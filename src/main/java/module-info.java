@@ -4,6 +4,6 @@ module org.desktop.system.sgli.sgli {
     requires jakarta.persistence;
 
 
-    opens org.desktop.system.sgli.sgli to javafx.fxml;
+    opens org.desktop.system.sgli.sgli.Controller to javafx.fxml;
     exports org.desktop.system.sgli.sgli;
 }
