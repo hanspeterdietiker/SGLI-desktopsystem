@@ -1,6 +1,7 @@
 module org.desktop.system.sgli.sgli {
     requires javafx.controls;
     requires javafx.fxml;
+    requires jakarta.persistence;
 
 
     opens org.desktop.system.sgli.sgli to javafx.fxml;
