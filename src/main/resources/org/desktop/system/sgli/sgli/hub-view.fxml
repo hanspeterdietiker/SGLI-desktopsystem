@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.desktop.system.sgli.sgli.Controller.WelcomeController"
+      style="-fx-background-color: #FFFFFF(to bottom);
+             -fx-padding: 40;
+             -fx-min-width: 600;
+             -fx-min-height: 500;"
+>
+
+</VBox>
