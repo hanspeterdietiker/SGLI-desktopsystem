@@ -1,11 +1,20 @@
 package org.desktop.system.sgli.sgli.Entity;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
 import java.util.UUID;
-
+@Entity
+@Table(name = "tb_payments")
 public class PaymentModel {
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Id
     private UUID id;
-    private ContractModel contractId;
+
+    @ManyToOne
+    @JoinColumn(name = "contract_id", nullable = false)
+    private ContractModel contract;
+
     private Date monthRef;
     private Date datePayment;
     private Float valorAlug;
@@ -13,16 +22,18 @@ public class PaymentModel {
     private Float valorCond;
 
     public PaymentModel(UUID id, Float valorCond, Float valorIptu,
-                        Float valorAlug, Date datePayment, Date monthRef, ContractModel contractId) {
+                        Float valorAlug, Date datePayment, Date monthRef, ContractModel contract) {
         this.id = id;
         this.valorCond = valorCond;
         this.valorIptu = valorIptu;
         this.valorAlug = valorAlug;
         this.datePayment = datePayment;
         this.monthRef = monthRef;
-        this.contractId = contractId;
+        this.contract = contract;
     }
+    public PaymentModel() {
 
+    }
 
     public UUID getId() {
         return id;
@@ -64,12 +75,12 @@ public class PaymentModel {
         this.monthRef = monthRef;
     }
 
-    public ContractModel getContractId() {
-        return contractId;
+    public ContractModel getContract() {
+        return contract;
     }
 
-    public void setContractId(ContractModel contractId) {
-        this.contractId = contractId;
+    public void setContract(ContractModel contract) {
+        this.contract = contract;
     }
 
     public Date getDatePayment() {
