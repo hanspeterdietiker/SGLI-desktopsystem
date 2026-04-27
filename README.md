@@ -17,7 +17,7 @@ Este sistema foi concebido para resolver a complexidade de organizar pagamentos 
 ## 🛠️ Tecnologias Utilizadas
 
 * **Interface Gráfica:** JavaFX (com FXML e CSS para design responsivo).
-* **Persistência:** Banco de dados embarcado (SQLite/H2) garantindo portabilidade.
+* **Persistência:** Banco de dados embarcado (SQLite) garantindo portabilidade.
 * **Relatórios:** Apache PDFBox para a construção dinâmica de documentos.
 * **Distribuição:** Empacotamento nativo via `jpackage` para instalação direta.
 
@@ -35,9 +35,11 @@ Para rodar o projeto localmente, certifique-se de ter o JDK 21 instalado.
 
 1. Clone o repositório.
 2. Importe o projeto na sua IDE de preferência.
-3. Execute a classe principal através do seu gerenciador de build (Maven/Gradle).
+3. Execute a classe principal através do seu gerenciador de build (Maven).
 
 ---
-Desenvolvido por 
+Desenvolvido 
+
 Github:[Hanspeter Dietiker](https://github.com/hanspeterdietiker)
+
 Linkedin: [Hanspeter Dietiker](https://www.linkedin.com/in/hanspeterdietiker/)
