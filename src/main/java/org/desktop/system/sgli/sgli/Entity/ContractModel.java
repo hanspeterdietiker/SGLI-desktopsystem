@@ -1,24 +1,37 @@
 package org.desktop.system.sgli.sgli.Entity;
 
+import jakarta.persistence.*;
+
 import java.util.UUID;
 import java.util.Date;
-
+import java.util.List;
+@Entity
+@Table(name = "tb_contracts")
 public class ContractModel {
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Id
     private UUID id;
+
     private String nameLocador;
-    private String CPF_CNPJ;
+    private String cpfCnpj;
     private Float valueBase;
     private Date dataInit;
     private Date dataEnd;
 
-    public ContractModel(UUID id, String nameLocador, String CPF_CNPJ,
+    @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<PaymentModel> payments;
+
+    public ContractModel(UUID id, String nameLocador, String cpfCnpj,
                          Date dataInit, Float valueBase, Date dataEnd) {
         this.id = id;
         this.nameLocador = nameLocador;
-        this.CPF_CNPJ = CPF_CNPJ;
+        this.cpfCnpj = cpfCnpj;
         this.dataInit = dataInit;
         this.valueBase = valueBase;
         this.dataEnd = dataEnd;
+    }
+
+    public ContractModel() {
     }
 
 
@@ -38,12 +51,12 @@ public class ContractModel {
         this.nameLocador = nameLocador;
     }
 
-    public String getCPF_CNPJ() {
-        return CPF_CNPJ;
+    public String getCpfCnpj() {
+        return cpfCnpj;
     }
 
-    public void setCPF_CNPJ(String CPF_CNPJ) {
-        this.CPF_CNPJ = CPF_CNPJ;
+    public void setCpfCnpj(String cpfCnpj) {
+        this.cpfCnpj = cpfCnpj;
     }
 
     public Date getDataInit() {
@@ -68,5 +81,13 @@ public class ContractModel {
 
     public void setDataEnd(Date dataEnd) {
         this.dataEnd = dataEnd;
+    }
+
+    public List<PaymentModel> getPayments() {
+        return payments;
+    }
+
+    public void setPayments(List<PaymentModel> payments) {
+        this.payments = payments;
     }
 }
