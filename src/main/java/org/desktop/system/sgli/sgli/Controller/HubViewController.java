@@ -4,6 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.desktop.system.sgli.sgli.Dto.ContractDto;
+import org.desktop.system.sgli.sgli.Dto.PaymentDto;
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Entity.PaymentModel;
 
@@ -40,35 +42,25 @@ public class HubViewController {
     @FXML
     private TextField valorCondField;
 
-    // Tabs de Listagem <Tab>
+    // Tabs de Listagem <Tab> - usando DTOs
     @FXML
-    private TableView<ContractModel> contractsTable;
+    private TableView<ContractDto> contractsTable;
     @FXML
-    private TableView<PaymentModel> paymentsTable;
+    private TableView<PaymentDto> paymentsTable;
 
 
     private ObservableList<ContractModel> contractsList = FXCollections.observableArrayList();
     private ObservableList<PaymentModel> paymentsList = FXCollections.observableArrayList();
 
+
+    private ObservableList<ContractDto> contractsDTOList = FXCollections.observableArrayList();
+    private ObservableList<PaymentDto> paymentsDTOList = FXCollections.observableArrayList();
+
     @FXML
     public void initialize() {
 
-        contractsTable.setItems(contractsList);
-        paymentsTable.setItems(paymentsList);
-
-
-        TableColumn<PaymentModel, ContractModel> contractColumn = (TableColumn<PaymentModel, ContractModel>) paymentsTable.getColumns().get(1);
-        contractColumn.setCellFactory(column -> new TableCell<PaymentModel, ContractModel>() {
-            @Override
-            protected void updateItem(ContractModel item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(item.getNameLocador());
-                }
-            }
-        });
+        contractsTable.setItems(contractsDTOList);
+        paymentsTable.setItems(paymentsDTOList);
 
 
         contractComboBox.setItems(contractsList);
@@ -97,11 +89,12 @@ public class HubViewController {
             Date dataInit = Date.from(dataInitLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
             Date dataEnd = Date.from(dataEndLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
+
             ContractModel contract = new ContractModel(null, nameLocador, cpfCnpj, dataInit, valueBase, dataEnd);
-
-
             contractsList.add(contract);
-            contractComboBox.setItems(contractsList); // Atualizar combo
+            contractComboBox.setItems(contractsList);
+
+
 
             showAlert("Sucesso", "Contrato salvo com sucesso!");
             clearFieldContract();
@@ -128,10 +121,10 @@ public class HubViewController {
             Date monthRef = Date.from(monthRefLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
             Date datePayment = Date.from(datePaymentLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
+
             PaymentModel payment = new PaymentModel(null, valorCond, valorIptu, valorAlug, datePayment, monthRef, selectedContract);
-
-
             paymentsList.add(payment);
+
 
             showAlert("Sucesso", "Pagamento salvo com sucesso!");
             clearFieldPayment();
