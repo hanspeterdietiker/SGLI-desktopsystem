@@ -6,4 +6,6 @@ module org.desktop.system.sgli.sgli {
 
     opens org.desktop.system.sgli.sgli.Controller to javafx.fxml;
     exports org.desktop.system.sgli.sgli;
+    exports org.desktop.system.sgli.sgli.Controller;
+
 }
