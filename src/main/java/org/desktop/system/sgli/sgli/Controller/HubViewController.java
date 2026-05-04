@@ -1,5 +1,6 @@
 package org.desktop.system.sgli.sgli.Controller;
 
+import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
+import com.itextpdf.text.Document;
 
 public class HubViewController {
 
@@ -95,7 +97,6 @@ public class HubViewController {
             contractComboBox.setItems(contractsList);
 
 
-
             showAlert("Sucesso", "Contrato salvo com sucesso!");
             clearFieldContract();
         } catch (Exception e) {
@@ -163,6 +164,46 @@ public class HubViewController {
         }
     }
 
+    @FXML
+    private void exportReportPayment() {
+        Document doc = new Document();
+        try {
+
+            String downloadsPath = System.getProperty("user.home") + "\\Downloads\\Relatorio_Contratos.pdf";
+
+            PdfWriter.getInstance(doc, new java.io.FileOutputStream(downloadsPath));
+            doc.open();
+
+
+            com.itextpdf.text.Paragraph title = new com.itextpdf.text.Paragraph("Relatório de Contratos");
+            title.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
+            doc.add(title);
+            doc.add(new com.itextpdf.text.Paragraph("\n"));
+
+
+            if (contractsList.isEmpty()) {
+                doc.add(new com.itextpdf.text.Paragraph("Nenhum contrato registrado."));
+            } else {
+                for (ContractModel contract : contractsList) {
+                    doc.add(new com.itextpdf.text.Paragraph("Nome: " + contract.getNameLocador()));
+                    doc.add(new com.itextpdf.text.Paragraph("CPF/CNPJ: " + contract.getCpfCnpj()));
+                    doc.add(new com.itextpdf.text.Paragraph("Valor Base: R$ " + contract.getValueBase()));
+                    doc.add(new com.itextpdf.text.Paragraph("Data Início: " + contract.getDataInit()));
+                    doc.add(new com.itextpdf.text.Paragraph("Data Fim: " + contract.getDataEnd()));
+                    doc.add(new com.itextpdf.text.Paragraph("\n"));
+                }
+            }
+
+            doc.close();
+            showAlert("Sucesso", "PDF salvo em: " + downloadsPath);
+        } catch (Exception e) {
+            showAlert("Erro", "Erro ao exportar relatório de contratos: " + e.getMessage());
+            if (doc.isOpen()) {
+                doc.close();
+            }
+        }
+    }
+
 
     private void clearFieldPayment() {
         contractComboBox.setValue(null);
@@ -172,6 +213,7 @@ public class HubViewController {
         valorIptuField.clear();
         valorCondField.clear();
     }
+
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
