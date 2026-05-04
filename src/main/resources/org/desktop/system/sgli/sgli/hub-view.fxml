@@ -1,14 +1,146 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
-      fx:controller="org.desktop.system.sgli.sgli.Controller.WelcomeController"
-      style="-fx-background-color: #FFFFFF(to bottom);
+      fx:controller="org.desktop.system.sgli.sgli.Controller.HubViewController"
+      style="-fx-background-color: linear-gradient(to bottom, #f0f0f0, #ffffff);
              -fx-padding: 40;
-             -fx-min-width: 600;
-             -fx-min-height: 500;"
->
+             -fx-min-width: 800;
+             -fx-min-height: 600;">
 
+    <Text text="Hub de Gerenciamento"
+          style="-fx-font-size: 50px; -fx-font-weight: bold; -fx-font-family: 'Dubai Light'; -fx-fill: #2c3e50;"/>
+    <Text text="Contratos e Pagamentos"
+          style="-fx-font-size: 25px; -fx-font-family: 'Dubai Light'; -fx-fill: #34495e;"/>
+
+    <TabPane style="-fx-tab-min-width: 120px; -fx-font-family: 'Dubai Light'; -fx-font-size: 14px;">
+        <!-- Aba Contratos -->
+        <Tab text="Contratos" closable="false">
+            <VBox spacing="15.0" style="-fx-padding: 20;">
+                <Text text="Gerenciar Contratos" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-font-family: 'Dubai Light'; -fx-fill: #2c3e50;"/>
+
+                <GridPane hgap="10" vgap="10" alignment="CENTER">
+                    <Label text="Nome Locador:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <TextField fx:id="nameLocadorField" promptText="Digite o nome" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-family: 'Dubai Light';"/>
+
+                    <Label text="CPF/CNPJ:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <TextField fx:id="cpfCnpjField" promptText="Digite CPF ou CNPJ" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-font-family: 'Dubai Light';"/>
+
+                    <Label text="Valor Base:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <TextField fx:id="valueBaseField" promptText="Valor base do contrato" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-font-family: 'Dubai Light';"/>
+
+                    <Label text="Data Início:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                    <DatePicker fx:id="dataInitPicker" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-font-family: 'Dubai Light';"/>
+
+                    <Label text="Data Fim:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                    <DatePicker fx:id="dataEndPicker" GridPane.columnIndex="1" GridPane.rowIndex="4" style="-fx-font-family: 'Dubai Light';"/>
+                </GridPane>
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Button text="Salvar Contrato" onAction="#saveContract" style="-fx-font-size: 16px; -fx-font-family: 'Dubai Light'; -fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 10 20;"/>
+                </HBox>
+            </VBox>
+        </Tab>
+
+        <!-- Aba Pagamentos -->
+        <Tab text="Pagamentos" closable="false">
+            <VBox spacing="15.0" style="-fx-padding: 20;">
+                <Text text="Gerenciar Pagamentos" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-font-family: 'Dubai Light'; -fx-fill: #2c3e50;"/>
+
+                <GridPane hgap="10" vgap="10" alignment="CENTER">
+                    <Label text="Contrato:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <ComboBox fx:id="contractComboBox" promptText="Selecione o contrato" GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-family: 'Dubai Light';"/>
+
+                    <Label text="Mês Referência:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                    <DatePicker fx:id="monthRefPicker" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-font-family: 'Dubai Light';"/>
+
+                    <Label text="Data Pagamento:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                    <DatePicker fx:id="datePaymentPicker" GridPane.columnIndex="1" GridPane.rowIndex="2" style="-fx-font-family: 'Dubai Light';"/>
+
+                    <Label text="Valor Aluguel:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                    <TextField fx:id="valorAlugField" promptText="Valor do aluguel" GridPane.columnIndex="1" GridPane.rowIndex="3" style="-fx-font-family: 'Dubai Light';"/>
+
+                    <Label text="Valor IPTU:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                    <TextField fx:id="valorIptuField" promptText="Valor do IPTU" GridPane.columnIndex="1" GridPane.rowIndex="4" style="-fx-font-family: 'Dubai Light';"/>
+
+                    <Label text="Valor Condomínio:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;" GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                    <TextField fx:id="valorCondField" promptText="Valor do condomínio" GridPane.columnIndex="1" GridPane.rowIndex="5" style="-fx-font-family: 'Dubai Light';"/>
+                </GridPane>
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Button text="Salvar Pagamento" onAction="#savePayment" style="-fx-font-size: 16px; -fx-font-family: 'Dubai Light'; -fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 10 20;"/>
+                </HBox>
+            </VBox>
+        </Tab>
+
+        <!-- Aba Listar Contratos -->
+        <Tab text="Listar Contratos" closable="false">
+            <VBox spacing="15.0" style="-fx-padding: 20;">
+                <Text text="Lista de Contratos" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-font-family: 'Dubai Light'; -fx-fill: #2c3e50;"/>
+                <TableView fx:id="contractsTable" style="-fx-font-family: 'Dubai Light';">
+                    <columns>
+                        <TableColumn text="Nome Locador" prefWidth="150">
+                            <cellValueFactory><PropertyValueFactory property="nameLocador" /></cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="CPF/CNPJ" prefWidth="120">
+                            <cellValueFactory><PropertyValueFactory property="cpfCnpj" /></cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Valor Base" prefWidth="100">
+                            <cellValueFactory><PropertyValueFactory property="valueBase" /></cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Data Início" prefWidth="130">
+                            <cellValueFactory><PropertyValueFactory property="dataInit" /></cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Data Fim" prefWidth="130">
+                            <cellValueFactory><PropertyValueFactory property="dataEnd" /></cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+                <HBox spacing="10" alignment="CENTER">
+                    <Button text="Atualizar Lista" onAction="#refreshListContract" style="-fx-font-size: 16px; -fx-font-family: 'Dubai Light'; -fx-background-color: #2ecc71; -fx-text-fill: white; -fx-padding: 10 20;"/>
+                </HBox>
+            </VBox>
+        </Tab>
+
+        <!-- Aba Listar Pagamentos -->
+        <Tab text="Listar Pagamentos" closable="false">
+            <VBox spacing="15.0" style="-fx-padding: 20;">
+                <Text text="Lista de Pagamentos" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-font-family: 'Dubai Light'; -fx-fill: #2c3e50;"/>
+                <TableView fx:id="paymentsTable" style="-fx-font-family: 'Dubai Light';">
+                    <columns>
+                        <TableColumn text="Contrato" prefWidth="180">
+                            <cellValueFactory><PropertyValueFactory property="contractName" /></cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Mês Ref." prefWidth="100">
+                            <cellValueFactory><PropertyValueFactory property="monthRef" /></cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Data Pag." prefWidth="100">
+                            <cellValueFactory><PropertyValueFactory property="datePayment" /></cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Aluguel" prefWidth="100">
+                            <cellValueFactory><PropertyValueFactory property="valorAlug" /></cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="IPTU" prefWidth="100">
+                            <cellValueFactory><PropertyValueFactory property="valorIptu" /></cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Condomínio" prefWidth="100">
+                            <cellValueFactory><PropertyValueFactory property="valorCond" /></cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
+                <HBox spacing="10" alignment="CENTER">
+                    <Button text="Atualizar Lista" onAction="#refreshListPayment" style="-fx-font-size: 16px; -fx-font-family: 'Dubai Light'; -fx-background-color: #2ecc71; -fx-text-fill: white; -fx-padding: 10 20;"/>
+                </HBox>
+            </VBox>
+        </Tab>
+
+
+    </TabPane>
+
+    <Text text="Sistema SGLI - 2026" style="-fx-font-size: 12px; -fx-font-family: 'Dubai Light'; -fx-fill: #7f8c8d;"/>
 </VBox>
