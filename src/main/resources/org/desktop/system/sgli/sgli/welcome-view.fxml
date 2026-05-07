@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.Rectangle?>
 
 
-<VBox alignment="CENTER" spacing="0.0" xmlns:fx="http://javafx.com/fxml"
+<VBox alignment="CENTER"  xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.desktop.system.sgli.sgli.Controller.WelcomeController"
       style="-fx-background: linear-gradient(to bottom, #0F4C75 0%, #1B5E8C 50%, #2E8BC0 100%);
              -fx-padding: 0;
@@ -15,7 +15,7 @@
              -fx-min-height: 600;">
 
     <!-- Seção Superior com Accent -->
-    <VBox alignment="CENTER" spacing="0.0" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+    <VBox alignment="CENTER"  style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
         <VBox alignment="CENTER" spacing="45.0" style="-fx-padding: 60 40 60 40;">
 
             <!-- Decoração superior -->
