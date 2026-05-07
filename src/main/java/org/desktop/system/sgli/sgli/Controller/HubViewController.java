@@ -15,6 +15,7 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import com.itextpdf.text.Document;
+import org.desktop.system.sgli.sgli.Exceptions.AlertException;
 
 public class HubViewController {
 
@@ -100,10 +101,10 @@ public class HubViewController {
             contractComboBox.setItems(contractsList);
 
 
-            showAlert("Sucesso", "Contrato salvo com sucesso!");
+            AlertException.showAlert("Sucesso", "Contrato salvo com sucesso!");
             clearFieldContract();
         } catch (Exception e) {
-            showAlert("Erro", "Erro ao salvar contrato: " + e.getMessage());
+            AlertException.showAlert("Erro", "Erro ao salvar contrato: " + e.getMessage());
         }
     }
 
@@ -112,7 +113,7 @@ public class HubViewController {
         try {
             ContractModel selectedContract = contractComboBox.getValue();
             if (selectedContract == null) {
-                showAlert("Erro", "Selecione um contrato!");
+                AlertException.showAlert("Erro", "Selecione um contrato!");
                 return;
             }
 
@@ -130,10 +131,10 @@ public class HubViewController {
             paymentsList.add(payment);
 
 
-            showAlert("Sucesso", "Pagamento salvo com sucesso!");
+            AlertException.showAlert("Sucesso", "Pagamento salvo com sucesso!");
             clearFieldPayment();
         } catch (Exception e) {
-            showAlert("Erro", "Erro ao salvar pagamento: " + e.getMessage());
+            AlertException.showAlert("Erro", "Erro ao salvar pagamento: " + e.getMessage());
         }
     }
 
@@ -142,9 +143,9 @@ public class HubViewController {
         try {
 
             contractsTable.refresh();
-            showAlert("Info", "Lista de contratos atualizada!");
+            AlertException.showAlert("Info", "Lista de contratos atualizada!");
         } catch (Exception e) {
-            showAlert("Erro", "Erro ao atualizar contrato: " + e.getMessage());
+            AlertException.showAlert("Erro", "Erro ao atualizar contrato: " + e.getMessage());
         }
     }
 
@@ -161,9 +162,9 @@ public class HubViewController {
         try {
 
             paymentsTable.refresh();
-            showAlert("Info", "Lista de pagamentos atualizada!");
+            AlertException.showAlert("Info", "Lista de pagamentos atualizada!");
         } catch (Exception e) {
-            showAlert("Erro", "Erro ao atualizar pagamento: " + e.getMessage());
+            AlertException.showAlert("Erro", "Erro ao atualizar pagamento: " + e.getMessage());
         }
     }
 
@@ -199,9 +200,9 @@ public class HubViewController {
             }
 
             doc.close();
-            showAlert("Sucesso", "PDF salvo em: " + downloadsPath);
+            AlertException.showAlert("Sucesso", "PDF salvo em: " + downloadsPath);
         } catch (Exception e) {
-            showAlert("Erro", "Erro ao exportar relatório de contratos: " + e.getMessage());
+            AlertException.showAlert("Erro", "Erro ao exportar relatório de contratos: " + e.getMessage());
             if (doc.isOpen()) {
                 doc.close();
             }
@@ -219,13 +220,7 @@ public class HubViewController {
     }
 
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
+
 
 
 }
