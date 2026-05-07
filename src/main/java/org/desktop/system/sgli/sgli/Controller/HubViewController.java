@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Entity.PaymentModel;
+import org.desktop.system.sgli.sgli.Utils.AlertAction;
 
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
@@ -17,7 +18,6 @@ import java.time.LocalDate;
 
 
 import com.itextpdf.text.Document;
-import org.desktop.system.sgli.sgli.Exceptions.AlertException;
 
 public class HubViewController {
 
@@ -89,7 +89,7 @@ public class HubViewController {
             LocalDate dateEndLocal = dateEndPicker.getValue();
 
             if (dateInitLocal == null || dateEndLocal == null) {
-                AlertException.showAlert("Erro", "Selecione as datas de início e fim do contrato!");
+                AlertAction.showAlert("Erro", "Selecione as datas de início e fim do contrato!");
                 return;
             }
 
@@ -99,10 +99,10 @@ public class HubViewController {
             contractComboBox.setItems(contractsList);
 
 
-            AlertException.showAlert("Sucesso", "Contrato salvo com sucesso!");
+            AlertAction.showAlert("Sucesso", "Contrato salvo com sucesso!");
             clearFieldContract();
         } catch (Exception e) {
-            AlertException.showAlert("Erro", "Erro ao salvar contrato: " + e.getMessage());
+            AlertAction.showAlert("Erro", "Erro ao salvar contrato: " + e.getMessage());
         }
 
     }
@@ -112,7 +112,7 @@ public class HubViewController {
         try {
             ContractModel selectedContract = contractComboBox.getValue();
             if (selectedContract == null) {
-                AlertException.showAlert("Erro", "Selecione um contrato!");
+                AlertAction.showAlert("Erro", "Selecione um contrato!");
                 return;
             }
 
@@ -126,10 +126,10 @@ public class HubViewController {
             paymentsList.add(payment);
 
 
-            AlertException.showAlert("Sucesso", "Pagamento salvo com sucesso!");
+            AlertAction.showAlert("Sucesso", "Pagamento salvo com sucesso!");
             clearFieldPayment();
         } catch (Exception e) {
-            AlertException.showAlert("Erro", "Erro ao salvar pagamento: " + e.getMessage());
+            AlertAction.showAlert("Erro", "Erro ao salvar pagamento: " + e.getMessage());
         }
     }
 
@@ -165,9 +165,9 @@ public class HubViewController {
             }
 
             doc.close();
-            AlertException.showAlert("Sucesso", "PDF salvo em: " + downloadsPath);
+            AlertAction.showAlert("Sucesso", "PDF salvo em: " + downloadsPath);
         } catch (Exception e) {
-            AlertException.showAlert("Erro", "Erro ao exportar relatório de Contratos: " + e.getMessage());
+            AlertAction.showAlert("Erro", "Erro ao exportar relatório de Contratos: " + e.getMessage());
             if (doc.isOpen()) {
                 doc.close();
             }
@@ -179,9 +179,9 @@ public class HubViewController {
         try {
 
             contractsTable.refresh();
-            AlertException.showAlert("Info", "Lista de contratos atualizada!");
+            AlertAction.showAlert("Info", "Lista de contratos atualizada!");
         } catch (Exception e) {
-            AlertException.showAlert("Erro", "Erro ao atualizar contrato: " + e.getMessage());
+            AlertAction.showAlert("Erro", "Erro ao atualizar contrato: " + e.getMessage());
         }
     }
 
@@ -199,9 +199,9 @@ public class HubViewController {
         try {
 
             paymentsTable.refresh();
-            AlertException.showAlert("Info", "Lista de pagamentos atualizada!");
+            AlertAction.showAlert("Info", "Lista de pagamentos atualizada!");
         } catch (Exception e) {
-            AlertException.showAlert("Erro", "Erro ao atualizar pagamento: " + e.getMessage());
+            AlertAction.showAlert("Erro", "Erro ao atualizar pagamento: " + e.getMessage());
         }
     }
 
@@ -236,9 +236,9 @@ public class HubViewController {
             }
 
             doc.close();
-            AlertException.showAlert("Sucesso", "PDF salvo em: " + downloadsPath);
+            AlertAction.showAlert("Sucesso", "PDF salvo em: " + downloadsPath);
         } catch (Exception e) {
-            AlertException.showAlert("Erro", "Erro ao exportar relatório de Pagamentos: " + e.getMessage());
+            AlertAction.showAlert("Erro", "Erro ao exportar relatório de Pagamentos: " + e.getMessage());
             if (doc.isOpen()) {
                 doc.close();
             }
