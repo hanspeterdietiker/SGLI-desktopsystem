@@ -118,7 +118,7 @@
                         </TableColumn>
                         <TableColumn text="Nome Locatario" prefWidth="150">
                             <cellValueFactory>
-                                <PropertyValueFactory property="nameLocador"/>
+                                <PropertyValueFactory property="nameLocatario"/>
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn text="CPF/CNPJ" prefWidth="120">
@@ -174,11 +174,6 @@
                         <TableColumn text="Mês Ref." prefWidth="100">
                             <cellValueFactory>
                                 <PropertyValueFactory property="monthRef"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn text="Data Pag." prefWidth="100">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="datePayment"/>
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn text="Aluguel" prefWidth="100">

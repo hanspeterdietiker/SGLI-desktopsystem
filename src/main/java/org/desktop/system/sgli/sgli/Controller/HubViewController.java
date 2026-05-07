@@ -3,12 +3,12 @@ package org.desktop.system.sgli.sgli.Controller;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.desktop.system.sgli.sgli.Dto.ContractDto;
-import org.desktop.system.sgli.sgli.Dto.PaymentDto;
+
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Entity.PaymentModel;
 
@@ -48,32 +48,28 @@ public class HubViewController {
     @FXML
     private TextField valorCondField;
 
-    // Tabs de Listagem <Tab> - usando DTOs
     @FXML
-    private TableView<ContractDto> contractsTable;
+    private TableView<ContractModel> contractsTable;
     @FXML
-    private TableView<PaymentDto> paymentsTable;
-
+    private TableView<PaymentModel> paymentsTable;
 
     private ObservableList<ContractModel> contractsList = FXCollections.observableArrayList();
+
     private ObservableList<PaymentModel> paymentsList = FXCollections.observableArrayList();
 
-
-    private ObservableList<ContractDto> contractsDTOList = FXCollections.observableArrayList();
-    private ObservableList<PaymentDto> paymentsDTOList = FXCollections.observableArrayList();
 
     @FXML
     public void initialize() {
 
-        contractsTable.setItems(contractsDTOList);
-        paymentsTable.setItems(paymentsDTOList);
-
+        contractsTable.setItems(contractsList);
+        paymentsTable.setItems(paymentsList);
+        ;
 
         contractComboBox.setItems(contractsList);
         contractComboBox.setConverter(new javafx.util.StringConverter<ContractModel>() {
             @Override
             public String toString(ContractModel contract) {
-                return contract != null ? contract.getNameLocador() : "";
+                return contract != null ? contract.getNameLocatario() : "";
             }
 
             @Override
@@ -132,8 +128,7 @@ public class HubViewController {
             Date monthRef = Date.from(monthRefLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
 
-
-            PaymentModel payment = new PaymentModel(null, valorCond, valorIptu, valorAlug,  monthRef, selectedContract);
+            PaymentModel payment = new PaymentModel(null, valorCond, valorIptu, valorAlug, monthRef, selectedContract);
             paymentsList.add(payment);
 
 
@@ -143,6 +138,7 @@ public class HubViewController {
             AlertException.showAlert("Erro", "Erro ao salvar pagamento: " + e.getMessage());
         }
     }
+
     @FXML
     private void exportReportContract() {
         Document doc = new Document();
@@ -183,6 +179,7 @@ public class HubViewController {
             }
         }
     }
+
     @FXML
     private void refreshListContract() {
         try {
@@ -235,7 +232,7 @@ public class HubViewController {
                 doc.add(new Paragraph("Nenhum Pagamento registrado."));
             } else {
                 for (PaymentModel payment : paymentsList) {
-                    doc.add(new Paragraph("Contrato" + payment.getContract()));
+                    doc.add(new Paragraph("Locatario" + payment.getContract().getNameLocatario())); // Fixing Object to String
                     doc.add(new Paragraph("Mes de Referencia " + payment.getMonthRef()));
                     doc.add(new Paragraph("Valor Aluguel R$ " + payment.getValorAlug()));
                     doc.add(new Paragraph("Valor Iptu R$ " + payment.getValorIptu()));
