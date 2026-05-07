@@ -26,14 +26,14 @@ public class ContractModel {
     private List<PaymentModel> payments;
 
     public ContractModel(UUID id, String nameLocador, String nameLocatario, String cpfCnpj,
-                         LocalDate dataInit, BigDecimal valueBase, LocalDate dataEnd) {
+                         LocalDate dateInit, BigDecimal valueBase, LocalDate dateEnd) {
         this.id = id;
         this.nameLocador = nameLocador;
         this.nameLocatario = nameLocatario;
         this.cpfCnpj = cpfCnpj;
-        this.dateInit = dataInit;
+        this.dateInit = dateInit;
         this.valueBase = valueBase;
-        this.dateEnd = dataEnd;
+        this.dateEnd = dateEnd;
     }
 
     public ContractModel() {
@@ -76,8 +76,8 @@ public class ContractModel {
         return dateInit;
     }
 
-    public void setDateInit(LocalDate dataInit) {
-        this.dateInit = dataInit;
+    public void setDateInit(LocalDate dateInit) {
+        this.dateInit = dateInit;
     }
 
     public BigDecimal getValueBase() {
