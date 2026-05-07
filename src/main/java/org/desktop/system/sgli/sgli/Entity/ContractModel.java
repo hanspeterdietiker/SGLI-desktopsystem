@@ -2,6 +2,8 @@ package org.desktop.system.sgli.sgli.Entity;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.UUID;
 import java.util.Date;
 import java.util.List;
@@ -17,15 +19,15 @@ public class ContractModel {
     private String nameLocador;
     private String nameLocatario;
     private String cpfCnpj;
-    private Float valueBase;
-    private Date dataInit;
-    private Date dataEnd;
+    private BigDecimal valueBase;
+    private LocalDate dataInit;
+    private LocalDate dataEnd;
 
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaymentModel> payments;
 
     public ContractModel(UUID id, String nameLocador, String nameLocatario, String cpfCnpj,
-                         Date dataInit, Float valueBase, Date dataEnd) {
+                         LocalDate dataInit, BigDecimal valueBase, LocalDate dataEnd) {
         this.id = id;
         this.nameLocador = nameLocador;
         this.nameLocatario = nameLocatario;
@@ -71,27 +73,27 @@ public class ContractModel {
         this.cpfCnpj = cpfCnpj;
     }
 
-    public Date getDataInit() {
+    public LocalDate getDataInit() {
         return dataInit;
     }
 
-    public void setDataInit(Date dataInit) {
+    public void setDataInit(LocalDate dataInit) {
         this.dataInit = dataInit;
     }
 
-    public Float getValueBase() {
+    public BigDecimal getValueBase() {
         return valueBase;
     }
 
-    public void setValueBase(Float valueBase) {
+    public void setValueBase(BigDecimal valueBase) {
         this.valueBase = valueBase;
     }
 
-    public Date getDataEnd() {
+    public LocalDate getDataEnd() {
         return dataEnd;
     }
 
-    public void setDataEnd(Date dataEnd) {
+    public void setDataEnd(LocalDate dataEnd) {
         this.dataEnd = dataEnd;
     }
 

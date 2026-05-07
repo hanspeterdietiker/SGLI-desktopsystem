@@ -3,7 +3,6 @@ package org.desktop.system.sgli.sgli.Controller;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,9 +12,10 @@ import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Entity.PaymentModel;
 
 import java.io.FileOutputStream;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
+
 
 import com.itextpdf.text.Document;
 import org.desktop.system.sgli.sgli.Exceptions.AlertException;
@@ -85,7 +85,7 @@ public class HubViewController {
             String nameLocador = nameLocadorField.getText();
             String nameLocatario = nameLocatarioField.getText();
             String cpfCnpj = cpfCnpjField.getText();
-            Float valueBase = Float.parseFloat(valueBaseField.getText());
+            BigDecimal valueBase = new BigDecimal(valueBaseField.getText());
             LocalDate dataInitLocal = dataInitPicker.getValue();
             LocalDate dataEndLocal = dataEndPicker.getValue();
 
@@ -94,11 +94,9 @@ public class HubViewController {
 
             }
 
-            Date dataInit = Date.from(dataInitLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            Date dataEnd = Date.from(dataEndLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
 
-            ContractModel contract = new ContractModel(null, nameLocador, nameLocatario, cpfCnpj, dataInit, valueBase, dataEnd);
+            ContractModel contract = new ContractModel(null, nameLocador, nameLocatario, cpfCnpj, dataInitLocal, valueBase, dataEndLocal);
             contractsList.add(contract);
             contractComboBox.setItems(contractsList);
 
@@ -125,7 +123,7 @@ public class HubViewController {
             Float valorIptu = Float.parseFloat(valorIptuField.getText());
             Float valorCond = Float.parseFloat(valorCondField.getText());
 
-            Date monthRef = Date.from(monthRefLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
+            LocalDate monthRef = LocalDate.from(monthRefLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
 
             PaymentModel payment = new PaymentModel(null, valorCond, valorIptu, valorAlug, monthRef, selectedContract);

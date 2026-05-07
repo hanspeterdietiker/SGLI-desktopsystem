@@ -2,6 +2,7 @@ package org.desktop.system.sgli.sgli.Entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 @Entity
@@ -15,14 +16,15 @@ public class PaymentModel {
     @JoinColumn(name = "contract_id", nullable = false)
     private ContractModel contract;
 
-    private Date monthRef;
-    private Date datePayment;
+
+    private LocalDate monthRef;
+
     private Float valorAlug;
     private Float valorIptu;
     private Float valorCond;
 
     public PaymentModel(UUID id, Float valorCond, Float valorIptu,
-                        Float valorAlug,  Date monthRef, ContractModel contract) {
+                        Float valorAlug,  LocalDate monthRef, ContractModel contract) {
         this.id = id;
         this.valorCond = valorCond;
         this.valorIptu = valorIptu;
@@ -66,11 +68,11 @@ public class PaymentModel {
         this.valorAlug = valorAlug;
     }
 
-    public Date getMonthRef() {
+    public LocalDate getMonthRef() {
         return monthRef;
     }
 
-    public void setMonthRef(Date monthRef) {
+    public void setMonthRef(LocalDate monthRef) {
         this.monthRef = monthRef;
     }
 
@@ -82,11 +84,4 @@ public class PaymentModel {
         this.contract = contract;
     }
 
-    public Date getDatePayment() {
-        return datePayment;
-    }
-
-    public void setDatePayment(Date datePayment) {
-        this.datePayment = datePayment;
-    }
 }
