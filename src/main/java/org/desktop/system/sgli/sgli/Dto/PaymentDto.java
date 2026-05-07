@@ -5,7 +5,6 @@ import java.util.Date;
 public class PaymentDto {
     private String contractName;
     private Date monthRef;
-    private Date datePayment;
     private Float valorAlug;
     private Float valorIptu;
     private Float valorCond;
@@ -13,7 +12,7 @@ public class PaymentDto {
     public PaymentDto(String contractName, Date monthRef, Date datePayment, Float valorAlug, Float valorIptu, Float valorCond) {
         this.contractName = contractName;
         this.monthRef = monthRef;
-        this.datePayment = datePayment;
+
         this.valorAlug = valorAlug;
         this.valorIptu = valorIptu;
         this.valorCond = valorCond;
@@ -36,14 +35,6 @@ public class PaymentDto {
 
     public void setMonthRef(Date monthRef) {
         this.monthRef = monthRef;
-    }
-
-    public Date getDatePayment() {
-        return datePayment;
-    }
-
-    public void setDatePayment(Date datePayment) {
-        this.datePayment = datePayment;
     }
 
     public Float getValorAlug() {

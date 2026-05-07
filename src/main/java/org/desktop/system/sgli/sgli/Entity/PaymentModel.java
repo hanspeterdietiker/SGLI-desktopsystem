@@ -22,12 +22,11 @@ public class PaymentModel {
     private Float valorCond;
 
     public PaymentModel(UUID id, Float valorCond, Float valorIptu,
-                        Float valorAlug, Date datePayment, Date monthRef, ContractModel contract) {
+                        Float valorAlug,  Date monthRef, ContractModel contract) {
         this.id = id;
         this.valorCond = valorCond;
         this.valorIptu = valorIptu;
         this.valorAlug = valorAlug;
-        this.datePayment = datePayment;
         this.monthRef = monthRef;
         this.contract = contract;
     }
