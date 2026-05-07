@@ -4,75 +4,83 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.shape.Rectangle?>
 
 
-<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+<VBox alignment="CENTER" spacing="0.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.desktop.system.sgli.sgli.Controller.WelcomeController"
-      style="-fx-background-color: #1E90FF(to bottom, #667eea 0%, #764ba2 100%);
-             -fx-padding: 40;
-             -fx-min-width: 600;
-             -fx-min-height: 500;">
+      style="-fx-background: linear-gradient(to bottom, #0F4C75 0%, #1B5E8C 50%, #2E8BC0 100%);
+             -fx-padding: 0;
+             -fx-min-width: 800;
+             -fx-min-height: 600;">
 
-    <!-- Título Principal -->
-    <Text text="Seja Bem-Vindo"
-          textAlignment="CENTER"
-          style="-fx-font-size: 48px;
-                 -fx-font-weight: bold;
-                 -fx-font-family: 'Segoe UI';
-                 -fx-fill: #FFFFFF;
-                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 3, 0.5, 0, 2);">
-        <VBox.margin>
-            <Insets top="20" bottom="10"/>
-        </VBox.margin>
-    </Text>
+    <!-- Seção Superior com Accent -->
+    <VBox alignment="CENTER" spacing="0.0" style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
+        <VBox alignment="CENTER" spacing="45.0" style="-fx-padding: 60 40 60 40;">
 
-<!--     Subtítulo -->
-    <Text text="Seu Imobiliario"
-          textAlignment="CENTER"
-          style="-fx-font-size: 24px;
-                 -fx-font-family: 'Segoe UI';
-                 -fx-fill: #FFFFFF;
-                 -fx-font-weight: bold;
-                 -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 3, 0.5, 0, 2);
-                 -fx-opacity: 0.9;">
-        <VBox.margin>
-            <Insets bottom="30"/>
-        </VBox.margin>
-    </Text>
+            <!-- Decoração superior -->
+            <Rectangle width="60" height="4" style="-fx-fill: #4A90E2; -fx-opacity: 0.6;"/>
 
-    <!-- Botão Principal -->
-    <Button
-            onAction="#onClickToHub"
-            text="Gerenciar"
-            style="-fx-font-size: 18px;
-                   -fx-font-weight: bold;
-                   -fx-font-family: 'Segoe UI';
-                   -fx-background-color: #3CB371;
-                   -fx-text-fill: #FFFFFF;
-                   -fx-background-radius: 25;
-                   -fx-border-radius: 25;
-                   -fx-padding: 15 30 15 30;
-                   -fx-cursor: hand;
-                   -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 2, 0.5, 0, 1);">
-        <VBox.margin>
-            <Insets bottom="40"/>
-        </VBox.margin>
+            <!-- Título Principal -->
+            <Text text="Sistema de Gestão de Locação Imobiliária"
+                  textAlignment="CENTER"
+                  style="-fx-font-size: 32px;
+                         -fx-font-weight: bold;
+                         -fx-font-family: 'Segoe UI', Arial, sans-serif;
+                         -fx-fill: #FFFFFF;">
+            </Text>
 
-    </Button>
+            <!-- Subtítulo -->
+            <Text text="Gerenciamento completo e profissional dos seus imóveis e contratos"
+                  textAlignment="CENTER"
+                  style="-fx-font-size: 16px;
+                         -fx-font-family: 'Segoe UI', Arial, sans-serif;
+                         -fx-fill: #E8F0F7;
+                         -fx-opacity: 0.95;">
+                <VBox.margin>
+                    <Insets top="-20"/>
+                </VBox.margin>
+            </Text>
 
+            <!-- Botão Principal -->
+            <Button
+                    onAction="#onClickToHub"
+                    text="Acessar Sistema"
+                    style="-fx-font-size: 16px;
+                           -fx-font-weight: bold;
+                           -fx-font-family: 'Segoe UI', Arial, sans-serif;
+                           -fx-background-color: #4A90E2;
+                           -fx-text-fill: #FFFFFF;
+                           -fx-background-radius: 6;
+                           -fx-border-radius: 6;
+                           -fx-padding: 14 45 14 45;
+                           -fx-cursor: hand;
+                           -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0.5, 0, 4);">
+                <VBox.margin>
+                    <Insets top="15"/>
+                </VBox.margin>
+            </Button>
 
-    <!-- Informações do Rodapé -->
-    <VBox alignment="CENTER" spacing="5.0" style="-fx-opacity: 0.8;">
-        <Text text="Hanspeter Dietiker | Copyright (c) 2026 "
-              textAlignment="CENTER"
-              style="-fx-font-size: 12px;
-                     -fx-font-family: 'Segoe UI';
-                     -fx-fill: #e9ecef;"/>
-        <Text text="All rights reserved. "
-              textAlignment="CENTER"
-              style="-fx-font-size: 12px;
-                     -fx-font-family: 'Segoe UI';
-                     -fx-fill: #e9ecef;"/>
+            <!-- Decoração inferior -->
+            <Rectangle width="60" height="4" style="-fx-fill: #4A90E2; -fx-opacity: 0.6;"/>
+        </VBox>
+    </VBox>
+
+    <!-- Seção Inferior com Rodapé -->
+    <VBox alignment="BOTTOM_CENTER" spacing="0.0" style="-fx-background-color: rgba(0, 0, 0, 0.15); -fx-padding: 30 40 25 40;">
+        <VBox alignment="CENTER" spacing="8.0">
+            <Text text="SGLI - Sistema de Gestão de Locação Imobiliária"
+                  textAlignment="CENTER"
+                  style="-fx-font-size: 13px;
+                         -fx-font-family: 'Segoe UI', Arial, sans-serif;
+                         -fx-fill: #E8F0F7;
+                         -fx-font-weight: bold;"/>
+            <Text text="© 2026 Hanspeter Dietiker. Todos os direitos reservados."
+                  textAlignment="CENTER"
+                  style="-fx-font-size: 11px;
+                         -fx-font-family: 'Segoe UI', Arial, sans-serif;
+                         -fx-fill: #B8D4E8;"/>
+        </VBox>
     </VBox>
 
 </VBox>
