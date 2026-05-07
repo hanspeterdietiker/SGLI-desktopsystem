@@ -18,7 +18,8 @@
     <Text text="Contratos e Pagamentos"
           style="-fx-font-size: 25px; -fx-font-family: 'Dubai Light'; -fx-fill: #34495e;"/>
 
-    <TabPane style="-fx-tab-min-width: 120px; -fx-font-family: 'Dubai Light'; -fx-font-size: 14px;">
+    <TabPane
+            style="-fx-tab-min-height:30px; -fx-tab-min-width: 100px; -fx-font-family: 'Dubai Light'; -fx-font-size: 14px;">
         <!-- Aba Contratos -->
         <Tab text="Contratos" closable="false">
             <VBox spacing="15" style="-fx-padding: 20;">
@@ -80,26 +81,20 @@
                            GridPane.columnIndex="0" GridPane.rowIndex="1"/>
                     <DatePicker fx:id="monthRefPicker" GridPane.columnIndex="1" GridPane.rowIndex="1"
                                 style="-fx-font-family: 'Dubai Light';"/>
-
-                    <Label text="Data Pagamento:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
-                           GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                    <DatePicker fx:id="datePaymentPicker" GridPane.columnIndex="1" GridPane.rowIndex="2"
-                                style="-fx-font-family: 'Dubai Light';"/>
-
                     <Label text="Valor Aluguel:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
-                           GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                           GridPane.columnIndex="0" GridPane.rowIndex="2"/>
                     <TextField fx:id="valorAlugField" promptText="Valor do aluguel" GridPane.columnIndex="1"
-                               GridPane.rowIndex="3" style="-fx-font-family: 'Dubai Light';"/>
+                               GridPane.rowIndex="2" style="-fx-font-family: 'Dubai Light';"/>
 
                     <Label text="Valor IPTU:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
-                           GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                           GridPane.columnIndex="0" GridPane.rowIndex="3"/>
                     <TextField fx:id="valorIptuField" promptText="Valor do IPTU" GridPane.columnIndex="1"
-                               GridPane.rowIndex="4" style="-fx-font-family: 'Dubai Light';"/>
+                               GridPane.rowIndex="3" style="-fx-font-family: 'Dubai Light';"/>
 
                     <Label text="Valor Condomínio:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
-                           GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+                           GridPane.columnIndex="0" GridPane.rowIndex="4"/>
                     <TextField fx:id="valorCondField" promptText="Valor do condomínio" GridPane.columnIndex="1"
-                               GridPane.rowIndex="5" style="-fx-font-family: 'Dubai Light';"/>
+                               GridPane.rowIndex="4" style="-fx-font-family: 'Dubai Light';"/>
                 </GridPane>
 
                 <HBox spacing="10" alignment="CENTER">
@@ -152,7 +147,13 @@
                 <HBox spacing="10" alignment="CENTER">
                     <Button text="Atualizar Lista" onAction="#refreshListContract"
                             style="-fx-font-size: 16px; -fx-font-family: 'Dubai Light'; -fx-background-color: #3498db; -fx-text-fill: white; -fx-padding: 10 20;"/>
-
+                    <Button
+                            text="Exportar Relatorio" onAction="#exportReportContract"
+                            style="-fx-font-size: 16px;
+                        -fx-font-family: 'Dubai Light';
+                        -fx-background-color: #e67e22;
+                        -fx-text-fill: white;
+                        -fx-padding: 10 20;"/>
 
                 </HBox>
             </VBox>

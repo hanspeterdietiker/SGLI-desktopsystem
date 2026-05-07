@@ -1,5 +1,7 @@
 package org.desktop.system.sgli.sgli.Controller;
 
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,6 +12,7 @@ import org.desktop.system.sgli.sgli.Dto.PaymentDto;
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Entity.PaymentModel;
 
+import java.io.FileOutputStream;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
@@ -38,8 +41,6 @@ public class HubViewController {
     private ComboBox<ContractModel> contractComboBox;
     @FXML
     private DatePicker monthRefPicker;
-    @FXML
-    private DatePicker datePaymentPicker;
     @FXML
     private TextField valorAlugField;
     @FXML
@@ -92,6 +93,11 @@ public class HubViewController {
             LocalDate dataInitLocal = dataInitPicker.getValue();
             LocalDate dataEndLocal = dataEndPicker.getValue();
 
+            if (dataInitLocal == null || dataEndLocal == null) {
+                AlertException.showAlert("Erro", "Selecione as datas de início e fim do contrato!");
+
+            }
+
             Date dataInit = Date.from(dataInitLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
             Date dataEnd = Date.from(dataEndLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
@@ -106,6 +112,7 @@ public class HubViewController {
         } catch (Exception e) {
             AlertException.showAlert("Erro", "Erro ao salvar contrato: " + e.getMessage());
         }
+
     }
 
     @FXML
@@ -118,16 +125,15 @@ public class HubViewController {
             }
 
             LocalDate monthRefLocal = monthRefPicker.getValue();
-            LocalDate datePaymentLocal = datePaymentPicker.getValue();
             Float valorAlug = Float.parseFloat(valorAlugField.getText());
             Float valorIptu = Float.parseFloat(valorIptuField.getText());
             Float valorCond = Float.parseFloat(valorCondField.getText());
 
             Date monthRef = Date.from(monthRefLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
-            Date datePayment = Date.from(datePaymentLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
 
-            PaymentModel payment = new PaymentModel(null, valorCond, valorIptu, valorAlug, datePayment, monthRef, selectedContract);
+
+            PaymentModel payment = new PaymentModel(null, valorCond, valorIptu, valorAlug,  monthRef, selectedContract);
             paymentsList.add(payment);
 
 
@@ -137,39 +143,8 @@ public class HubViewController {
             AlertException.showAlert("Erro", "Erro ao salvar pagamento: " + e.getMessage());
         }
     }
-
     @FXML
-    private void refreshListContract() {
-        try {
-
-            contractsTable.refresh();
-            AlertException.showAlert("Info", "Lista de contratos atualizada!");
-        } catch (Exception e) {
-            AlertException.showAlert("Erro", "Erro ao atualizar contrato: " + e.getMessage());
-        }
-    }
-
-    private void clearFieldContract() {
-        nameLocadorField.clear();
-        cpfCnpjField.clear();
-        valueBaseField.clear();
-        dataInitPicker.setValue(null);
-        dataEndPicker.setValue(null);
-    }
-
-    @FXML
-    private void refreshListPayment() {
-        try {
-
-            paymentsTable.refresh();
-            AlertException.showAlert("Info", "Lista de pagamentos atualizada!");
-        } catch (Exception e) {
-            AlertException.showAlert("Erro", "Erro ao atualizar pagamento: " + e.getMessage());
-        }
-    }
-
-    @FXML
-    private void exportReportPayment() {
+    private void exportReportContract() {
         Document doc = new Document();
         try {
 
@@ -202,7 +177,77 @@ public class HubViewController {
             doc.close();
             AlertException.showAlert("Sucesso", "PDF salvo em: " + downloadsPath);
         } catch (Exception e) {
-            AlertException.showAlert("Erro", "Erro ao exportar relatório de contratos: " + e.getMessage());
+            AlertException.showAlert("Erro", "Erro ao exportar relatório de Contratos: " + e.getMessage());
+            if (doc.isOpen()) {
+                doc.close();
+            }
+        }
+    }
+    @FXML
+    private void refreshListContract() {
+        try {
+
+            contractsTable.refresh();
+            AlertException.showAlert("Info", "Lista de contratos atualizada!");
+        } catch (Exception e) {
+            AlertException.showAlert("Erro", "Erro ao atualizar contrato: " + e.getMessage());
+        }
+    }
+
+    private void clearFieldContract() {
+        nameLocadorField.clear();
+        nameLocatarioField.clear();
+        cpfCnpjField.clear();
+        valueBaseField.clear();
+        dataInitPicker.setValue(null);
+        dataEndPicker.setValue(null);
+    }
+
+    @FXML
+    private void refreshListPayment() {
+        try {
+
+            paymentsTable.refresh();
+            AlertException.showAlert("Info", "Lista de pagamentos atualizada!");
+        } catch (Exception e) {
+            AlertException.showAlert("Erro", "Erro ao atualizar pagamento: " + e.getMessage());
+        }
+    }
+
+    @FXML
+    private void exportReportPayment() {
+        Document doc = new Document();
+        try {
+
+            String downloadsPath = System.getProperty("user.home") + "\\Downloads\\Relatorio_Pagamentos.pdf";
+
+            PdfWriter.getInstance(doc, new FileOutputStream(downloadsPath));
+            doc.open();
+
+
+            Paragraph title = new Paragraph("Relatório de Pagamentos");
+            title.setAlignment(Element.ALIGN_CENTER);
+            doc.add(title);
+            doc.add(new Paragraph("\n"));
+
+
+            if (paymentsList.isEmpty()) {
+                doc.add(new Paragraph("Nenhum Pagamento registrado."));
+            } else {
+                for (PaymentModel payment : paymentsList) {
+                    doc.add(new Paragraph("Contrato" + payment.getContract()));
+                    doc.add(new Paragraph("Mes de Referencia " + payment.getMonthRef()));
+                    doc.add(new Paragraph("Valor Aluguel R$ " + payment.getValorAlug()));
+                    doc.add(new Paragraph("Valor Iptu R$ " + payment.getValorIptu()));
+                    doc.add(new Paragraph("Valor Condominio R$ " + payment.getValorCond()));
+                    doc.add(new Paragraph("\n"));
+                }
+            }
+
+            doc.close();
+            AlertException.showAlert("Sucesso", "PDF salvo em: " + downloadsPath);
+        } catch (Exception e) {
+            AlertException.showAlert("Erro", "Erro ao exportar relatório de Pagamentos: " + e.getMessage());
             if (doc.isOpen()) {
                 doc.close();
             }
@@ -213,14 +258,10 @@ public class HubViewController {
     private void clearFieldPayment() {
         contractComboBox.setValue(null);
         monthRefPicker.setValue(null);
-        datePaymentPicker.setValue(null);
         valorAlugField.clear();
         valorIptuField.clear();
         valorCondField.clear();
     }
-
-
-
 
 
 }
