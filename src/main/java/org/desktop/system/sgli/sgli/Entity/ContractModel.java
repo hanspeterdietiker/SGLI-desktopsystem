@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.util.UUID;
 import java.util.Date;
 import java.util.List;
+
 @Entity
 @Table(name = "tb_contracts")
 public class ContractModel {
@@ -12,7 +13,9 @@ public class ContractModel {
     @Id
     private UUID id;
 
+
     private String nameLocador;
+    private String nameLocatario;
     private String cpfCnpj;
     private Float valueBase;
     private Date dataInit;
@@ -21,10 +24,11 @@ public class ContractModel {
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaymentModel> payments;
 
-    public ContractModel(UUID id, String nameLocador, String cpfCnpj,
+    public ContractModel(UUID id, String nameLocador, String nameLocatario, String cpfCnpj,
                          Date dataInit, Float valueBase, Date dataEnd) {
         this.id = id;
         this.nameLocador = nameLocador;
+        this.nameLocatario = nameLocatario;
         this.cpfCnpj = cpfCnpj;
         this.dataInit = dataInit;
         this.valueBase = valueBase;
@@ -32,6 +36,14 @@ public class ContractModel {
     }
 
     public ContractModel() {
+    }
+
+    public String getNameLocatario() {
+        return nameLocatario;
+    }
+
+    public void setNameLocatario(String nameLocatario) {
+        this.nameLocatario = nameLocatario;
     }
 
 
