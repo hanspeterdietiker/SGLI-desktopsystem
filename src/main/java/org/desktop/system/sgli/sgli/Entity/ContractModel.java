@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -20,8 +19,8 @@ public class ContractModel {
     private String nameLocatario;
     private String cpfCnpj;
     private BigDecimal valueBase;
-    private LocalDate dataInit;
-    private LocalDate dataEnd;
+    private LocalDate dateInit;
+    private LocalDate dateEnd;
 
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaymentModel> payments;
@@ -32,9 +31,9 @@ public class ContractModel {
         this.nameLocador = nameLocador;
         this.nameLocatario = nameLocatario;
         this.cpfCnpj = cpfCnpj;
-        this.dataInit = dataInit;
+        this.dateInit = dataInit;
         this.valueBase = valueBase;
-        this.dataEnd = dataEnd;
+        this.dateEnd = dataEnd;
     }
 
     public ContractModel() {
@@ -73,12 +72,12 @@ public class ContractModel {
         this.cpfCnpj = cpfCnpj;
     }
 
-    public LocalDate getDataInit() {
-        return dataInit;
+    public LocalDate getDateInit() {
+        return dateInit;
     }
 
-    public void setDataInit(LocalDate dataInit) {
-        this.dataInit = dataInit;
+    public void setDateInit(LocalDate dataInit) {
+        this.dateInit = dataInit;
     }
 
     public BigDecimal getValueBase() {
@@ -89,12 +88,12 @@ public class ContractModel {
         this.valueBase = valueBase;
     }
 
-    public LocalDate getDataEnd() {
-        return dataEnd;
+    public LocalDate getDateEnd() {
+        return dateEnd;
     }
 
-    public void setDataEnd(LocalDate dataEnd) {
-        this.dataEnd = dataEnd;
+    public void setDateEnd(LocalDate dataEnd) {
+        this.dateEnd = dataEnd;
     }
 
     public List<PaymentModel> getPayments() {

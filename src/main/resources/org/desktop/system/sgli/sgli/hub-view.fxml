@@ -49,12 +49,12 @@
 
                     <Label text="Data Início:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
                            GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-                    <DatePicker fx:id="dataInitPicker" GridPane.columnIndex="1" GridPane.rowIndex="4"
+                    <DatePicker fx:id="dateInitPicker" GridPane.columnIndex="1" GridPane.rowIndex="4"
                                 style="-fx-font-family: 'Dubai Light';"/>
 
                     <Label text="Data Fim:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
                            GridPane.columnIndex="0" GridPane.rowIndex="5"/>
-                    <DatePicker fx:id="dataEndPicker" GridPane.columnIndex="1" GridPane.rowIndex="5"
+                    <DatePicker fx:id="dateEndPicker" GridPane.columnIndex="1" GridPane.rowIndex="5"
                                 style="-fx-font-family: 'Dubai Light';"/>
                 </GridPane>
                 <HBox spacing="10" alignment="CENTER">
@@ -133,12 +133,12 @@
                         </TableColumn>
                         <TableColumn text="Data Início" prefWidth="100">
                             <cellValueFactory>
-                                <PropertyValueFactory property="dataInit"/>
+                                <PropertyValueFactory property="dateInit"/>
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn text="Data Fim" prefWidth="100">
                             <cellValueFactory>
-                                <PropertyValueFactory property="dataEnd"/>
+                                <PropertyValueFactory property="dateEnd"/>
                             </cellValueFactory>
                         </TableColumn>
                     </columns>

@@ -14,7 +14,6 @@ import org.desktop.system.sgli.sgli.Entity.PaymentModel;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.ZoneId;
 
 
 import com.itextpdf.text.Document;
@@ -32,9 +31,9 @@ public class HubViewController {
     @FXML
     private TextField valueBaseField;
     @FXML
-    private DatePicker dataInitPicker;
+    private DatePicker dateInitPicker;
     @FXML
-    private DatePicker dataEndPicker;
+    private DatePicker dateEndPicker;
 
     // Payment
     @FXML
@@ -86,17 +85,16 @@ public class HubViewController {
             String nameLocatario = nameLocatarioField.getText();
             String cpfCnpj = cpfCnpjField.getText();
             BigDecimal valueBase = new BigDecimal(valueBaseField.getText());
-            LocalDate dataInitLocal = dataInitPicker.getValue();
-            LocalDate dataEndLocal = dataEndPicker.getValue();
+            LocalDate dateInitLocal = dateInitPicker.getValue();
+            LocalDate dateEndLocal = dateEndPicker.getValue();
 
-            if (dataInitLocal == null || dataEndLocal == null) {
+            if (dateInitLocal == null || dateEndLocal == null) {
                 AlertException.showAlert("Erro", "Selecione as datas de início e fim do contrato!");
-
+                return;
             }
 
 
-
-            ContractModel contract = new ContractModel(null, nameLocador, nameLocatario, cpfCnpj, dataInitLocal, valueBase, dataEndLocal);
+            ContractModel contract = new ContractModel(null, nameLocador, nameLocatario, cpfCnpj, dateInitLocal, valueBase, dateEndLocal);
             contractsList.add(contract);
             contractComboBox.setItems(contractsList);
 
@@ -123,10 +121,8 @@ public class HubViewController {
             Float valorIptu = Float.parseFloat(valorIptuField.getText());
             Float valorCond = Float.parseFloat(valorCondField.getText());
 
-            LocalDate monthRef = LocalDate.from(monthRefLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
-
-            PaymentModel payment = new PaymentModel(null, valorCond, valorIptu, valorAlug, monthRef, selectedContract);
+            PaymentModel payment = new PaymentModel(null, valorCond, valorIptu, valorAlug, monthRefLocal, selectedContract);
             paymentsList.add(payment);
 
 
@@ -162,8 +158,8 @@ public class HubViewController {
                     doc.add(new com.itextpdf.text.Paragraph("Nome Locatario: " + contract.getNameLocatario()));
                     doc.add(new com.itextpdf.text.Paragraph("CPF/CNPJ: " + contract.getCpfCnpj()));
                     doc.add(new com.itextpdf.text.Paragraph("Valor Base: R$ " + contract.getValueBase()));
-                    doc.add(new com.itextpdf.text.Paragraph("Data Início: " + contract.getDataInit()));
-                    doc.add(new com.itextpdf.text.Paragraph("Data Fim: " + contract.getDataEnd()));
+                    doc.add(new com.itextpdf.text.Paragraph("Data Início: " + contract.getDateInit()));
+                    doc.add(new com.itextpdf.text.Paragraph("Data Fim: " + contract.getDateEnd()));
                     doc.add(new com.itextpdf.text.Paragraph("\n"));
                 }
             }
@@ -194,8 +190,8 @@ public class HubViewController {
         nameLocatarioField.clear();
         cpfCnpjField.clear();
         valueBaseField.clear();
-        dataInitPicker.setValue(null);
-        dataEndPicker.setValue(null);
+        dateInitPicker.setValue(null);
+        dateEndPicker.setValue(null);
     }
 
     @FXML
