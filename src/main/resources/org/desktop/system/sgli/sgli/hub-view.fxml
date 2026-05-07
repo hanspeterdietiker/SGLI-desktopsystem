@@ -121,6 +121,11 @@
                                 <PropertyValueFactory property="nameLocador"/>
                             </cellValueFactory>
                         </TableColumn>
+                        <TableColumn text="Nome Locatario" prefWidth="150">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="nameLocador"/>
+                            </cellValueFactory>
+                        </TableColumn>
                         <TableColumn text="CPF/CNPJ" prefWidth="120">
                             <cellValueFactory>
                                 <PropertyValueFactory property="cpfCnpj"/>
@@ -131,12 +136,12 @@
                                 <PropertyValueFactory property="valueBase"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Data Início" prefWidth="130">
+                        <TableColumn text="Data Início" prefWidth="100">
                             <cellValueFactory>
                                 <PropertyValueFactory property="dataInit"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Data Fim" prefWidth="130">
+                        <TableColumn text="Data Fim" prefWidth="100">
                             <cellValueFactory>
                                 <PropertyValueFactory property="dataEnd"/>
                             </cellValueFactory>
