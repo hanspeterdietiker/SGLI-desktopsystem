@@ -22,6 +22,8 @@ public class HubViewController {
     @FXML
     private TextField nameLocadorField;
     @FXML
+    private TextField nameLocatarioField;
+    @FXML
     private TextField cpfCnpjField;
     @FXML
     private TextField valueBaseField;
@@ -83,6 +85,7 @@ public class HubViewController {
     private void saveContract() {
         try {
             String nameLocador = nameLocadorField.getText();
+            String nameLocatario = nameLocatarioField.getText();
             String cpfCnpj = cpfCnpjField.getText();
             Float valueBase = Float.parseFloat(valueBaseField.getText());
             LocalDate dataInitLocal = dataInitPicker.getValue();
@@ -92,7 +95,7 @@ public class HubViewController {
             Date dataEnd = Date.from(dataEndLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
 
 
-            ContractModel contract = new ContractModel(null, nameLocador, cpfCnpj, dataInit, valueBase, dataEnd);
+            ContractModel contract = new ContractModel(null, nameLocador, nameLocatario, cpfCnpj, dataInit, valueBase, dataEnd);
             contractsList.add(contract);
             contractComboBox.setItems(contractsList);
 
@@ -185,7 +188,8 @@ public class HubViewController {
                 doc.add(new com.itextpdf.text.Paragraph("Nenhum contrato registrado."));
             } else {
                 for (ContractModel contract : contractsList) {
-                    doc.add(new com.itextpdf.text.Paragraph("Nome: " + contract.getNameLocador()));
+                    doc.add(new com.itextpdf.text.Paragraph("Nome Locador: " + contract.getNameLocador()));
+                    doc.add(new com.itextpdf.text.Paragraph("Nome Locatario: " + contract.getNameLocatario()));
                     doc.add(new com.itextpdf.text.Paragraph("CPF/CNPJ: " + contract.getCpfCnpj()));
                     doc.add(new com.itextpdf.text.Paragraph("Valor Base: R$ " + contract.getValueBase()));
                     doc.add(new com.itextpdf.text.Paragraph("Data Início: " + contract.getDataInit()));
