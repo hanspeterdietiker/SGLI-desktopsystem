@@ -3,13 +3,16 @@ package org.desktop.system.sgli.sgli.Dto;
 import java.util.Date;
 
 public class ContractDto {
+
+    private String nameLocatario;
     private String nameLocador;
     private String cpfCnpj;
     private Float valueBase;
     private Date dataInit;
     private Date dataEnd;
 
-    public ContractDto(String nameLocador, String cpfCnpj, Float valueBase, Date dataInit, Date dataEnd) {
+    public ContractDto(String nameLocador, String nameLocatario, String cpfCnpj, Float valueBase, Date dataInit, Date dataEnd) {
+        this.nameLocatario = nameLocatario;
         this.nameLocador = nameLocador;
         this.cpfCnpj = cpfCnpj;
         this.valueBase = valueBase;
@@ -18,6 +21,14 @@ public class ContractDto {
     }
 
     public ContractDto() {
+    }
+
+    public String getNameLocatario() {
+        return nameLocatario;
+    }
+
+    public void setNameLocatario(String nameLocatario) {
+        this.nameLocatario = nameLocatario;
     }
 
     public String getNameLocador() {
