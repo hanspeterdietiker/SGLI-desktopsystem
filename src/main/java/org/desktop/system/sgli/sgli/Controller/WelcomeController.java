@@ -14,7 +14,7 @@ public class WelcomeController {
 
     @FXML
     protected void onClickToHub(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/desktop/system/sgli/sgli/hub-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/desktop/system/sgli/sgli/view/hub-view.fxml"));
         Parent root = loader.load();
 
         Scene hubScene = new Scene(root, 1000, 720);

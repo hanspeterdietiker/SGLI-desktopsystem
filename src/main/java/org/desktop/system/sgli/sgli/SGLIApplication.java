@@ -7,12 +7,13 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class SGLIApplication extends Application {
-    Image icone = new Image(SGLIApplication.class.getResourceAsStream("/assets/icon.png"));
+    Image icone = new Image(Objects.requireNonNull(SGLIApplication.class.getResourceAsStream("/org/desktop/system/sgli/sgli/assets/icon.png")));
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(SGLIApplication.class.getResource("welcome-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(SGLIApplication.class.getResource("view/welcome-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 1000, 720);
         stage.setTitle("SGLI System - Application");
         stage.getIcons().add(icone);
