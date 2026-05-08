@@ -2,8 +2,8 @@ package org.desktop.system.sgli.sgli.Entity;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.UUID;
 @Entity
 @Table(name = "tb_payments")
@@ -19,12 +19,12 @@ public class PaymentModel {
 
     private LocalDate monthRef;
 
-    private Float valorAlug;
-    private Float valorIptu;
-    private Float valorCond;
+    private BigDecimal valorAlug;
+    private BigDecimal valorIptu;
+    private BigDecimal valorCond;
 
-    public PaymentModel(UUID id, Float valorCond, Float valorIptu,
-                        Float valorAlug,  LocalDate monthRef, ContractModel contract) {
+    public PaymentModel(UUID id, BigDecimal valorCond, BigDecimal valorIptu,
+                        BigDecimal valorAlug,  LocalDate monthRef, ContractModel contract) {
         this.id = id;
         this.valorCond = valorCond;
         this.valorIptu = valorIptu;
@@ -44,27 +44,27 @@ public class PaymentModel {
         this.id = id;
     }
 
-    public Float getValorCond() {
+    public BigDecimal getValorCond() {
         return valorCond;
     }
 
-    public void setValorCond(Float valorCond) {
+    public void setValorCond(BigDecimal valorCond) {
         this.valorCond = valorCond;
     }
 
-    public Float getValorIptu() {
+    public BigDecimal getValorIptu() {
         return valorIptu;
     }
 
-    public void setValorIptu(Float valorIptu) {
+    public void setValorIptu(BigDecimal valorIptu) {
         this.valorIptu = valorIptu;
     }
 
-    public Float getValorAlug() {
+    public BigDecimal getValorAlug() {
         return valorAlug;
     }
 
-    public void setValorAlug(Float valorAlug) {
+    public void setValorAlug(BigDecimal valorAlug) {
         this.valorAlug = valorAlug;
     }
 

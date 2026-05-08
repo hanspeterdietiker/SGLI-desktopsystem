@@ -117,9 +117,9 @@ public class HubViewController {
             }
 
             LocalDate monthRefLocal = monthRefPicker.getValue();
-            Float valorAlug = Float.parseFloat(valorAlugField.getText());
-            Float valorIptu = Float.parseFloat(valorIptuField.getText());
-            Float valorCond = Float.parseFloat(valorCondField.getText());
+            BigDecimal valorAlug = new BigDecimal(valorAlugField.getText());
+            BigDecimal valorIptu = new BigDecimal(valorIptuField.getText());
+            BigDecimal valorCond = new BigDecimal(valorCondField.getText());
 
 
             PaymentModel payment = new PaymentModel(null, valorCond, valorIptu, valorAlug, monthRefLocal, selectedContract);
