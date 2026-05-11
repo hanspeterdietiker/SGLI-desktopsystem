@@ -29,7 +29,11 @@ public class HubViewController {
     @FXML
     private TextField cpfCnpjField;
     @FXML
-    private TextField valueBaseField;
+    private TextField valorAlugField;
+    @FXML
+    private TextField valorIptuField;
+    @FXML
+    private TextField valorCondField;
     @FXML
     private DatePicker dateInitPicker;
     @FXML
@@ -41,17 +45,16 @@ public class HubViewController {
     @FXML
     private DatePicker monthRefPicker;
     @FXML
-    private TextField valorAlugField;
-    @FXML
-    private TextField valorIptuField;
-    @FXML
-    private TextField valorCondField;
+    private TextField valorBaseField;
 
+    // Table View
     @FXML
     private TableView<ContractModel> contractsTable;
     @FXML
     private TableView<PaymentModel> paymentsTable;
 
+
+    //List Contract and Payment
     private ObservableList<ContractModel> contractsList = FXCollections.observableArrayList();
 
     private ObservableList<PaymentModel> paymentsList = FXCollections.observableArrayList();
@@ -84,7 +87,9 @@ public class HubViewController {
             String nameLocador = nameLocadorField.getText();
             String nameLocatario = nameLocatarioField.getText();
             String cpfCnpj = cpfCnpjField.getText();
-            BigDecimal valueBase = new BigDecimal(valueBaseField.getText());
+            BigDecimal valorAlug = new BigDecimal(valorAlugField.getText());
+            BigDecimal valorIptu = new BigDecimal(valorIptuField.getText());
+            BigDecimal valorCond = new BigDecimal(valorCondField.getText());
             LocalDate dateInitLocal = dateInitPicker.getValue();
             LocalDate dateEndLocal = dateEndPicker.getValue();
 
@@ -93,8 +98,8 @@ public class HubViewController {
                 return;
             }
 
-
-            ContractModel contract = new ContractModel(null, nameLocador, nameLocatario, cpfCnpj, dateInitLocal, valueBase, dateEndLocal);
+            ContractModel contract = new ContractModel(null, nameLocador, nameLocatario,
+                    cpfCnpj, valorAlug, valorIptu, valorCond, dateInitLocal, dateEndLocal);
             contractsList.add(contract);
             contractComboBox.setItems(contractsList);
 
@@ -117,12 +122,10 @@ public class HubViewController {
             }
 
             LocalDate monthRefLocal = monthRefPicker.getValue();
-            BigDecimal valorAlug = new BigDecimal(valorAlugField.getText());
-            BigDecimal valorIptu = new BigDecimal(valorIptuField.getText());
-            BigDecimal valorCond = new BigDecimal(valorCondField.getText());
+            BigDecimal valorBase = new BigDecimal(valorBaseField.getText());
 
 
-            PaymentModel payment = new PaymentModel(null, valorCond, valorIptu, valorAlug, monthRefLocal, selectedContract);
+            PaymentModel payment = new PaymentModel(null, selectedContract, monthRefLocal, valorBase);
             paymentsList.add(payment);
 
 
@@ -157,7 +160,9 @@ public class HubViewController {
                     doc.add(new com.itextpdf.text.Paragraph("Nome Locador: " + contract.getNameLocador()));
                     doc.add(new com.itextpdf.text.Paragraph("Nome Locatario: " + contract.getNameLocatario()));
                     doc.add(new com.itextpdf.text.Paragraph("CPF/CNPJ: " + contract.getCpfCnpj()));
-                    doc.add(new com.itextpdf.text.Paragraph("Valor Base: R$ " + contract.getValueBase()));
+                    doc.add(new com.itextpdf.text.Paragraph("Valor Condominio R$ " + contract.getValorCond()));
+                    doc.add(new com.itextpdf.text.Paragraph("Valor Aluguel R$ " + contract.getValorAlug()));
+                    doc.add(new com.itextpdf.text.Paragraph("Valor Iptu R$ " + contract.getValorIptu()));
                     doc.add(new com.itextpdf.text.Paragraph("Data Início: " + contract.getDateInit()));
                     doc.add(new com.itextpdf.text.Paragraph("Data Fim: " + contract.getDateEnd()));
                     doc.add(new com.itextpdf.text.Paragraph("\n"));
@@ -189,7 +194,9 @@ public class HubViewController {
         nameLocadorField.clear();
         nameLocatarioField.clear();
         cpfCnpjField.clear();
-        valueBaseField.clear();
+        valorAlugField.clear();
+        valorIptuField.clear();
+        valorCondField.clear();
         dateInitPicker.setValue(null);
         dateEndPicker.setValue(null);
     }
@@ -228,9 +235,7 @@ public class HubViewController {
                 for (PaymentModel payment : paymentsList) {
                     doc.add(new Paragraph("Locatario" + payment.getContract().getNameLocatario())); // Fixing Object to String
                     doc.add(new Paragraph("Mes de Referencia " + payment.getMonthRef()));
-                    doc.add(new Paragraph("Valor Aluguel R$ " + payment.getValorAlug()));
-                    doc.add(new Paragraph("Valor Iptu R$ " + payment.getValorIptu()));
-                    doc.add(new Paragraph("Valor Condominio R$ " + payment.getValorCond()));
+                    doc.add(new Paragraph("Valor Base R$ " + payment.getValorBase()));
                     doc.add(new Paragraph("\n"));
                 }
             }
@@ -249,9 +254,7 @@ public class HubViewController {
     private void clearFieldPayment() {
         contractComboBox.setValue(null);
         monthRefPicker.setValue(null);
-        valorAlugField.clear();
-        valorIptuField.clear();
-        valorCondField.clear();
+        valorBaseField.clear();
     }
 
 

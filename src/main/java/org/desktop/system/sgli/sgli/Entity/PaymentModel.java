@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
+
 @Entity
 @Table(name = "tb_payments")
 public class PaymentModel {
@@ -19,53 +20,17 @@ public class PaymentModel {
 
     private LocalDate monthRef;
 
-    private BigDecimal valorAlug;
-    private BigDecimal valorIptu;
-    private BigDecimal valorCond;
+    private BigDecimal valorBase;
 
-    public PaymentModel(UUID id, BigDecimal valorCond, BigDecimal valorIptu,
-                        BigDecimal valorAlug,  LocalDate monthRef, ContractModel contract) {
+
+    public PaymentModel(UUID id, ContractModel contract, LocalDate monthRef, BigDecimal valorBase) {
         this.id = id;
-        this.valorCond = valorCond;
-        this.valorIptu = valorIptu;
-        this.valorAlug = valorAlug;
-        this.monthRef = monthRef;
         this.contract = contract;
+        this.monthRef = monthRef;
+        this.valorBase = valorBase;
     }
+
     public PaymentModel() {
-
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public BigDecimal getValorCond() {
-        return valorCond;
-    }
-
-    public void setValorCond(BigDecimal valorCond) {
-        this.valorCond = valorCond;
-    }
-
-    public BigDecimal getValorIptu() {
-        return valorIptu;
-    }
-
-    public void setValorIptu(BigDecimal valorIptu) {
-        this.valorIptu = valorIptu;
-    }
-
-    public BigDecimal getValorAlug() {
-        return valorAlug;
-    }
-
-    public void setValorAlug(BigDecimal valorAlug) {
-        this.valorAlug = valorAlug;
     }
 
     public LocalDate getMonthRef() {
@@ -74,6 +39,22 @@ public class PaymentModel {
 
     public void setMonthRef(LocalDate monthRef) {
         this.monthRef = monthRef;
+    }
+
+    public BigDecimal getValorBase() {
+        return valorBase;
+    }
+
+    public void setValorBase(BigDecimal valorBase) {
+        this.valorBase = valorBase;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public ContractModel getContract() {
@@ -85,3 +66,4 @@ public class PaymentModel {
     }
 
 }
+

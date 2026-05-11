@@ -19,43 +19,58 @@
           style="-fx-font-size: 25px; -fx-font-family: 'Dubai Light'; -fx-fill: #34495e;"/>
 
     <TabPane
-            style="-fx-tab-min-height:30px; -fx-tab-min-width: 100px; -fx-font-family: 'Dubai Light'; -fx-font-size: 14px;">
+            style="-fx-tab-min-height:10px; -fx-tab-min-width: 100px; -fx-font-family: 'Dubai Light'; -fx-font-size: 14px;">
         <!-- Aba Contratos -->
         <Tab text="Contratos" closable="false">
             <VBox spacing="15" style="-fx-padding: 20;">
                 <Text text="Gerenciar Contratos"
                       style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-font-family: 'Dubai Light'; -fx-fill: #2c3e50;"/>
 
-                <GridPane hgap="10" vgap="10" alignment="CENTER">
+                <GridPane hgap="15" vgap="12" alignment="CENTER_LEFT" style="-fx-padding: 20;">
+                    <!-- Primeira coluna -->
                     <Label text="Nome Locatario:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
                            GridPane.columnIndex="0" GridPane.rowIndex="0"/>
                     <TextField fx:id="nameLocatarioField" promptText="Digite o nome"
-                               GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-family:'Dubai Light';"/>
+                               GridPane.columnIndex="1" GridPane.rowIndex="0" style="-fx-font-family:'Dubai Light'; -fx-pref-width: 200;"/>
 
                     <Label text="Nome Locador:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
                            GridPane.columnIndex="0" GridPane.rowIndex="1"/>
                     <TextField fx:id="nameLocadorField" promptText="Digite o nome" GridPane.columnIndex="1"
-                               GridPane.rowIndex="1" style="-fx-font-family: 'Dubai Light';"/>
+                               GridPane.rowIndex="1" style="-fx-font-family: 'Dubai Light'; -fx-pref-width: 200;"/>
 
                     <Label text="CPF/CNPJ:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
                            GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                    <TextField fx:id="cpfCnpjField" promptText="Digite CPF ou CNPJ" GridPane.columnIndex="1"
-                               GridPane.rowIndex="2" style="-fx-font-family: 'Dubai Light';"/>
+                    <TextField fx:id="cpfCnpjField" promptText="Digite CPF/CNPJ do Locatario" GridPane.columnIndex="1"
+                               GridPane.rowIndex="2" style="-fx-font-family: 'Dubai Light'; -fx-pref-width: 200;"/>
 
-                    <Label text="Valor Base:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
+                    <Label text="Valor Aluguel:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
                            GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                    <TextField fx:id="valueBaseField" promptText="Valor base do contrato" GridPane.columnIndex="1"
-                               GridPane.rowIndex="3" style="-fx-font-family: 'Dubai Light';"/>
+                    <TextField fx:id="valorAlugField" promptText="Valor do aluguel" GridPane.columnIndex="1"
+                               GridPane.rowIndex="3" style="-fx-font-family: 'Dubai Light'; -fx-pref-width: 200;"/>
+
+                    <!-- Segunda coluna -->
+                    <Label text="Valor IPTU:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
+                           GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+                    <TextField fx:id="valorIptuField" promptText="Valor do IPTU" GridPane.columnIndex="4"
+                               GridPane.rowIndex="0" style="-fx-font-family: 'Dubai Light'; -fx-pref-width: 200;"/>
+
+                    <Label text="Valor Condomínio:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
+                           GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                    <TextField fx:id="valorCondField" promptText="Valor do condomínio" GridPane.columnIndex="4"
+                               GridPane.rowIndex="1" style="-fx-font-family: 'Dubai Light'; -fx-pref-width: 200;"/>
 
                     <Label text="Data Início:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
-                           GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-                    <DatePicker fx:id="dateInitPicker" GridPane.columnIndex="1" GridPane.rowIndex="4"
-                                style="-fx-font-family: 'Dubai Light';"/>
+                           GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+                    <DatePicker fx:id="dateInitPicker" GridPane.columnIndex="4" GridPane.rowIndex="2"
+                                style="-fx-font-family: 'Dubai Light'; -fx-pref-width: 200;"/>
 
                     <Label text="Data Fim:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
-                           GridPane.columnIndex="0" GridPane.rowIndex="5"/>
-                    <DatePicker fx:id="dateEndPicker" GridPane.columnIndex="1" GridPane.rowIndex="5"
-                                style="-fx-font-family: 'Dubai Light';"/>
+                           GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+                    <DatePicker fx:id="dateEndPicker" GridPane.columnIndex="4" GridPane.rowIndex="3"
+                                style="-fx-font-family: 'Dubai Light'; -fx-pref-width: 200;"/>
+
+                    <!-- Espaçador entre colunas -->
+                    <VBox GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.rowSpan="4" style="-fx-pref-width: 30;"/>
                 </GridPane>
                 <HBox spacing="10" alignment="CENTER">
                     <Button text="Salvar Contrato" onAction="#saveContract"
@@ -77,24 +92,16 @@
                     <ComboBox fx:id="contractComboBox" promptText="Selecione o contrato" GridPane.columnIndex="1"
                               GridPane.rowIndex="0" style="-fx-font-family: 'Dubai Light';"/>
 
-                    <Label text="Mês Referência:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
+                    <Label text="Valor Base:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
                            GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                    <DatePicker fx:id="monthRefPicker" GridPane.columnIndex="1" GridPane.rowIndex="1"
-                                style="-fx-font-family: 'Dubai Light';"/>
-                    <Label text="Valor Aluguel:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
+                    <TextField fx:id="valorBaseField" promptText="Valor base do contrato" GridPane.columnIndex="1"
+                               GridPane.rowIndex="1" style="-fx-font-family: 'Dubai Light';"/>
+
+                    <Label text="Mês Referência:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
                            GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                    <TextField fx:id="valorAlugField" promptText="Valor do aluguel" GridPane.columnIndex="1"
-                               GridPane.rowIndex="2" style="-fx-font-family: 'Dubai Light';"/>
+                    <DatePicker fx:id="monthRefPicker" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                                style="-fx-font-family: 'Dubai Light';"/>
 
-                    <Label text="Valor IPTU:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
-                           GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                    <TextField fx:id="valorIptuField" promptText="Valor do IPTU" GridPane.columnIndex="1"
-                               GridPane.rowIndex="3" style="-fx-font-family: 'Dubai Light';"/>
-
-                    <Label text="Valor Condomínio:" style="-fx-font-family: 'Dubai Light'; -fx-font-size: 14px;"
-                           GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-                    <TextField fx:id="valorCondField" promptText="Valor do condomínio" GridPane.columnIndex="1"
-                               GridPane.rowIndex="4" style="-fx-font-family: 'Dubai Light';"/>
                 </GridPane>
 
                 <HBox spacing="10" alignment="CENTER">
@@ -106,7 +113,7 @@
 
         <!-- Aba Listar Contratos -->
         <Tab text="Listar Contratos" closable="false">
-            <VBox spacing="15.0" style="-fx-padding: 20;">
+            <VBox spacing="5.0" style="-fx-padding: 20;">
                 <Text text="Lista de Contratos"
                       style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-font-family: 'Dubai Light'; -fx-fill: #2c3e50;"/>
                 <TableView fx:id="contractsTable" style="-fx-font-family: 'Dubai Light';">
@@ -126,17 +133,27 @@
                                 <PropertyValueFactory property="cpfCnpj"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Valor Base" prefWidth="100">
+                        <TableColumn text="Aluguel" prefWidth="100">
                             <cellValueFactory>
-                                <PropertyValueFactory property="valueBase"/>
+                                <PropertyValueFactory property="valorAlug"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Data Início" prefWidth="100">
+                        <TableColumn text="IPTU" prefWidth="100">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="valorIptu"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Condomínio" prefWidth="100">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="valorCond"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Data Início" prefWidth="80">
                             <cellValueFactory>
                                 <PropertyValueFactory property="dateInit"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Data Fim" prefWidth="100">
+                        <TableColumn text="Data Fim" prefWidth="80">
                             <cellValueFactory>
                                 <PropertyValueFactory property="dateEnd"/>
                             </cellValueFactory>
@@ -161,7 +178,7 @@
 
         <!-- Aba Listar Pagamentos -->
         <Tab text="Listar Pagamentos" closable="false">
-            <VBox spacing="15.0" style="-fx-padding: 20;">
+            <VBox spacing="5.0" style="-fx-padding: 20;">
                 <Text text="Lista de Pagamentos"
                       style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-font-family: 'Dubai Light'; -fx-fill: #2c3e50;"/>
                 <TableView fx:id="paymentsTable" style="-fx-font-family: 'Dubai Light';">
@@ -176,19 +193,9 @@
                                 <PropertyValueFactory property="monthRef"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Aluguel" prefWidth="100">
+                        <TableColumn text="Valor Base" prefWidth="100">
                             <cellValueFactory>
-                                <PropertyValueFactory property="valorAlug"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn text="IPTU" prefWidth="100">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="valorIptu"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn text="Condomínio" prefWidth="100">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="valorCond"/>
+                                <PropertyValueFactory property="valorBase"/>
                             </cellValueFactory>
                         </TableColumn>
                     </columns>
