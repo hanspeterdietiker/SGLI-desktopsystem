@@ -14,8 +14,12 @@ import org.desktop.system.sgli.sgli.Utils.AlertAction;
 
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 
 import com.itextpdf.text.Document;
@@ -60,8 +64,8 @@ public class HubViewController {
 
     private ObservableList<PaymentModel> paymentsList = FXCollections.observableArrayList();
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
+    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    DecimalFormat decimalFormat = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
     @FXML
     public void initialize() {
 
@@ -156,7 +160,7 @@ public class HubViewController {
             title.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
             doc.add(title);
             doc.add(new com.itextpdf.text.Paragraph("\n"));
-            com.itextpdf.text.Paragraph dataCreated = new com.itextpdf.text.Paragraph("Data de Criação: " + LocalDate.now().format(formatter));
+            com.itextpdf.text.Paragraph dataCreated = new com.itextpdf.text.Paragraph("Data de Criação: " + LocalDate.now().format(dateFormatter));
             dataCreated.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
             doc.add(dataCreated);
 
@@ -169,11 +173,11 @@ public class HubViewController {
                     doc.add(new com.itextpdf.text.Paragraph("Nome Locador: " + contract.getNameLocador()));
                     doc.add(new com.itextpdf.text.Paragraph("Nome Locatario: " + contract.getNameLocatario()));
                     doc.add(new com.itextpdf.text.Paragraph("CPF/CNPJ: " + contract.getCpfCnpj()));
-                    doc.add(new com.itextpdf.text.Paragraph("Valor Condominio R$ " + contract.getValorCond()));
-                    doc.add(new com.itextpdf.text.Paragraph("Valor Aluguel R$ " + contract.getValorAlug()));
-                    doc.add(new com.itextpdf.text.Paragraph("Valor Iptu R$ " + contract.getValorIptu()));
-                    doc.add(new com.itextpdf.text.Paragraph("Data Início: " + contract.getDateInit().format(formatter)));
-                    doc.add(new com.itextpdf.text.Paragraph("Data Fim: " + contract.getDateEnd().format(formatter)));
+                    doc.add(new com.itextpdf.text.Paragraph("Valor Condominio R$ " + decimalFormat.format(contract.getValorCond())));
+                    doc.add(new com.itextpdf.text.Paragraph("Valor Aluguel R$ " + decimalFormat.format(contract.getValorAlug())));
+                    doc.add(new com.itextpdf.text.Paragraph(String.format("Valor Iptu R$ " + decimalFormat.format(contract.getValorIptu()))));
+                    doc.add(new com.itextpdf.text.Paragraph("Data Início: " + contract.getDateInit().format(dateFormatter)));
+                    doc.add(new com.itextpdf.text.Paragraph("Data Fim: " + contract.getDateEnd().format(dateFormatter)));
                     doc.add(new com.itextpdf.text.Paragraph("\n"));
                 }
             }
@@ -236,7 +240,7 @@ public class HubViewController {
             title.setAlignment(Element.ALIGN_CENTER);
             doc.add(title);
             doc.add(new Paragraph("\n"));
-            com.itextpdf.text.Paragraph dataCreated = new com.itextpdf.text.Paragraph("Data de Criação: " + LocalDate.now().format(formatter));
+            com.itextpdf.text.Paragraph dataCreated = new com.itextpdf.text.Paragraph("Data de Criação: " + LocalDate.now().format(dateFormatter));
             dataCreated.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
             doc.add(dataCreated);
 
@@ -247,8 +251,8 @@ public class HubViewController {
 
                 for (PaymentModel payment : paymentsList) {
                     doc.add(new Paragraph("Locatario: " + payment.getContract()));
-                    doc.add(new Paragraph("Mes de Referencia: " + payment.getMonthRef().format(formatter)));
-                    doc.add(new Paragraph("Valor Base R$ " + payment.getValorBase()));
+                    doc.add(new Paragraph("Mes de Referencia: " + payment.getMonthRef().format(dateFormatter)));
+                    doc.add(new Paragraph("Valor Base R$ " + decimalFormat.format(payment.getValorBase())));
                     doc.add(new Paragraph("\n"));
                 }
             }
