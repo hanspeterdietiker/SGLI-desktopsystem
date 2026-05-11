@@ -15,6 +15,7 @@ import org.desktop.system.sgli.sgli.Utils.AlertAction;
 import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 import com.itextpdf.text.Document;
@@ -59,6 +60,7 @@ public class HubViewController {
 
     private ObservableList<PaymentModel> paymentsList = FXCollections.observableArrayList();
 
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
     @FXML
     public void initialize() {
@@ -69,9 +71,12 @@ public class HubViewController {
 
         contractComboBox.setItems(contractsList);
         contractComboBox.setConverter(new javafx.util.StringConverter<ContractModel>() {
+
             @Override
             public String toString(ContractModel contract) {
                 return contract != null ? contract.getNameLocatario() : "";
+
+
             }
 
             @Override
@@ -97,9 +102,9 @@ public class HubViewController {
                 AlertAction.showAlert("Erro", "Selecione as datas de início e fim do contrato!");
                 return;
             }
-
             ContractModel contract = new ContractModel(null, nameLocador, nameLocatario,
                     cpfCnpj, valorAlug, valorIptu, valorCond, dateInitLocal, dateEndLocal);
+
             contractsList.add(contract);
             contractComboBox.setItems(contractsList);
 
@@ -151,11 +156,15 @@ public class HubViewController {
             title.setAlignment(com.itextpdf.text.Element.ALIGN_CENTER);
             doc.add(title);
             doc.add(new com.itextpdf.text.Paragraph("\n"));
+            com.itextpdf.text.Paragraph dataCreated = new com.itextpdf.text.Paragraph("Data de Criação: " + LocalDate.now().format(formatter));
+            dataCreated.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
+            doc.add(dataCreated);
 
 
             if (contractsList.isEmpty()) {
                 doc.add(new com.itextpdf.text.Paragraph("Nenhum contrato registrado."));
             } else {
+
                 for (ContractModel contract : contractsList) {
                     doc.add(new com.itextpdf.text.Paragraph("Nome Locador: " + contract.getNameLocador()));
                     doc.add(new com.itextpdf.text.Paragraph("Nome Locatario: " + contract.getNameLocatario()));
@@ -163,8 +172,8 @@ public class HubViewController {
                     doc.add(new com.itextpdf.text.Paragraph("Valor Condominio R$ " + contract.getValorCond()));
                     doc.add(new com.itextpdf.text.Paragraph("Valor Aluguel R$ " + contract.getValorAlug()));
                     doc.add(new com.itextpdf.text.Paragraph("Valor Iptu R$ " + contract.getValorIptu()));
-                    doc.add(new com.itextpdf.text.Paragraph("Data Início: " + contract.getDateInit()));
-                    doc.add(new com.itextpdf.text.Paragraph("Data Fim: " + contract.getDateEnd()));
+                    doc.add(new com.itextpdf.text.Paragraph("Data Início: " + contract.getDateInit().format(formatter)));
+                    doc.add(new com.itextpdf.text.Paragraph("Data Fim: " + contract.getDateEnd().format(formatter)));
                     doc.add(new com.itextpdf.text.Paragraph("\n"));
                 }
             }
@@ -227,14 +236,18 @@ public class HubViewController {
             title.setAlignment(Element.ALIGN_CENTER);
             doc.add(title);
             doc.add(new Paragraph("\n"));
+            com.itextpdf.text.Paragraph dataCreated = new com.itextpdf.text.Paragraph("Data de Criação: " + LocalDate.now().format(formatter));
+            dataCreated.setAlignment(com.itextpdf.text.Element.ALIGN_RIGHT);
+            doc.add(dataCreated);
 
 
             if (paymentsList.isEmpty()) {
                 doc.add(new Paragraph("Nenhum Pagamento registrado."));
             } else {
+
                 for (PaymentModel payment : paymentsList) {
-                    doc.add(new Paragraph("Locatario" + payment.getContract().getNameLocatario())); // Fixing Object to String
-                    doc.add(new Paragraph("Mes de Referencia " + payment.getMonthRef()));
+                    doc.add(new Paragraph("Locatario: " + payment.getContract()));
+                    doc.add(new Paragraph("Mes de Referencia: " + payment.getMonthRef().format(formatter)));
                     doc.add(new Paragraph("Valor Base R$ " + payment.getValorBase()));
                     doc.add(new Paragraph("\n"));
                 }
