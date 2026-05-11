@@ -9,8 +9,8 @@ Este sistema foi concebido para resolver a complexidade de organizar pagamentos 
 ## ✨ Funcionalidades Principais
 
 * **Gestão de Pagamentos:** Registro simplificado de valores de Aluguel, IPTU e Condomínio.
-* **Cálculos Automáticos:** Totalização imediata de despesas mensais e acumulados anuais.
-* **Monitoramento de Contratos:** Alertas inteligentes para prazos de vigência (padrão 30 meses) e janelas de reajuste.
+* **Cálculos Automáticos:** Totalização imediata de Pagamentos mensais e Acumulados anuais.
+* **Monitoramento de Contratos:** Controle por Tabelas de vigencia de Contrato e Valores.
 * **Exportação para PDF:** Geração de documentos formatados especificamente para a Declaração de Imposto de Renda, separando valores dedutíveis.
 * **Privacidade Local:** Todos os dados são armazenados de forma segura no computador do usuário, sem necessidade de conexão externa.
 
@@ -18,7 +18,7 @@ Este sistema foi concebido para resolver a complexidade de organizar pagamentos 
 
 * **Interface Gráfica:** JavaFX (com FXML e CSS para design responsivo).
 * **Persistência:** Banco de dados embarcado (SQLite) garantindo portabilidade.
-* **Relatórios:** Apache PDFBox para a construção dinâmica de documentos.
+* **Relatórios:** Apache ItextPdf para a construção dinâmica de documentos.
 * **Distribuição:** Empacotamento nativo via `jpackage` para instalação direta.
 
 ## 📂 Estrutura do Repositório
@@ -40,6 +40,6 @@ Para rodar o projeto localmente, certifique-se de ter o JDK 21 instalado.
 ---
 Desenvolvido 
 
-Github:[Hanspeter Dietiker](https://github.com/hanspeterdietiker)
+Github: [Hanspeter Dietiker](https://github.com/hanspeterdietiker)
 
 Linkedin: [Hanspeter Dietiker](https://www.linkedin.com/in/hanspeterdietiker/)
