@@ -16,7 +16,6 @@ import java.io.FileOutputStream;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -59,22 +58,115 @@ public class HubViewController {
     private TableView<PaymentModel> paymentsTable;
 
 
-    //List Contract and Payment
-    private ObservableList<ContractModel> contractsList = FXCollections.observableArrayList();
+    //  List Contract and Payment
+    private final ObservableList<ContractModel> contractsList = FXCollections.observableArrayList();
 
-    private ObservableList<PaymentModel> paymentsList = FXCollections.observableArrayList();
+    private final ObservableList<PaymentModel> paymentsList = FXCollections.observableArrayList();
 
+    // Formatadores
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     DecimalFormat decimalFormat = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
+
+
+
+
+
     @FXML
     public void initialize() {
 
         contractsTable.setItems(contractsList);
         paymentsTable.setItems(paymentsList);
-        ;
+
+
+        for (TableColumn<ContractModel, ?> column : contractsTable.getColumns()) {
+            if ("Data Início".equals(column.getText())) {
+                @SuppressWarnings("unchecked")
+                TableColumn<ContractModel, LocalDate> dateInitColumn = (TableColumn<ContractModel, LocalDate>) column;
+                dateInitColumn.setCellFactory(col -> new TableCell<>() {
+                    @Override
+                    protected void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setText(empty || item == null ? null : dateFormatter.format(item));
+                    }
+                });
+            } else if ("Data Fim".equals(column.getText())) {
+                @SuppressWarnings("unchecked")
+                TableColumn<ContractModel, LocalDate> dateEndColumn = (TableColumn<ContractModel, LocalDate>) column;
+                dateEndColumn.setCellFactory(col -> new TableCell<>() {
+                    @Override
+                    protected void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setText(empty || item == null ? null : dateFormatter.format(item));
+                    }
+                });
+            }
+        }
+
+
+        for (TableColumn<ContractModel, ?> column : contractsTable.getColumns()) {
+            if ("Aluguel".equals(column.getText())) {
+                @SuppressWarnings("unchecked")
+                TableColumn<ContractModel, BigDecimal> valorAlugColumn = (TableColumn<ContractModel, BigDecimal>) column;
+                valorAlugColumn.setCellFactory(col -> new TableCell<>() {
+                    @Override
+                    protected void updateItem(BigDecimal item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setText(empty || item == null ? null : "R$ " + decimalFormat.format(item));
+                    }
+                });
+            } else if ("IPTU".equals(column.getText())) {
+                @SuppressWarnings("unchecked")
+                TableColumn<ContractModel, BigDecimal> valorIptuColumn = (TableColumn<ContractModel, BigDecimal>) column;
+                valorIptuColumn.setCellFactory(col -> new TableCell<>() {
+                    @Override
+                    protected void updateItem(BigDecimal item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setText(empty || item == null ? null : "R$ " + decimalFormat.format(item));
+                    }
+                });
+            } else if ("Condomínio".equals(column.getText())) {
+                @SuppressWarnings("unchecked")
+                TableColumn<ContractModel, BigDecimal> valorCondColumn = (TableColumn<ContractModel, BigDecimal>) column;
+                valorCondColumn.setCellFactory(col -> new TableCell<>() {
+                    @Override
+                    protected void updateItem(BigDecimal item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setText(empty || item == null ? null : "R$ " + decimalFormat.format(item));
+                    }
+                });
+            }
+        }
+
+
+        for (TableColumn<PaymentModel, ?> column : paymentsTable.getColumns()) {
+            if ("Valor Base".equals(column.getText())) {
+                @SuppressWarnings("unchecked")
+                TableColumn<PaymentModel, BigDecimal> valorBaseColumn = (TableColumn<PaymentModel, BigDecimal>) column;
+                valorBaseColumn.setCellFactory(col -> new TableCell<>() {
+                    @Override
+                    protected void updateItem(BigDecimal item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setText(empty || item == null ? null : "R$ " + decimalFormat.format(item));
+                    }
+                });
+            }
+        }
+        for (TableColumn<PaymentModel, ?> column : paymentsTable.getColumns()) {
+            if ("Mês Ref.".equals(column.getText())) {
+                @SuppressWarnings("unchecked")
+                TableColumn<PaymentModel, LocalDate> monthRefColumn = (TableColumn<PaymentModel, LocalDate>) column;
+                monthRefColumn.setCellFactory(col -> new TableCell<>() {
+                    @Override
+                    protected void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setText(empty || item == null ? null : dateFormatter.format(item));
+                    }
+                });
+            }
+        }
 
         contractComboBox.setItems(contractsList);
-        contractComboBox.setConverter(new javafx.util.StringConverter<ContractModel>() {
+        contractComboBox.setConverter(new javafx.util.StringConverter<>() {
 
             @Override
             public String toString(ContractModel contract) {
