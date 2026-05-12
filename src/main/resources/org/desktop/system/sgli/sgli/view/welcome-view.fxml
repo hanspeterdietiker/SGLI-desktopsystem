@@ -5,38 +5,34 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.shape.Rectangle?>
+<?import java.net.URL?>
 
-
-<VBox alignment="CENTER"  xmlns:fx="http://javafx.com/fxml"
+<VBox xmlns:fx="http://javafx.com/fxml"
       fx:controller="org.desktop.system.sgli.sgli.Controller.WelcomeController"
-      style="-fx-background: linear-gradient(to bottom, #0F4C75 0%, #1B5E8C 50%, #2E8BC0 100%);
-             -fx-padding: 0;
-             -fx-min-width: 800;
-             -fx-min-height: 600;">
+      styleClass="welcome-root, center-alignment">
+
+    <!-- Referência ao seu arquivo CSS -->
+    <stylesheets>
+        <URL value="@../styles/welcome-view.css" />
+    </stylesheets>
 
     <!-- Seção Superior com Accent -->
-    <VBox alignment="CENTER"  style="-fx-background-color: transparent;" VBox.vgrow="ALWAYS">
-        <VBox alignment="CENTER" spacing="45.0" style="-fx-padding: 60 40 60 40;">
+    <VBox styleClass="superior-session, center-alignment" VBox.vgrow="ALWAYS">
+        <VBox styleClass="superior-vbox, center-alignment">
 
-            <!-- Decoração superior -->
-            <Rectangle width="60" height="4" style="-fx-fill: #4A90E2; -fx-opacity: 0.6;"/>
+            <!-- Decoração superior  -->
+            <Rectangle width="60" height="4" styleClass="superior-decoration"/>
 
             <!-- Título Principal -->
             <Text text="Sistema de Gestão de Locação Imobiliária"
                   textAlignment="CENTER"
-                  style="-fx-font-size: 32px;
-                         -fx-font-weight: bold;
-                         -fx-font-family: 'Segoe UI', Arial, sans-serif;
-                         -fx-fill: #FFFFFF;">
+                  styleClass="principle-title">
             </Text>
 
             <!-- Subtítulo -->
             <Text text="Gerenciamento completo e profissional dos seus imóveis e contratos"
                   textAlignment="CENTER"
-                  style="-fx-font-size: 16px;
-                         -fx-font-family: 'Segoe UI', Arial, sans-serif;
-                         -fx-fill: #E8F0F7;
-                         -fx-opacity: 0.95;">
+                  styleClass="sub-title">
                 <VBox.margin>
                     <Insets top="-20"/>
                 </VBox.margin>
@@ -46,40 +42,26 @@
             <Button
                     onAction="#onClickToHub"
                     text="Acessar Sistema"
-                    style="-fx-font-size: 16px;
-                           -fx-font-weight: bold;
-                           -fx-font-family: 'Segoe UI', Arial, sans-serif;
-                           -fx-background-color: #4A90E2;
-                           -fx-text-fill: #FFFFFF;
-                           -fx-background-radius: 6;
-                           -fx-border-radius: 6;
-                           -fx-padding: 14 45 14 45;
-                           -fx-cursor: hand;
-                           -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0.5, 0, 4);">
+                    styleClass="principle-button">
                 <VBox.margin>
                     <Insets top="15"/>
                 </VBox.margin>
             </Button>
 
             <!-- Decoração inferior -->
-            <Rectangle width="60" height="4" style="-fx-fill: #4A90E2; -fx-opacity: 0.6;"/>
+            <Rectangle width="60" height="4" styleClass="inferior-decoration"/>
         </VBox>
     </VBox>
 
     <!-- Seção Inferior com Rodapé -->
-    <VBox alignment="BOTTOM_CENTER" spacing="0.0" style="-fx-background-color: rgba(0, 0, 0, 0.15); -fx-padding: 30 40 25 40;">
-        <VBox alignment="CENTER" spacing="8.0">
+    <VBox styleClass="inferior-vbox, bottom-alignment">
+        <VBox styleClass="spacing-8, center-alignment">
             <Text text="SGLI - Sistema de Gestão de Locação Imobiliária"
                   textAlignment="CENTER"
-                  style="-fx-font-size: 13px;
-                         -fx-font-family: 'Segoe UI', Arial, sans-serif;
-                         -fx-fill: #E8F0F7;
-                         -fx-font-weight: bold;"/>
+                  styleClass="inferior-text"/>
             <Text text="© 2026 Hanspeter Dietiker. Todos os direitos reservados."
                   textAlignment="CENTER"
-                  style="-fx-font-size: 11px;
-                         -fx-font-family: 'Segoe UI', Arial, sans-serif;
-                         -fx-fill: #B8D4E8;"/>
+                  styleClass="inferior-author"/>
         </VBox>
     </VBox>
 

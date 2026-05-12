@@ -1,0 +1,87 @@
+/* WelCome View Css */
+
+.welcome-root {
+    -fx-background: linear-gradient(to bottom, #0F4C75 0%, #1B5E8C 50%, #2E8BC0 100%);
+    -fx-padding: 0;
+    -fx-min-width: 800;
+    -fx-min-height: 600;
+}
+
+.superior-session {
+    -fx-background-color: transparent;
+}
+
+.center-alignment {
+    -fx-alignment: center;
+}
+
+.bottom-alignment{
+    -fx-alignment: bottom-center;
+}
+
+.superior-vbox{
+    -fx-spacing: 45;
+    -fx-padding: 60 40 60 40;
+}
+
+.superior-decoration{
+    -fx-pref-width: 60;
+    -fx-pref-height: 4;
+    -fx-fill: #4A90E2;
+    -fx-opacity: 0.6;
+}
+
+.principle-title {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+    -fx-fill: #FFFFFF;
+}
+
+.sub-title{
+    -fx-font-size: 16px;
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+    -fx-fill: #E8F0F7;
+    -fx-opacity: 0.95;
+}
+
+.principle-button{
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+    -fx-background-color: #4A90E2;
+    -fx-text-fill: #FFFFFF;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-padding: 14 45 14 45;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.4), 8, 0.5, 0, 4);
+}
+
+.inferior-vbox{
+    -fx-background-color: rgba(0, 0, 0, 0.15); -fx-padding: 30 40 25 40;
+}
+
+.inferior-decoration{
+    -fx-pref-width: 60;
+    -fx-pref-height: 4;
+    -fx-fill: #4A90E2;
+    -fx-opacity: 0.6;
+}
+
+.spacing-8{
+    -fx-spacing: 8;
+}
+
+.inferior-text{
+    -fx-font-size: 13px;
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+    -fx-fill: #E8F0F7;
+    -fx-font-weight: bold;
+}
+
+.inferior-author{
+    -fx-font-size: 11px;
+    -fx-font-family: 'Segoe UI', Arial, sans-serif;
+    -fx-fill: #B8D4E8;
+}
