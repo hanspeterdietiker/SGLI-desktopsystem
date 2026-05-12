@@ -1,0 +1,174 @@
+/* Hub View Styles */
+
+/* Main container */
+.root {
+    -fx-background-color: linear-gradient(to bottom, #f0f0f0, #ffffff);
+    -fx-padding: 40;
+    -fx-min-width: 800;
+    -fx-min-height: 600;
+}
+
+/* Title styles */
+.title-text {
+    -fx-font-size: 50px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Dubai Light';
+    -fx-fill: #2c3e50;
+}
+
+.subtitle-text {
+    -fx-font-size: 25px;
+    -fx-font-family: 'Dubai Light';
+    -fx-fill: #34495e;
+}
+
+.section-title {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-font-family: 'Dubai Light';
+    -fx-fill: #2c3e50;
+}
+
+/* TabPane styles */
+.tab-pane {
+    -fx-tab-min-height: 10px;
+    -fx-tab-min-width: 100px;
+    -fx-font-family: 'Dubai Light';
+    -fx-font-size: 14px;
+}
+
+/* Form elements */
+.form-label {
+    -fx-font-family: 'Dubai Light';
+    -fx-font-size: 14px;
+
+}
+
+.form-textfield {
+    -fx-font-family: 'Dubai Light';
+    -fx-pref-width: 200;
+}
+
+.form-date-picker {
+    -fx-font-family: 'Dubai Light';
+    -fx-pref-width: 200;
+}
+
+.form-combo-box {
+    -fx-font-family: 'Dubai Light';
+    -fx-pref-width: 200;
+}
+
+/* GridPane styles */
+.contracts-grid {
+    -fx-padding: 20;
+}
+
+/* Button styles */
+.primary-button {
+    -fx-font-size: 16px;
+    -fx-font-family: 'Dubai Light';
+    -fx-background-color: #3498db;
+    -fx-text-fill: white;
+    -fx-padding: 10 20;
+    -fx-hgap: 12;
+
+}
+
+.export-button {
+    -fx-font-size: 16px;
+    -fx-font-family: 'Dubai Light';
+    -fx-background-color: #e67e22;
+    -fx-text-fill: white;
+    -fx-padding: 10 20;
+}
+
+/* Table styles */
+.contracts-table {
+    -fx-font-family: 'Dubai Light';
+}
+
+.payments-table {
+    -fx-font-family: 'Dubai Light';
+}
+
+/* Footer text */
+.footer-text {
+    -fx-font-size: 12px;
+    -fx-font-family: 'Dubai Light';
+    -fx-fill: #7f8c8d;
+}
+
+/* Spacing utilities */
+.spacing-15 {
+    -fx-spacing: 15;
+}
+
+.spacing-10 {
+    -fx-spacing: 10;
+}
+
+.spacing-5 {
+    -fx-spacing: 5;
+}
+
+.padding-20 {
+    -fx-padding: 20;
+}
+
+.padding-5 {
+    -fx-padding: 5;
+}
+
+/* Alignment utilities */
+.center-alignment {
+    -fx-alignment: CENTER;
+}
+
+.center-left-alignment {
+    -fx-alignment: CENTER_LEFT;
+}
+
+/* VBox spacing */
+.contracts-vbox {
+    -fx-spacing: 15;
+    -fx-padding: 20;
+}
+
+.payments-vbox {
+    -fx-spacing: 15;
+    -fx-padding: 20;
+}
+
+.list-contracts-vbox {
+    -fx-spacing: 5;
+    -fx-padding: 5;
+}
+
+.list-payments-vbox {
+    -fx-spacing: 5;
+    -fx-padding: 20;
+}
+
+/* GridPane spacing */
+.contracts-grid-spacing {
+    -fx-hgap: 15;
+    -fx-vgap: 12;
+}
+
+.payments-grid-spacing {
+    -fx-hgap: 10;
+    -fx-vgap: 10;
+}
+
+/* Spacer utility */
+.spacer-30 {
+    -fx-pref-width: 30;
+}
+
+.grid-pane{
+    -fx-alignment: center;
+    -fx-hgap: 15;
+    -fx-vgap: 12;
+    -fx-padding: 20;
+}
