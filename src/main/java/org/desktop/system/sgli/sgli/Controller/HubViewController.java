@@ -3,6 +3,7 @@ package org.desktop.system.sgli.sgli.Controller;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.pdf.PdfWriter;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -68,15 +69,8 @@ public class HubViewController {
     DecimalFormat decimalFormat = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
 
 
-
-
-
     @FXML
     public void initialize() {
-
-        contractsTable.setItems(contractsList);
-        paymentsTable.setItems(paymentsList);
-
 
         for (TableColumn<ContractModel, ?> column : contractsTable.getColumns()) {
             if ("Data Início".equals(column.getText())) {
@@ -164,10 +158,28 @@ public class HubViewController {
                 });
             }
         }
+        for (TableColumn<PaymentModel, ?> column : paymentsTable.getColumns()) {
+            if ("Contrato".equals(column.getText())) {
+                @SuppressWarnings("unchecked")
+                TableColumn<PaymentModel, String> contractNameColumn = (TableColumn<PaymentModel, String>) column;
+                contractNameColumn.setCellValueFactory(cellData -> {
+                    PaymentModel pagamento = cellData.getValue();
+                    if (pagamento != null && pagamento.getContract() != null) {
+                        String nomeDoLocatario = pagamento.getContract().getNameLocatario();
+                        return new SimpleStringProperty(nomeDoLocatario);
+                    } else {
+                        return new SimpleStringProperty("Sem contrato");
+                    }
+                });
+
+            }
+        }
+
+        contractsTable.setItems(contractsList);
+        paymentsTable.setItems(paymentsList);
 
         contractComboBox.setItems(contractsList);
         contractComboBox.setConverter(new javafx.util.StringConverter<>() {
-
             @Override
             public String toString(ContractModel contract) {
                 return contract != null ? contract.getNameLocatario() : "";
@@ -342,7 +354,7 @@ public class HubViewController {
             } else {
 
                 for (PaymentModel payment : paymentsList) {
-                    doc.add(new Paragraph("Locatario: " + payment.getContract()));
+                    doc.add(new Paragraph("Locatario: " + payment.getContract().getNameLocatario()));
                     doc.add(new Paragraph("Mes de Referencia: " + payment.getMonthRef().format(dateFormatter)));
                     doc.add(new Paragraph("Valor Base R$ " + decimalFormat.format(payment.getValorBase())));
                     doc.add(new Paragraph("\n"));
