@@ -210,6 +210,16 @@ public class HubViewController {
                 AlertAction.showAlert("Erro", "Selecione as datas de início e fim do contrato!");
                 return;
             }
+
+            if (nameLocador.isEmpty() || nameLocatario.isEmpty()) {
+                AlertAction.showAlert("Erro", "Preencha os campos de nome do locador e locatário!");
+                return;
+            }
+            if (cpfCnpj.isEmpty()) {
+                AlertAction.showAlert("Erro", "Preencha o campo de CPF/CNPJ!");
+                return;
+            }
+
             ContractModel contract = new ContractModel(null, nameLocador, nameLocatario,
                     cpfCnpj, valorAlug, valorIptu, valorCond, dateInitLocal, dateEndLocal);
 
@@ -237,6 +247,10 @@ public class HubViewController {
             LocalDate monthRefLocal = monthRefPicker.getValue();
             BigDecimal valorBase = new BigDecimal(valorBaseField.getText());
 
+            if (monthRefLocal == null) {
+                AlertAction.showAlert("Erro", "Selecione um Mes de Referencia");
+                return;
+            }
 
             PaymentModel payment = new PaymentModel(null, selectedContract, monthRefLocal, valorBase);
             paymentsList.add(payment);
