@@ -7,6 +7,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import org.desktop.system.sgli.sgli.Services.ContractService;
+import org.desktop.system.sgli.sgli.Services.PaymentService;
 import org.desktop.system.sgli.sgli.Services.PdfReportService;
 import org.desktop.system.sgli.sgli.Components.ActionTableCell;
 import org.desktop.system.sgli.sgli.Controller.Dialog.ContractPutDialog;
@@ -210,81 +212,49 @@ public class HubViewController {
         configureActionsColumn(paymentsTable, this::editPayment, this::deletePayment);
     }
 
+
     @FXML
     private void saveContract() {
-
         try {
-            String nameLocador = nameLocadorField.getText();
-            String nameLocatario = nameLocatarioField.getText();
-            String cpfCnpj = cpfCnpjField.getText();
-            BigDecimal valorAlug = new BigDecimal(valorAlugField.getText());
-            BigDecimal valorIptu = new BigDecimal(valorIptuField.getText());
-            BigDecimal valorCond = new BigDecimal(valorCondField.getText());
-            LocalDate dateInitLocal = dateInitPicker.getValue();
-            LocalDate dateEndLocal = dateEndPicker.getValue();
 
-            if (dateInitLocal == null || dateEndLocal == null) {
-                AlertAction.showAlert("Erro", "Selecione as datas de início e fim do contrato!");
-                return;
-            }
+            ContractModel newContract = ContractService.validateAndCreate(nameLocadorField.getText(), nameLocatarioField.getText(), cpfCnpjField.getText(), valorAlugField.getText(), valorIptuField.getText(), valorCondField.getText(), dateInitPicker.getValue(), dateEndPicker.getValue());
 
-            if (nameLocador.isEmpty() || nameLocatario.isEmpty()) {
-                AlertAction.showAlert("Erro", "Preencha os campos de nome do locador e locatário!");
-                return;
-            }
-            if (cpfCnpj.isEmpty()) {
-                AlertAction.showAlert("Erro", "Preencha o campo de CPF/CNPJ!");
-                return;
-            }
 
-            ContractModel contract = new ContractModel(null, nameLocador, nameLocatario, cpfCnpj, valorAlug, valorIptu, valorCond, dateInitLocal, dateEndLocal);
-
-            contractsList.add(contract);
+            contractsList.add(newContract);
             contractComboBox.setItems(contractsList);
             AlertAction.showAlert("Sucesso", "Contrato salvo com sucesso!");
 
             clearFieldContract();
-        } catch (NumberFormatException e) {
-            AlertAction.showAlert("Erro", "Valor inválido! Digite um número válido para aluguel, IPTU e condomínio.");
-        } catch (Exception e) {
-            AlertAction.showAlert("Erro", "Erro ao salvar contrato: " + e.getMessage());
-        }
 
+        } catch (IllegalArgumentException e) {
+
+            AlertAction.showAlert("Erro de Validação", e.getMessage());
+
+        } catch (Exception e) {
+
+            AlertAction.showAlert("Erro Inesperado", "Erro ao salvar contrato: " + e.getMessage());
+        }
     }
 
     @FXML
     private void savePayment() {
         try {
-            ContractModel selectedContract = contractComboBox.getValue();
-            if (selectedContract == null) {
-                AlertAction.showAlert("Erro", "Selecione um contrato!");
-                return;
-            }
 
-            LocalDate monthRefLocal = monthRefPicker.getValue();
-            String valorBaseStr = valorBaseField.getText().trim();
+            PaymentModel newPayment = PaymentService.validateAndCreate(contractComboBox.getValue(), monthRefPicker.getValue(), valorBaseField.getText());
 
-            if (monthRefLocal == null) {
-                AlertAction.showAlert("Erro", "Selecione um Mes de Referencia");
-                return;
-            }
 
-            if (valorBaseStr.isEmpty()) {
-                AlertAction.showAlert("Erro", "Preencha o campo de Valor Base!");
-                return;
-            }
-
-            BigDecimal valorBase = new BigDecimal(valorBaseStr);
-
-            PaymentModel payment = new PaymentModel(null, selectedContract, monthRefLocal, valorBase);
-            paymentsList.add(payment);
-
+            paymentsList.add(newPayment);
             AlertAction.showAlert("Sucesso", "Pagamento salvo com sucesso!");
+
             clearFieldPayment();
-        } catch (NumberFormatException e) {
-            AlertAction.showAlert("Erro", "Valor base inválido! Digite um número válido.");
+
+        } catch (IllegalArgumentException e) {
+
+            AlertAction.showAlert("Erro de Validação", e.getMessage());
+
         } catch (Exception e) {
-            AlertAction.showAlert("Erro", "Erro ao salvar pagamento: " + e.getMessage());
+
+            AlertAction.showAlert("Erro Inesperado", "Erro ao salvar pagamento: " + e.getMessage());
         }
     }
 
