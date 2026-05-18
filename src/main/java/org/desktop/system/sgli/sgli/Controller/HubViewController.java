@@ -9,6 +9,9 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import javafx.scene.layout.HBox;
+import org.desktop.system.sgli.sgli.Controller.Dialog.ContractPutDialog;
+import org.desktop.system.sgli.sgli.Controller.Dialog.PaymentPutDialog;
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Entity.PaymentModel;
 import org.desktop.system.sgli.sgli.Utils.AlertAction;
@@ -177,6 +180,11 @@ public class HubViewController {
 
         contractsTable.setItems(contractsList);
         paymentsTable.setItems(paymentsList);
+        
+        
+        configureContractActionsColumn();
+       
+        configurePaymentActionsColumn();
 
         contractComboBox.setItems(contractsList);
         contractComboBox.setConverter(new javafx.util.StringConverter<>() {
@@ -192,6 +200,84 @@ public class HubViewController {
                 return null;
             }
         });
+    }
+
+    private void configureContractActionsColumn() {
+        for (TableColumn<ContractModel, ?> column : contractsTable.getColumns()) {
+            if ("Ações".equals(column.getText())) {
+                @SuppressWarnings("unchecked")
+                TableColumn<ContractModel, Void> actionsColumn = (TableColumn<ContractModel, Void>) column;
+                actionsColumn.setCellFactory(col -> new TableCell<>() {
+                    private final Button editBtn = new Button("Editar");
+                    private final Button deleteBtn = new Button("Deletar");
+                    private final HBox container = new HBox();
+
+                    {
+                        editBtn.getStyleClass().add("edit-button");
+                        deleteBtn.getStyleClass().add("delete-button");
+
+                        editBtn.setOnAction(event -> {
+                            ContractModel contract = getTableView().getItems().get(getIndex());
+                            editContract(contract);
+                        });
+
+                        deleteBtn.setOnAction(event -> {
+                            ContractModel contract = getTableView().getItems().get(getIndex());
+                            deleteContract(contract);
+                        });
+
+                        container.setSpacing(10);
+                        container.setStyle("-fx-alignment: CENTER;");
+                        container.getChildren().addAll(editBtn, deleteBtn);
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setGraphic(empty ? null : container);
+                    }
+                });
+            }
+        }
+    }
+
+    private void configurePaymentActionsColumn() {
+        for (TableColumn<PaymentModel, ?> column : paymentsTable.getColumns()) {
+            if ("Ações".equals(column.getText())) {
+                @SuppressWarnings("unchecked")
+                TableColumn<PaymentModel, Void> actionsColumn = (TableColumn<PaymentModel, Void>) column;
+                actionsColumn.setCellFactory(col -> new TableCell<>() {
+                    private final Button editBtn = new Button("Editar");
+                    private final Button deleteBtn = new Button("Deletar");
+                    private final HBox container = new HBox();
+
+                    {
+                        editBtn.getStyleClass().add("edit-button");
+                        deleteBtn.getStyleClass().add("delete-button");
+
+                        editBtn.setOnAction(event -> {
+                            PaymentModel payment = getTableView().getItems().get(getIndex());
+                            editPayment(payment);
+                        });
+
+                        deleteBtn.setOnAction(event -> {
+                            PaymentModel payment = getTableView().getItems().get(getIndex());
+                            deletePayment(payment);
+                        });
+
+                        container.setSpacing(10);
+                        container.setStyle("-fx-alignment: CENTER;");
+                        container.getChildren().addAll(editBtn, deleteBtn);
+                    }
+
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        setGraphic(empty ? null : container);
+                    }
+                });
+            }
+        }
     }
 
     @FXML
@@ -225,10 +311,11 @@ public class HubViewController {
 
             contractsList.add(contract);
             contractComboBox.setItems(contractsList);
-
-
             AlertAction.showAlert("Sucesso", "Contrato salvo com sucesso!");
+            
             clearFieldContract();
+        } catch (NumberFormatException e) {
+            AlertAction.showAlert("Erro", "Valor inválido! Digite um número válido para aluguel, IPTU e condomínio.");
         } catch (Exception e) {
             AlertAction.showAlert("Erro", "Erro ao salvar contrato: " + e.getMessage());
         }
@@ -245,21 +332,73 @@ public class HubViewController {
             }
 
             LocalDate monthRefLocal = monthRefPicker.getValue();
-            BigDecimal valorBase = new BigDecimal(valorBaseField.getText());
-
+            String valorBaseStr = valorBaseField.getText().trim();
+            
             if (monthRefLocal == null) {
                 AlertAction.showAlert("Erro", "Selecione um Mes de Referencia");
                 return;
             }
+            
+            if (valorBaseStr.isEmpty()) {
+                AlertAction.showAlert("Erro", "Preencha o campo de Valor Base!");
+                return;
+            }
+
+            BigDecimal valorBase = new BigDecimal(valorBaseStr);
 
             PaymentModel payment = new PaymentModel(null, selectedContract, monthRefLocal, valorBase);
             paymentsList.add(payment);
 
-
             AlertAction.showAlert("Sucesso", "Pagamento salvo com sucesso!");
             clearFieldPayment();
+        } catch (NumberFormatException e) {
+            AlertAction.showAlert("Erro", "Valor base inválido! Digite um número válido.");
         } catch (Exception e) {
             AlertAction.showAlert("Erro", "Erro ao salvar pagamento: " + e.getMessage());
+        }
+    }
+
+    private void editContract(ContractModel contract) {
+        ContractPutDialog dialog = new ContractPutDialog(contract);
+        var result = dialog.showAndWait();
+        
+        if (result.isPresent() && result.get() != null) {
+            contractsTable.refresh();
+            contractComboBox.setItems(contractsList);
+            AlertAction.showAlert("Sucesso", "Contrato atualizado com sucesso!");
+        }
+    }
+
+    private void deleteContract(ContractModel contract) {
+        boolean confirmed = AlertAction.showConfirmation("Confirmar Exclusão", 
+            "Tem certeza que deseja deletar o contrato de " + contract.getNameLocatario() + "?");
+        
+        if (confirmed) {
+            contractsList.remove(contract);
+            contractComboBox.setItems(contractsList);
+            contractsTable.refresh();
+            AlertAction.showAlert("Sucesso", "Contrato deletado com sucesso!");
+        }
+    }
+
+    private void editPayment(PaymentModel payment) {
+        PaymentPutDialog dialog = new PaymentPutDialog(payment, contractsList);
+        var result = dialog.showAndWait();
+        
+        if (result.isPresent() && result.get() != null) {
+            paymentsTable.refresh();
+            AlertAction.showAlert("Sucesso", "Pagamento atualizado com sucesso!");
+        }
+    }
+
+    private void deletePayment(PaymentModel payment) {
+        boolean confirmed = AlertAction.showConfirmation("Confirmar Exclusão", 
+            "Tem certeza que deseja deletar este pagamento?");
+        
+        if (confirmed) {
+            paymentsList.remove(payment);
+            paymentsTable.refresh();
+            AlertAction.showAlert("Sucesso", "Pagamento deletado com sucesso!");
         }
     }
 

@@ -83,6 +83,33 @@
     -fx-padding: 10 20;
 }
 
+.edit-button {
+    -fx-font-size: 12px;
+    -fx-font-family: 'Dubai Light';
+    -fx-background-color: #27ae60;
+    -fx-text-fill: white;
+    -fx-padding: 5 10;
+    -fx-cursor: hand;
+    -fx-min-width: 70;
+}
+
+.delete-button {
+    -fx-font-size: 12px;
+    -fx-font-family: 'Dubai Light';
+    -fx-background-color: #e74c3c;
+    -fx-text-fill: white;
+    -fx-padding: 5 10;
+    -fx-cursor: hand;
+    -fx-min-width: 70;
+}
+
+/* Action buttons container */
+.action-buttons-container {
+    -fx-spacing: 8;
+    -fx-alignment: CENTER;
+    -fx-padding: 5;
+}
+
 /* Table styles */
 .contracts-table {
     -fx-font-family: 'Dubai Light';

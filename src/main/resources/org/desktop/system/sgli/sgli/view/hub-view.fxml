@@ -146,13 +146,14 @@
                                 <PropertyValueFactory property="dateInit"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Data Fim" prefWidth="100">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="dateEnd"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                    </columns>
-                </TableView>
+                         <TableColumn text="Data Fim" prefWidth="100">
+                             <cellValueFactory>
+                                 <PropertyValueFactory property="dateEnd"/>
+                             </cellValueFactory>
+                         </TableColumn>
+                         <TableColumn text="Ações" prefWidth="200"/>
+                     </columns>
+                 </TableView>
 
                 <HBox styleClass="center-alignment,spacing-10">
                     <Button text="Atualizar Lista" onAction="#refreshListContract" styleClass="primary-button"/>
@@ -177,13 +178,14 @@
                                 <PropertyValueFactory property="monthRef"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Valor Base" prefWidth="100">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="valorBase"/>
-                            </cellValueFactory>
-                        </TableColumn>
-                    </columns>
-                </TableView>
+                         <TableColumn text="Valor Base" prefWidth="100">
+                             <cellValueFactory>
+                                 <PropertyValueFactory property="valorBase"/>
+                             </cellValueFactory>
+                         </TableColumn>
+                         <TableColumn text="Ações" prefWidth="200"/>
+                     </columns>
+                 </TableView>
                 <HBox styleClass="center-alignment, spacing-10">
                     <Button text="Atualizar Lista" onAction="#refreshListPayment" styleClass="primary-button"/>
                     <Button text="Exportar Relatorio" onAction="#exportReportPayment" styleClass="export-button"/>
