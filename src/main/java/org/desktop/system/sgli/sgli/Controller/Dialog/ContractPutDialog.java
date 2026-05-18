@@ -66,7 +66,7 @@ public class ContractPutDialog extends Dialog<ContractModel> {
         gridPane.add(new Label("Data Fim:"), 0, 7);
         gridPane.add(dateEndPicker, 1, 7);
 
-        // Configurar tamanho dos campos
+
         nameLocadorField.setPrefWidth(250);
         nameLocatarioField.setPrefWidth(250);
         cpfCnpjField.setPrefWidth(250);

@@ -42,7 +42,7 @@ public class PaymentPutDialog extends Dialog<PaymentModel> {
         monthRefPicker.setValue(payment.getMonthRef());
         valorBaseField.setText(payment.getValorBase().toString());
 
-        // Criar GridPane com campos
+
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(20));
         gridPane.setHgap(15);

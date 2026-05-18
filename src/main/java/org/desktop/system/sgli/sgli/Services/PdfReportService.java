@@ -1,0 +1,104 @@
+package org.desktop.system.sgli.sgli.Services;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+import org.desktop.system.sgli.sgli.Entity.ContractModel;
+import org.desktop.system.sgli.sgli.Entity.PaymentModel;
+import org.desktop.system.sgli.sgli.Utils.AlertAction;
+
+import java.io.FileOutputStream;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+
+public class PdfReportService {
+
+
+    private PdfReportService() {
+        throw new UnsupportedOperationException("Esta classe é de serviço e não deve ser instanciada");
+    }
+
+    public static void exportContractsReport(List<ContractModel> contractsList, DateTimeFormatter dateFormatter, DecimalFormat decimalFormat) {
+        Document doc = new Document();
+        try {
+            String downloadsPath = System.getProperty("user.home") + "\\Downloads\\Relatorio_Contratos.pdf";
+            PdfWriter.getInstance(doc, new FileOutputStream(downloadsPath));
+            doc.open();
+
+            Paragraph title = new Paragraph("Relatório de Contratos");
+            title.setAlignment(Element.ALIGN_CENTER);
+            doc.add(title);
+            doc.add(new Paragraph("\n"));
+
+            Paragraph dataCreated = new Paragraph("Data de Criação: " + LocalDate.now().format(dateFormatter));
+            dataCreated.setAlignment(Element.ALIGN_RIGHT);
+            doc.add(dataCreated);
+            doc.add(new Paragraph("\n"));
+
+            if (contractsList.isEmpty()) {
+                doc.add(new Paragraph("Nenhum contrato registrado."));
+            } else {
+                for (ContractModel contract : contractsList) {
+                    doc.add(new Paragraph("Nome Locador: " + contract.getNameLocador()));
+                    doc.add(new Paragraph("Nome Locatario: " + contract.getNameLocatario()));
+                    doc.add(new Paragraph("CPF/CNPJ: " + contract.getCpfCnpj()));
+                    doc.add(new Paragraph("Valor Condominio R$ " + decimalFormat.format(contract.getValorCond())));
+                    doc.add(new Paragraph("Valor Aluguel R$ " + decimalFormat.format(contract.getValorAlug())));
+                    doc.add(new Paragraph("Valor Iptu R$ " + decimalFormat.format(contract.getValorIptu())));
+                    doc.add(new Paragraph("Data Início: " + contract.getDateInit().format(dateFormatter)));
+                    doc.add(new Paragraph("Data Fim: " + contract.getDateEnd().format(dateFormatter)));
+                    doc.add(new Paragraph("\n"));
+                }
+            }
+
+            doc.close();
+            AlertAction.showAlert("Sucesso", "PDF de Contratos salvo em: " + downloadsPath);
+        } catch (Exception e) {
+            AlertAction.showAlert("Erro", "Erro ao exportar relatório de Contratos: " + e.getMessage());
+            if (doc.isOpen()) {
+                doc.close();
+            }
+        }
+    }
+
+    public static void exportPaymentsReport(List<PaymentModel> paymentsList, DateTimeFormatter dateFormatter, DecimalFormat decimalFormat) {
+        Document doc = new Document();
+        try {
+            String downloadsPath = System.getProperty("user.home") + "\\Downloads\\Relatorio_Pagamentos.pdf";
+            PdfWriter.getInstance(doc, new FileOutputStream(downloadsPath));
+            doc.open();
+
+            Paragraph title = new Paragraph("Relatório de Pagamentos");
+            title.setAlignment(Element.ALIGN_CENTER);
+            doc.add(title);
+            doc.add(new Paragraph("\n"));
+
+            Paragraph dataCreated = new Paragraph("Data de Criação: " + LocalDate.now().format(dateFormatter));
+            dataCreated.setAlignment(Element.ALIGN_RIGHT);
+            doc.add(dataCreated);
+            doc.add(new Paragraph("\n"));
+
+            if (paymentsList.isEmpty()) {
+                doc.add(new Paragraph("Nenhum Pagamento registrado."));
+            } else {
+                for (PaymentModel payment : paymentsList) {
+                    doc.add(new Paragraph("Locatario: " + payment.getContract().getNameLocatario()));
+                    doc.add(new Paragraph("Mes de Referencia: " + payment.getMonthRef().format(dateFormatter)));
+                    doc.add(new Paragraph("Valor Base R$ " + decimalFormat.format(payment.getValorBase())));
+                    doc.add(new Paragraph("\n"));
+                }
+            }
+
+            doc.close();
+            AlertAction.showAlert("Sucesso", "PDF de Pagamentos salvo em: " + downloadsPath);
+        } catch (Exception e) {
+            AlertAction.showAlert("Erro", "Erro ao exportar relatório de Pagamentos: " + e.getMessage());
+            if (doc.isOpen()) {
+                doc.close();
+            }
+        }
+    }
+}
