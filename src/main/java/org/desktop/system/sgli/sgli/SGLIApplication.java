@@ -14,7 +14,7 @@ public class SGLIApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(SGLIApplication.class.getResource("view/welcome-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1000, 720);
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 720);
         stage.setTitle("SGLI System - Application");
         stage.getIcons().add(icone);
         stage.setScene(scene);
