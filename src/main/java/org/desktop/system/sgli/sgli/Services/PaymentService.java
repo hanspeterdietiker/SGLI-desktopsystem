@@ -32,7 +32,6 @@ public class PaymentService {
             throw new IllegalArgumentException("Valor base inválido! Digite um número válido.");
         }
 
-
         return new PaymentModel(null, selectedContract, monthRef, valorBase);
     }
 }

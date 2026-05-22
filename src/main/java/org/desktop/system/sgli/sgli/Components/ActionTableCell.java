@@ -21,6 +21,7 @@ public class ActionTableCell<T> extends TableCell<T, Void> {
             T item = getTableView().getItems().get(getIndex());
             if (item != null) {
                 onEdit.accept(item);
+
             }
         });
 

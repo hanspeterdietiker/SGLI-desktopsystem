@@ -7,6 +7,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import org.desktop.system.sgli.sgli.Repository.ContractRepository;
+import org.desktop.system.sgli.sgli.Repository.PaymentRepository;
 import org.desktop.system.sgli.sgli.Services.ContractService;
 import org.desktop.system.sgli.sgli.Services.PaymentService;
 import org.desktop.system.sgli.sgli.Services.PdfReportService;
@@ -67,6 +69,9 @@ public class HubViewController {
     private final ObservableList<ContractModel> contractsList = FXCollections.observableArrayList();
 
     private final ObservableList<PaymentModel> paymentsList = FXCollections.observableArrayList();
+
+    private final ContractRepository contractRepository = new ContractRepository();
+    private final PaymentRepository paymentRepository = new PaymentRepository();
 
     // Formatadores
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -193,6 +198,8 @@ public class HubViewController {
                 return null;
             }
         });
+
+        loadDataFromDatabase();
     }
 
 
@@ -219,9 +226,8 @@ public class HubViewController {
 
             ContractModel newContract = ContractService.validateAndCreate(nameLocadorField.getText(), nameLocatarioField.getText(), cpfCnpjField.getText(), valorAlugField.getText(), valorIptuField.getText(), valorCondField.getText(), dateInitPicker.getValue(), dateEndPicker.getValue());
 
-
-            contractsList.add(newContract);
-            contractComboBox.setItems(contractsList);
+            ContractModel savedContract = contractRepository.save(newContract);
+            contractsList.add(savedContract);
             AlertAction.showAlert("Sucesso", "Contrato salvo com sucesso!");
 
             clearFieldContract();
@@ -241,9 +247,8 @@ public class HubViewController {
         try {
 
             PaymentModel newPayment = PaymentService.validateAndCreate(contractComboBox.getValue(), monthRefPicker.getValue(), valorBaseField.getText());
-
-
-            paymentsList.add(newPayment);
+            PaymentModel savedPayment = paymentRepository.save(newPayment);
+            paymentsList.add(savedPayment);
             AlertAction.showAlert("Sucesso", "Pagamento salvo com sucesso!");
 
             clearFieldPayment();
@@ -263,8 +268,8 @@ public class HubViewController {
         var result = dialog.showAndWait();
 
         if (result.isPresent() && result.get() != null) {
-            contractsTable.refresh();
-            contractComboBox.setItems(contractsList);
+            contractRepository.update(result.get());
+            loadDataFromDatabase();
             AlertAction.showAlert("Sucesso", "Contrato atualizado com sucesso!");
         }
     }
@@ -273,9 +278,12 @@ public class HubViewController {
         boolean confirmed = AlertAction.showConfirmation("Confirmar Exclusão", "Tem certeza que deseja deletar o contrato de " + contract.getNameLocatario() + "?");
 
         if (confirmed) {
+            paymentRepository.deleteByContractId(contract.getId());
+            contractRepository.delete(contract.getId());
             contractsList.remove(contract);
-            contractComboBox.setItems(contractsList);
+            paymentsList.removeIf(payment -> payment.getContract() != null && contract.getId().equals(payment.getContract().getId()));
             contractsTable.refresh();
+            paymentsTable.refresh();
             AlertAction.showAlert("Sucesso", "Contrato deletado com sucesso!");
         }
     }
@@ -285,7 +293,11 @@ public class HubViewController {
         var result = dialog.showAndWait();
 
         if (result.isPresent() && result.get() != null) {
-            paymentsTable.refresh();
+            PaymentModel updatedPayment = paymentRepository.update(result.get());
+            int paymentIndex = paymentsList.indexOf(payment);
+            if (paymentIndex >= 0) {
+                paymentsList.set(paymentIndex, updatedPayment);
+            }
             AlertAction.showAlert("Sucesso", "Pagamento atualizado com sucesso!");
         }
     }
@@ -294,6 +306,7 @@ public class HubViewController {
         boolean confirmed = AlertAction.showConfirmation("Confirmar Exclusão", "Tem certeza que deseja deletar este pagamento?");
 
         if (confirmed) {
+            paymentRepository.delete(payment.getId());
             paymentsList.remove(payment);
             paymentsTable.refresh();
             AlertAction.showAlert("Sucesso", "Pagamento deletado com sucesso!");
@@ -310,6 +323,7 @@ public class HubViewController {
         try {
 
             contractsTable.refresh();
+            loadDataFromDatabase();
             AlertAction.showAlert("Info", "Lista de contratos atualizada!");
         } catch (Exception e) {
             AlertAction.showAlert("Erro", "Erro ao atualizar contrato: " + e.getMessage());
@@ -326,6 +340,7 @@ public class HubViewController {
         try {
 
             paymentsTable.refresh();
+            loadDataFromDatabase();
             AlertAction.showAlert("Info", "Lista de pagamentos atualizada!");
         } catch (Exception e) {
             AlertAction.showAlert("Erro", "Erro ao atualizar pagamento: " + e.getMessage());
@@ -342,5 +357,11 @@ public class HubViewController {
         FormUtils.clearFields(contractComboBox, monthRefPicker, valorBaseField);
     }
 
+    private void loadDataFromDatabase() {
+        contractsList.setAll(contractRepository.findAll());
+        paymentsList.setAll(paymentRepository.findAll());
+        contractsTable.refresh();
+        paymentsTable.refresh();
+    }
 
 }

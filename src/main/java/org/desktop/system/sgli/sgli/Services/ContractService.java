@@ -1,6 +1,7 @@
 package org.desktop.system.sgli.sgli.Services;
 
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -41,8 +42,6 @@ public class ContractService {
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Valor numérico inválido! Digite apenas números válidos para aluguel, IPTU e condomínio.");
         }
-
-
-        return new ContractModel(null, nameLocador, nameLocatario, cpfCnpj, valorAlug, valorIptu, valorCond, dateInit, dateEnd);
+        return new ContractModel(null, nameLocador.trim(), nameLocatario.trim(), cpfCnpj.trim(), valorAlug, valorIptu, valorCond, dateInit, dateEnd);
     }
 }
