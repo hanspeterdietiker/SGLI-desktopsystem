@@ -29,16 +29,39 @@ O projeto segue uma estrutura modular para facilitar a manutenção e escalabili
 * `src/main/resources`: Arquivos FXML, estilos CSS e recursos de imagem.
 
 
-## 🔧 Como Executar (Desenvolvimento)
 
-Para rodar o projeto localmente, certifique-se de ter o JDK 21 instalado.
+## 🔧 Como Executar via Terminal
 
-1. Clone o repositório.
-2. Importe o projeto na sua IDE de preferência.
-3. Execute a classe principal através do seu gerenciador de build (Maven).
+Para rodar o projeto localmente, certifique-se de ter o JDK 17+ instalado. Além disso, é necessário ter o **Git** e o **Maven** configurados no seu ambiente de desenvolvimento.
 
----
-Desenvolvido 
+Siga o passo a passo abaixo para compilar e iniciar a aplicação:
+
+
+Abra o seu terminal e baixe o código-fonte para a sua máquina:
+```bash
+1. Clonando o repositório do projeto:
+git clone [https://github.com/hanspeter-dietiker/sgli-system.git](https://github.com/hanspeter-dietiker/sgli-system.git)
+
+2. Acesse a pasta do projeto
+Navegue para o diretório raiz da aplicação que acabou de ser criada:
+
+Bash
+cd sgli-system
+
+3. Compile o projeto
+Execute o comando abaixo através do seu gerenciador de build para limpar builds antigos, baixar todas as dependências necessárias e compilar o código:
+
+Bash
+mvn clean install
+
+4. Inicie o sistema
+Como a aplicação utiliza a interface gráfica do JavaFX, rode o comando abaixo para iniciar o aplicativo com as permissões de módulos corretas:
+
+Bash
+mvn javafx:run
+
+```
+Desenvolvido
 
 Github: [Hanspeter Dietiker](https://github.com/hanspeterdietiker)
 
