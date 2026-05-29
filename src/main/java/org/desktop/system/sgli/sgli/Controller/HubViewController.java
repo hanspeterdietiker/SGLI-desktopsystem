@@ -7,8 +7,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import org.desktop.system.sgli.sgli.Repository.ContractRepository;
-import org.desktop.system.sgli.sgli.Repository.PaymentRepository;
 import org.desktop.system.sgli.sgli.Services.ContractService;
 import org.desktop.system.sgli.sgli.Services.PaymentService;
 import org.desktop.system.sgli.sgli.Services.PdfReportService;
@@ -72,8 +70,8 @@ public class HubViewController {
 
     private final ObservableList<PaymentModel> paymentsList = FXCollections.observableArrayList();
 
-    private final ContractRepository contractRepository = new ContractRepository();
-    private final PaymentRepository paymentRepository = new PaymentRepository();
+    private final ContractService contractService = new ContractService();
+    private final PaymentService paymentService = new PaymentService();
 
     // Formatadores
     DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -226,9 +224,11 @@ public class HubViewController {
     private void saveContract() {
         try {
 
-            ContractModel newContract = ContractService.validateAndCreate(nameLocadorField.getText(), nameLocatarioField.getText(), cpfLocatarioField.getText(), cpfLocadorField.getText(), valorAlugField.getText(), valorIptuField.getText(), valorCondField.getText(), dateInitPicker.getValue(), dateEndPicker.getValue());
-
-            ContractModel savedContract = contractRepository.save(newContract);
+            ContractModel savedContract = contractService.save(
+                    nameLocadorField.getText(), nameLocatarioField.getText(),
+                    cpfLocatarioField.getText(), cpfLocadorField.getText(),
+                    valorAlugField.getText(), valorIptuField.getText(), valorCondField.getText(),
+                    dateInitPicker.getValue(), dateEndPicker.getValue());
             contractsList.add(savedContract);
             AlertAction.showAlert("Sucesso", "Contrato salvo com sucesso!");
 
@@ -248,8 +248,8 @@ public class HubViewController {
     private void savePayment() {
         try {
 
-            PaymentModel newPayment = PaymentService.validateAndCreate(contractComboBox.getValue(), monthRefPicker.getValue(), valorBaseField.getText());
-            PaymentModel savedPayment = paymentRepository.save(newPayment);
+            PaymentModel savedPayment = paymentService.save(
+                    contractComboBox.getValue(), monthRefPicker.getValue(), valorBaseField.getText());
             paymentsList.add(savedPayment);
             AlertAction.showAlert("Sucesso", "Pagamento salvo com sucesso!");
 
@@ -270,7 +270,7 @@ public class HubViewController {
         var result = dialog.showAndWait();
 
         if (result.isPresent() && result.get() != null) {
-            contractRepository.update(result.get());
+            contractService.update(result.get());
             loadDataFromDatabase();
             AlertAction.showAlert("Sucesso", "Contrato atualizado com sucesso!");
         }
@@ -280,8 +280,8 @@ public class HubViewController {
         boolean confirmed = AlertAction.showConfirmation("Confirmar Exclusão", "Tem certeza que deseja deletar o contrato de " + contract.getNameLocatario() + "?");
 
         if (confirmed) {
-            paymentRepository.deleteByContractId(contract.getId());
-            contractRepository.delete(contract.getId());
+            paymentService.deleteByContractId(contract.getId());
+            contractService.delete(contract.getId());
             contractsList.remove(contract);
             paymentsList.removeIf(payment -> payment.getContract() != null && contract.getId().equals(payment.getContract().getId()));
             contractsTable.refresh();
@@ -295,7 +295,7 @@ public class HubViewController {
         var result = dialog.showAndWait();
 
         if (result.isPresent() && result.get() != null) {
-            PaymentModel updatedPayment = paymentRepository.update(result.get());
+            PaymentModel updatedPayment = paymentService.update(result.get());
             int paymentIndex = paymentsList.indexOf(payment);
             if (paymentIndex >= 0) {
                 paymentsList.set(paymentIndex, updatedPayment);
@@ -308,7 +308,7 @@ public class HubViewController {
         boolean confirmed = AlertAction.showConfirmation("Confirmar Exclusão", "Tem certeza que deseja deletar este pagamento?");
 
         if (confirmed) {
-            paymentRepository.delete(payment.getId());
+            paymentService.delete(payment.getId());
             paymentsList.remove(payment);
             paymentsTable.refresh();
             AlertAction.showAlert("Sucesso", "Pagamento deletado com sucesso!");
@@ -360,8 +360,8 @@ public class HubViewController {
     }
 
     private void loadDataFromDatabase() {
-        contractsList.setAll(contractRepository.findAll());
-        paymentsList.setAll(paymentRepository.findAll());
+        contractsList.setAll(contractService.findAll());
+        paymentsList.setAll(paymentService.findAll());
         contractsTable.refresh();
         paymentsTable.refresh();
     }

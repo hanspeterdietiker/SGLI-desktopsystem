@@ -2,18 +2,43 @@ package org.desktop.system.sgli.sgli.Services;
 
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Entity.PaymentModel;
+import org.desktop.system.sgli.sgli.Repository.PaymentRepository;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
 
 public class PaymentService {
 
-    private PaymentService() {
-        throw new UnsupportedOperationException("Classe de serviço não deve ser instanciada");
+    private final PaymentRepository paymentRepository;
+
+    public PaymentService() {
+        this.paymentRepository = new PaymentRepository();
     }
 
-    public static PaymentModel validateAndCreate(ContractModel selectedContract, LocalDate monthRef, String valorBaseStr) {
+    public PaymentModel save(ContractModel selectedContract, LocalDate monthRef, String valorBaseStr) {
+        PaymentModel payment = validateAndCreate(selectedContract, monthRef, valorBaseStr);
+        return paymentRepository.save(payment);
+    }
 
+    public PaymentModel update(PaymentModel payment) {
+        return paymentRepository.update(payment);
+    }
+
+    public void delete(UUID id) {
+        paymentRepository.delete(id);
+    }
+
+    public void deleteByContractId(UUID contractId) {
+        paymentRepository.deleteByContractId(contractId);
+    }
+
+    public List<PaymentModel> findAll() {
+        return paymentRepository.findAll();
+    }
+
+    private static PaymentModel validateAndCreate(ContractModel selectedContract, LocalDate monthRef, String valorBaseStr) {
         if (selectedContract == null) {
             throw new IllegalArgumentException("Selecione um contrato!");
         }
@@ -23,7 +48,6 @@ public class PaymentService {
         if (valorBaseStr == null || valorBaseStr.trim().isEmpty()) {
             throw new IllegalArgumentException("Preencha o campo de Valor Base!");
         }
-
 
         BigDecimal valorBase;
         try {
