@@ -13,10 +13,9 @@ public class ContractService {
 
 
     public static ContractModel validateAndCreate(
-            String nameLocador, String nameLocatario, String cpfCnpj,
+            String nameLocador, String nameLocatario, String cpfLocatario, String cpfLocador,
             String valorAlugStr, String valorIptuStr, String valorCondStr,
             LocalDate dateInit, LocalDate dateEnd) {
-
 
         if (dateInit == null || dateEnd == null) {
             throw new IllegalArgumentException("Selecione as datas de início e fim do contrato!");
@@ -25,23 +24,24 @@ public class ContractService {
                 nameLocatario == null || nameLocatario.trim().isEmpty()) {
             throw new IllegalArgumentException("Preencha os campos de nome do locador e locatário!");
         }
-        if (cpfCnpj == null || cpfCnpj.trim().isEmpty()) {
-            throw new IllegalArgumentException("Preencha o campo de CPF/CNPJ!");
+        if (cpfLocatario == null || cpfLocatario.trim().isEmpty()) {
+            throw new IllegalArgumentException("Preencha o CPF do Locatário!");
         }
-
+        if (cpfLocador == null || cpfLocador.trim().isEmpty()) {
+            throw new IllegalArgumentException("Preencha o CPF do Locador!");
+        }
 
         BigDecimal valorAlug;
         BigDecimal valorIptu;
         BigDecimal valorCond;
 
         try {
-
             valorAlug = new BigDecimal(valorAlugStr.trim());
             valorIptu = new BigDecimal(valorIptuStr.trim());
             valorCond = new BigDecimal(valorCondStr.trim());
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Valor numérico inválido! Digite apenas números válidos para aluguel, IPTU e condomínio.");
         }
-        return new ContractModel(null, nameLocador.trim(), nameLocatario.trim(), cpfCnpj.trim(), valorAlug, valorIptu, valorCond, dateInit, dateEnd);
+        return new ContractModel(null, nameLocador.trim(), nameLocatario.trim(), cpfLocatario.trim(), cpfLocador.trim(), valorAlug, valorIptu, valorCond, dateInit, dateEnd);
     }
 }

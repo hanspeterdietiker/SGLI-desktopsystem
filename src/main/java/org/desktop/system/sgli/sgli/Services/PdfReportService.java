@@ -43,8 +43,9 @@ public class PdfReportService {
             } else {
                 for (ContractModel contract : contractsList) {
                     doc.add(new Paragraph("Nome Locador: " + contract.getNameLocador()));
+                    doc.add(new Paragraph("CPF Locador: " + contract.getCpfLocador()));
                     doc.add(new Paragraph("Nome Locatario: " + contract.getNameLocatario()));
-                    doc.add(new Paragraph("CPF/CNPJ: " + contract.getCpfCnpj()));
+                    doc.add(new Paragraph("CPF Locatário: " + contract.getCpfLocatario()));
                     doc.add(new Paragraph("Valor Condominio R$ " + decimalFormat.format(contract.getValorCond())));
                     doc.add(new Paragraph("Valor Aluguel R$ " + decimalFormat.format(contract.getValorAlug())));
                     doc.add(new Paragraph("Valor Iptu R$ " + decimalFormat.format(contract.getValorIptu())));

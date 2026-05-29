@@ -17,7 +17,8 @@ public class ContractModel {
 
     private String nameLocador;
     private String nameLocatario;
-    private String cpfCnpj;
+    private String cpfLocatario;
+    private String cpfLocador;
     private BigDecimal valorAlug;
     private BigDecimal valorIptu;
     private BigDecimal valorCond;
@@ -27,11 +28,12 @@ public class ContractModel {
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaymentModel> payments;
 
-    public ContractModel(UUID id, String nameLocador, String nameLocatario, String cpfCnpj, BigDecimal valorAlug, BigDecimal valorIptu, BigDecimal valorCond, LocalDate dateInit, LocalDate dateEnd) {
+    public ContractModel(UUID id, String nameLocador, String nameLocatario, String cpfLocatario, String cpfLocador, BigDecimal valorAlug, BigDecimal valorIptu, BigDecimal valorCond, LocalDate dateInit, LocalDate dateEnd) {
         this.id = id;
         this.nameLocador = nameLocador;
         this.nameLocatario = nameLocatario;
-        this.cpfCnpj = cpfCnpj;
+        this.cpfLocatario = cpfLocatario;
+        this.cpfLocador = cpfLocador;
         this.valorAlug = valorAlug;
         this.valorIptu = valorIptu;
         this.valorCond = valorCond;
@@ -64,12 +66,20 @@ public class ContractModel {
         this.nameLocatario = nameLocatario;
     }
 
-    public String getCpfCnpj() {
-        return cpfCnpj;
+    public String getCpfLocatario() {
+        return cpfLocatario;
     }
 
-    public void setCpfCnpj(String cpfCnpj) {
-        this.cpfCnpj = cpfCnpj;
+    public void setCpfLocatario(String cpfLocatario) {
+        this.cpfLocatario = cpfLocatario;
+    }
+
+    public String getCpfLocador() {
+        return cpfLocador;
+    }
+
+    public void setCpfLocador(String cpfLocador) {
+        this.cpfLocador = cpfLocador;
     }
 
     public BigDecimal getValorAlug() {

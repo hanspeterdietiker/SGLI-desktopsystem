@@ -38,7 +38,9 @@ public class HubViewController {
     @FXML
     private TextField nameLocatarioField;
     @FXML
-    private TextField cpfCnpjField;
+    private TextField cpfLocatarioField;
+    @FXML
+    private TextField cpfLocadorField;
     @FXML
     private TextField valorAlugField;
     @FXML
@@ -224,7 +226,7 @@ public class HubViewController {
     private void saveContract() {
         try {
 
-            ContractModel newContract = ContractService.validateAndCreate(nameLocadorField.getText(), nameLocatarioField.getText(), cpfCnpjField.getText(), valorAlugField.getText(), valorIptuField.getText(), valorCondField.getText(), dateInitPicker.getValue(), dateEndPicker.getValue());
+            ContractModel newContract = ContractService.validateAndCreate(nameLocadorField.getText(), nameLocatarioField.getText(), cpfLocatarioField.getText(), cpfLocadorField.getText(), valorAlugField.getText(), valorIptuField.getText(), valorCondField.getText(), dateInitPicker.getValue(), dateEndPicker.getValue());
 
             ContractModel savedContract = contractRepository.save(newContract);
             contractsList.add(savedContract);
@@ -331,7 +333,7 @@ public class HubViewController {
     }
 
     private void clearFieldContract() {
-        FormUtils.clearFields(nameLocadorField, nameLocatarioField, cpfCnpjField, valorAlugField, valorIptuField, valorCondField, dateInitPicker, dateEndPicker);
+        FormUtils.clearFields(nameLocadorField, nameLocatarioField, cpfLocatarioField, cpfLocadorField, valorAlugField, valorIptuField, valorCondField, dateInitPicker, dateEndPicker);
 
     }
 

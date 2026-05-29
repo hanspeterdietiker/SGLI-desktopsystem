@@ -35,15 +35,20 @@
                     <TextField fx:id="nameLocadorField" promptText="Digite o nome" GridPane.columnIndex="1"
                                GridPane.rowIndex="1" styleClass="form-textfield"/>
 
-                    <Label text="CPF/CNPJ:" styleClass="form-label"
+                    <Label text="CPF Locatário:" styleClass="form-label"
                            GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                    <TextField fx:id="cpfCnpjField" promptText="Digite CPF/CNPJ do Locatario" GridPane.columnIndex="1"
+                    <TextField fx:id="cpfLocatarioField" promptText="CPF do Locatário" GridPane.columnIndex="1"
                                GridPane.rowIndex="2" styleClass="form-textfield"/>
 
-                    <Label text="Valor Aluguel:" styleClass="form-label"
+                    <Label text="CPF Locador:" styleClass="form-label"
                            GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                    <TextField fx:id="valorAlugField" promptText="Valor do aluguel" GridPane.columnIndex="1"
+                    <TextField fx:id="cpfLocadorField" promptText="CPF do Locador" GridPane.columnIndex="1"
                                GridPane.rowIndex="3" styleClass="form-textfield"/>
+
+                    <Label text="Valor Aluguel:" styleClass="form-label"
+                           GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                    <TextField fx:id="valorAlugField" promptText="Valor do aluguel" GridPane.columnIndex="1"
+                               GridPane.rowIndex="4" styleClass="form-textfield"/>
 
                     <!-- Segunda coluna -->
                     <Label text="Valor IPTU:" styleClass="form-label"
@@ -67,7 +72,7 @@
                                 styleClass="form-date-picker"/>
 
                     <!-- Espaçador entre colunas -->
-                    <VBox GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.rowSpan="4" styleClass="spacer-30"/>
+                    <VBox GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.rowSpan="5" styleClass="spacer-30"/>
                 </GridPane>
                 <HBox styleClass="center-alignment">
                     <Button text="Salvar Contrato" onAction="#saveContract" styleClass="primary-button"/>
@@ -121,9 +126,14 @@
                                 <PropertyValueFactory property="nameLocatario"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="CPF/CNPJ" prefWidth="120">
+                        <TableColumn text="CPF Locatário" prefWidth="120">
                             <cellValueFactory>
-                                <PropertyValueFactory property="cpfCnpj"/>
+                                <PropertyValueFactory property="cpfLocatario"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="CPF Locador" prefWidth="120">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="cpfLocador"/>
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn text="Aluguel" prefWidth="100">
