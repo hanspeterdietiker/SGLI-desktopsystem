@@ -5,7 +5,7 @@ on:
     branches: [ "master", "develop", "release/v1.0.0", "release/v1.0.1" ] 
   
   pull_request:
-   branches: [ "master", "develop", "release/v1.0.0" ] 
+   branches: [ "master", "develop" ] 
 
 jobs:
   build:
