@@ -21,7 +21,7 @@ public class ContractService {
             String valorAlugStr, String valorIptuStr, String valorCondStr,
             LocalDate dateInit, LocalDate dateEnd) {
 
-        ContractModel contract = validateAndCreate(
+        ContractModel contract = validate(
                 nameLocador, nameLocatario, cpfLocatario, cpfLocador,
                 valorAlugStr, valorIptuStr, valorCondStr, dateInit, dateEnd);
         return contractRepository.save(contract);
@@ -39,7 +39,7 @@ public class ContractService {
         return contractRepository.findAll();
     }
 
-    private static ContractModel validateAndCreate(
+    private static ContractModel validate(
             String nameLocador, String nameLocatario, String cpfLocatario, String cpfLocador,
             String valorAlugStr, String valorIptuStr, String valorCondStr,
             LocalDate dateInit, LocalDate dateEnd) {
