@@ -270,9 +270,15 @@ public class HubViewController {
         var result = dialog.showAndWait();
 
         if (result.isPresent() && result.get() != null) {
-            contractService.update(result.get());
-            loadDataFromDatabase();
-            AlertAction.showAlert("Sucesso", "Contrato atualizado com sucesso!");
+            try {
+                contractService.update(result.get());
+                loadDataFromDatabase();
+                AlertAction.showAlert("Sucesso", "Contrato atualizado com sucesso!");
+            } catch (IllegalArgumentException e) {
+                AlertAction.showAlert("Erro de Validação", e.getMessage());
+            } catch (Exception e) {
+                AlertAction.showAlert("Erro Inesperado", "Erro ao atualizar contrato: " + e.getMessage());
+            }
         }
     }
 
@@ -295,12 +301,18 @@ public class HubViewController {
         var result = dialog.showAndWait();
 
         if (result.isPresent() && result.get() != null) {
-            PaymentModel updatedPayment = paymentService.update(result.get());
-            int paymentIndex = paymentsList.indexOf(payment);
-            if (paymentIndex >= 0) {
-                paymentsList.set(paymentIndex, updatedPayment);
+            try {
+                PaymentModel updatedPayment = paymentService.update(result.get());
+                int paymentIndex = paymentsList.indexOf(payment);
+                if (paymentIndex >= 0) {
+                    paymentsList.set(paymentIndex, updatedPayment);
+                }
+                AlertAction.showAlert("Sucesso", "Pagamento atualizado com sucesso!");
+            } catch (IllegalArgumentException e) {
+                AlertAction.showAlert("Erro de Validação", e.getMessage());
+            } catch (Exception e) {
+                AlertAction.showAlert("Erro Inesperado", "Erro ao atualizar pagamento: " + e.getMessage());
             }
-            AlertAction.showAlert("Sucesso", "Pagamento atualizado com sucesso!");
         }
     }
 

@@ -28,7 +28,27 @@ public class ContractService {
     }
 
     public ContractModel update(ContractModel contract) {
+        if (contract.getDateInit() == null || contract.getDateEnd() == null) {
+            throw new IllegalArgumentException("Selecione as datas de início e fim do contrato!");
+        }
+        if (isBlank(contract.getNameLocador()) || isBlank(contract.getNameLocatario())) {
+            throw new IllegalArgumentException("Preencha os campos de nome do locador e locatário!");
+        }
+        if (isBlank(contract.getCpfLocatario())) {
+            throw new IllegalArgumentException("Preencha o CPF do Locatário!");
+        }
+        if (isBlank(contract.getCpfLocador())) {
+            throw new IllegalArgumentException("Preencha o CPF do Locador!");
+        }
+        if (contract.getValorAlug() == null || contract.getValorIptu() == null || contract.getValorCond() == null) {
+            throw new IllegalArgumentException("Valor numérico inválido!");
+        }
         return contractRepository.update(contract);
+    }
+
+
+    private static boolean isBlank(String s) {
+        return s == null || s.trim().isEmpty();
     }
 
     public void delete(UUID id) {
@@ -38,6 +58,7 @@ public class ContractService {
     public List<ContractModel> findAll() {
         return contractRepository.findAll();
     }
+
 
     private static ContractModel validate(
             String nameLocador, String nameLocatario, String cpfLocatario, String cpfLocador,
@@ -73,4 +94,7 @@ public class ContractService {
         return new ContractModel(null, nameLocador.trim(), nameLocatario.trim(),
                 cpfLocatario.trim(), cpfLocador.trim(), valorAlug, valorIptu, valorCond, dateInit, dateEnd);
     }
+
+
+
 }

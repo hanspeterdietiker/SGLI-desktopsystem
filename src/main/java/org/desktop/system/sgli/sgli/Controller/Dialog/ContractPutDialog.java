@@ -7,7 +7,6 @@ import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Utils.AlertAction;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 public class ContractPutDialog extends Dialog<ContractModel> {
     private final TextField nameLocadorField = new TextField();
@@ -99,59 +98,23 @@ public class ContractPutDialog extends Dialog<ContractModel> {
 
     private ContractModel validateAndSave() {
         try {
-            String nameLocador = nameLocadorField.getText().trim();
-            String nameLocatario = nameLocatarioField.getText().trim();
-            String cpfLocatario = cpfLocatarioField.getText().trim();
-            String cpfLocador = cpfLocadorField.getText().trim();
-            String valorAlugStr = valorAlugField.getText().trim();
-            String valorIptuStr = valorIptuField.getText().trim();
-            String valorCondStr = valorCondField.getText().trim();
+            BigDecimal valorAlug = new BigDecimal(valorAlugField.getText().trim());
+            BigDecimal valorIptu = new BigDecimal(valorIptuField.getText().trim());
+            BigDecimal valorCond = new BigDecimal(valorCondField.getText().trim());
 
-            if (nameLocador.isEmpty() || nameLocatario.isEmpty()) {
-                AlertAction.showAlert("Erro", "Preencha os campos de nome do locador e locatário!");
-                return null;
-            }
-            if (cpfLocatario.isEmpty()) {
-                AlertAction.showAlert("Erro", "Preencha o CPF do Locatário!");
-                return null;
-            }
-            if (cpfLocador.isEmpty()) {
-                AlertAction.showAlert("Erro", "Preencha o CPF do Locador!");
-                return null;
-            }
-            if (valorAlugStr.isEmpty() || valorIptuStr.isEmpty() || valorCondStr.isEmpty()) {
-                AlertAction.showAlert("Erro", "Preencha todos os campos de valores!");
-                return null;
-            }
-
-            LocalDate dateInit = dateInitPicker.getValue();
-            LocalDate dateEnd = dateEndPicker.getValue();
-
-            if (dateInit == null || dateEnd == null) {
-                AlertAction.showAlert("Erro", "Selecione as datas de início e fim!");
-                return null;
-            }
-
-            BigDecimal valorAlug = new BigDecimal(valorAlugStr);
-            BigDecimal valorIptu = new BigDecimal(valorIptuStr);
-            BigDecimal valorCond = new BigDecimal(valorCondStr);
-
-            contract.setNameLocador(nameLocador);
-            contract.setNameLocatario(nameLocatario);
-            contract.setCpfLocatario(cpfLocatario);
-            contract.setCpfLocador(cpfLocador);
+            contract.setNameLocador(nameLocadorField.getText().trim());
+            contract.setNameLocatario(nameLocatarioField.getText().trim());
+            contract.setCpfLocatario(cpfLocatarioField.getText().trim());
+            contract.setCpfLocador(cpfLocadorField.getText().trim());
             contract.setValorAlug(valorAlug);
             contract.setValorIptu(valorIptu);
             contract.setValorCond(valorCond);
-            contract.setDateInit(dateInit);
-            contract.setDateEnd(dateEnd);
+            contract.setDateInit(dateInitPicker.getValue());
+            contract.setDateEnd(dateEndPicker.getValue());
 
             return contract;
         } catch (NumberFormatException e) {
             AlertAction.showAlert("Erro", "Valor inválido! Digite números válidos para os valores monetários.");
-            return null;
-        } catch (Exception e) {
-            AlertAction.showAlert("Erro", "Erro ao salvar: " + e.getMessage());
             return null;
         }
     }
