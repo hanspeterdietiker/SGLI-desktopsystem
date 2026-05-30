@@ -9,7 +9,6 @@ import org.desktop.system.sgli.sgli.Utils.AlertAction;
 import javafx.collections.ObservableList;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 
 public class PaymentPutDialog extends Dialog<PaymentModel> {
     private final ComboBox<ContractModel> contractComboBox = new ComboBox<>();
@@ -79,37 +78,16 @@ public class PaymentPutDialog extends Dialog<PaymentModel> {
 
     private PaymentModel validateAndSave() {
         try {
-            ContractModel selectedContract = contractComboBox.getValue();
-            if (selectedContract == null) {
-                AlertAction.showAlert("Erro", "Selecione um contrato!");
-                return null;
-            }
+            BigDecimal valorBase = new BigDecimal(valorBaseField.getText().trim());
 
-            LocalDate monthRef = monthRefPicker.getValue();
-            if (monthRef == null) {
-                AlertAction.showAlert("Erro", "Selecione um mês de referência!");
-                return null;
-            }
-
-            String valorBaseStr = valorBaseField.getText().trim();
-            if (valorBaseStr.isEmpty()) {
-                AlertAction.showAlert("Erro", "Preencha o campo de Valor Base!");
-                return null;
-            }
-
-            BigDecimal valorBase = new BigDecimal(valorBaseStr);
-
-            payment.setContract(selectedContract);
-            payment.setMonthRef(monthRef);
+            payment.setContract(contractComboBox.getValue());
+            payment.setMonthRef(monthRefPicker.getValue());
             payment.setValorBase(valorBase);
 
             return payment;
         } catch (NumberFormatException e) {
             AlertAction.showAlert("Erro", "Valor base inválido! Digite um número válido.");
-            return null;
-        } catch (Exception e) {
-            AlertAction.showAlert("Erro", "Erro ao salvar: " + e.getMessage());
-            return null;
+           return null;
         }
     }
 }

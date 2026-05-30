@@ -23,6 +23,15 @@ public class PaymentService {
     }
 
     public PaymentModel update(PaymentModel payment) {
+        if (payment.getContract() == null) {
+            throw new IllegalArgumentException("Selecione um contrato!");
+        }
+        if (payment.getMonthRef() == null) {
+            throw new IllegalArgumentException("Selecione um Mês de Referência!");
+        }
+        if (payment.getValorBase() == null) {
+            throw new IllegalArgumentException("Preencha o campo de Valor Base!");
+        }
         return paymentRepository.update(payment);
     }
 
