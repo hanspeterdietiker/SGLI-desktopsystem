@@ -17,9 +17,9 @@
     <Text text="Hub de Gerenciamento" styleClass="title-text"/>
     <Text text="Contratos e Pagamentos" styleClass="subtitle-text"/>
 
-    <TabPane styleClass="tab-pane">
+    <TabPane styleClass="tab-pane" >
         <!-- Aba Contratos -->
-        <Tab text="Contratos" closable="false">
+        <Tab styleClass="tab" text="Contratos" closable="false">
             <VBox styleClass="contracts-vbox">
                 <Text text="Gerenciar Contratos" styleClass="section-title"/>
 
@@ -82,7 +82,7 @@
         </Tab>
 
         <!-- Aba Pagamentos -->
-        <Tab text="Pagamentos" closable="false">
+        <Tab styleClass="tab"  text="Pagamentos" closable="false">
             <VBox styleClass="payments-vbox">
                 <Text text="Gerenciar Pagamentos" styleClass="section-title"/>
 
@@ -111,7 +111,7 @@
         </Tab>
 
         <!-- Aba Listar Contratos -->
-        <Tab text="Listar Contratos" closable="false">
+        <Tab styleClass="tab" text="Listar Contratos" closable="false">
             <VBox styleClass="list-contracts-vbox">
                 <Text text="Lista de Contratos" styleClass="section-title"/>
                 <TableView fx:id="contractsTable" styleClass="contracts-table">
@@ -173,7 +173,7 @@
         </Tab>
 
         <!-- Aba Listar Pagamentos -->
-        <Tab text="Listar Pagamentos" closable="false">
+        <Tab styleClass="tab" text="Listar Pagamentos" closable="false">
             <VBox styleClass="list-payments-vbox">
                 <Text text="Lista de Pagamentos" styleClass="section-title"/>
                 <TableView fx:id="paymentsTable" styleClass="payments-table">
