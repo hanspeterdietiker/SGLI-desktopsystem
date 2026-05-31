@@ -87,6 +87,7 @@ public class PdfReportService {
             } else {
                 for (PaymentModel payment : paymentsList) {
                     doc.add(new Paragraph("Locatario: " + payment.getContract().getNameLocatario()));
+                    doc.add(new Paragraph("CPF Locatario: " + payment.getContract().getCpfLocatario()));
                     doc.add(new Paragraph("Mes de Referencia: " + payment.getMonthRef().format(dateFormatter)));
                     doc.add(new Paragraph("Valor Base R$ " + decimalFormat.format(payment.getValorBase())));
                     doc.add(new Paragraph("\n"));
