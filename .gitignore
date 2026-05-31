@@ -38,5 +38,6 @@ build/
 ### Mac OS ###
 .DS_Store
 
-## CLAUDE ### Logs ###
+## CLAUDE ###
 CLAUDE.md
+.spec
