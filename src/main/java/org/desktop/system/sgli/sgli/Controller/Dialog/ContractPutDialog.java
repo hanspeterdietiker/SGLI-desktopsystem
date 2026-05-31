@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Utils.AlertAction;
+import org.desktop.system.sgli.sgli.Utils.FormUtils;
 
 import java.math.BigDecimal;
 
@@ -26,6 +27,8 @@ public class ContractPutDialog extends Dialog<ContractModel> {
         getDialogPane().setPrefWidth(600);
         getDialogPane().setPrefHeight(560);
 
+
+        FormUtils.applyCpfMask(cpfLocatarioField, cpfLocadorField);
 
         nameLocadorField.setText(contract.getNameLocador());
         nameLocatarioField.setText(contract.getNameLocatario());

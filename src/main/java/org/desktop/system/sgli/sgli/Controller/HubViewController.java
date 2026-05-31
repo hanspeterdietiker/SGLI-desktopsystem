@@ -81,6 +81,7 @@ public class HubViewController {
     @FXML
     public void initialize() {
 
+
         for (TableColumn<ContractModel, ?> column : contractsTable.getColumns()) {
             if ("Data Início".equals(column.getText())) {
                 @SuppressWarnings("unchecked") TableColumn<ContractModel, LocalDate> dateInitColumn = (TableColumn<ContractModel, LocalDate>) column;

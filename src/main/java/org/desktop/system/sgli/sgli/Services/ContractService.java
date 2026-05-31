@@ -2,6 +2,7 @@ package org.desktop.system.sgli.sgli.Services;
 
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Repository.ContractRepository;
+import org.desktop.system.sgli.sgli.Utils.CpfUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -34,11 +35,11 @@ public class ContractService {
         if (isBlank(contract.getNameLocador()) || isBlank(contract.getNameLocatario())) {
             throw new IllegalArgumentException("Preencha os campos de nome do locador e locatário!");
         }
-        if (isBlank(contract.getCpfLocatario())) {
-            throw new IllegalArgumentException("Preencha o CPF do Locatário!");
+        if (!CpfUtils.isFormatValid(contract.getCpfLocatario())) {
+            throw new IllegalArgumentException("CPF do Locatário inválido! Use o formato 000.000.000-00.");
         }
-        if (isBlank(contract.getCpfLocador())) {
-            throw new IllegalArgumentException("Preencha o CPF do Locador!");
+        if (!CpfUtils.isFormatValid(contract.getCpfLocador())) {
+            throw new IllegalArgumentException("CPF do Locador inválido! Use o formato 000.000.000-00.");
         }
         if (contract.getValorAlug() == null || contract.getValorIptu() == null || contract.getValorCond() == null) {
             throw new IllegalArgumentException("Valor numérico inválido!");
@@ -72,11 +73,11 @@ public class ContractService {
                 nameLocatario == null || nameLocatario.trim().isEmpty()) {
             throw new IllegalArgumentException("Preencha os campos de nome do locador e locatário!");
         }
-        if (cpfLocatario == null || cpfLocatario.trim().isEmpty()) {
-            throw new IllegalArgumentException("Preencha o CPF do Locatário!");
+        if (!CpfUtils.isFormatValid(cpfLocatario)) {
+            throw new IllegalArgumentException("CPF do Locatário inválido! Use o formato 000.000.000-00.");
         }
-        if (cpfLocador == null || cpfLocador.trim().isEmpty()) {
-            throw new IllegalArgumentException("Preencha o CPF do Locador!");
+        if (!CpfUtils.isFormatValid(cpfLocador)) {
+            throw new IllegalArgumentException("CPF do Locador inválido! Use o formato 000.000.000-00.");
         }
 
         BigDecimal valorAlug;
@@ -94,7 +95,6 @@ public class ContractService {
         return new ContractModel(null, nameLocador.trim(), nameLocatario.trim(),
                 cpfLocatario.trim(), cpfLocador.trim(), valorAlug, valorIptu, valorCond, dateInit, dateEnd);
     }
-
 
 
 }
