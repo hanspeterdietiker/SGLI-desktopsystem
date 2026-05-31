@@ -22,9 +22,23 @@ public class ContractService {
             String valorAlugStr, String valorIptuStr, String valorCondStr,
             LocalDate dateInit, LocalDate dateEnd) {
 
-        ContractModel contract = validate(
+        ContractModel contract = validateContractField(
                 nameLocador, nameLocatario, cpfLocatario, cpfLocador,
                 valorAlugStr, valorIptuStr, valorCondStr, dateInit, dateEnd);
+
+        if (contractRepository.existsByNameLocatario(nameLocatario)) {
+            throw new IllegalArgumentException(
+                    "Já existe um contrato com o Locatario: \"" + nameLocatario.trim() + "\".\n" +
+                            "Se necessário, edite ou exclua o contrato existente.");
+        }
+
+        if (contractRepository.existsByCpfLocatario(cpfLocatario)) {
+            throw new IllegalArgumentException(
+                    "Ja existe um contrato com o numero de CPF:\"" + cpfLocatario.trim() + "\".\n" +
+                            "Se necessário, edite ou exclua o contrato existente."
+            );
+        }
+
         return contractRepository.save(contract);
     }
 
@@ -61,7 +75,7 @@ public class ContractService {
     }
 
 
-    private static ContractModel validate(
+    private static ContractModel validateContractField(
             String nameLocador, String nameLocatario, String cpfLocatario, String cpfLocador,
             String valorAlugStr, String valorIptuStr, String valorCondStr,
             LocalDate dateInit, LocalDate dateEnd) {
@@ -79,6 +93,7 @@ public class ContractService {
         if (!CpfUtils.isFormatValid(cpfLocador)) {
             throw new IllegalArgumentException("CPF do Locador inválido! Use o formato 000.000.000-00.");
         }
+
 
         BigDecimal valorAlug;
         BigDecimal valorIptu;

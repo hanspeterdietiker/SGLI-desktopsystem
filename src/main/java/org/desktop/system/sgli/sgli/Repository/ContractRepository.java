@@ -24,6 +24,26 @@ public class ContractRepository {
         });
     }
 
+    public boolean existsByNameLocatario(String nameLocatario) {
+        try (EntityManager entityManager = JpaUtil.getEntityManager()) {
+            Long count = entityManager
+                    .createQuery("SELECT COUNT(c) FROM ContractModel c WHERE LOWER(c.nameLocatario) = LOWER(:nameLocatario)", Long.class)
+                    .setParameter("nameLocatario", nameLocatario.trim())
+                    .getSingleResult();
+            return count > 0;
+        }
+    }
+
+    public boolean existsByCpfLocatario(String cpfLocatario) {
+        try (EntityManager entityManager = JpaUtil.getEntityManager()) {
+            Long count = entityManager
+                    .createQuery("SELECT COUNT(c) FROM ContractModel c WHERE c.cpfLocatario = :cpfLocatario", Long.class)
+                    .setParameter("cpfLocatario", cpfLocatario.trim())
+                    .getSingleResult();
+            return count > 0;
+        }
+    }
+
     public ContractModel update(ContractModel contract) {
         return executeInTransaction(entityManager -> entityManager.merge(contract));
     }
