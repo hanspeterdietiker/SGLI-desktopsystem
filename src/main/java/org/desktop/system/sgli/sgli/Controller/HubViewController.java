@@ -16,15 +16,13 @@ import org.desktop.system.sgli.sgli.Controller.Dialog.PaymentPutDialog;
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Entity.PaymentModel;
 import org.desktop.system.sgli.sgli.Utils.AlertAction;
+import org.desktop.system.sgli.sgli.Utils.DateFormatterUtils;
+import org.desktop.system.sgli.sgli.Utils.DecimalFormatterUtils;
 import org.desktop.system.sgli.sgli.Utils.FormUtils;
 
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.function.Consumer;
 
 
@@ -73,14 +71,11 @@ public class HubViewController {
     private final ContractService contractService = new ContractService();
     private final PaymentService paymentService = new PaymentService();
 
-    // Formatadores
-    DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    DecimalFormat decimalFormat = new DecimalFormat("#,##0.00", new DecimalFormatSymbols(new Locale("pt", "BR")));
-
+    
 
     @FXML
     public void initialize() {
-
+        FormUtils.applyCpfMask(cpfLocatarioField, cpfLocadorField);
 
         for (TableColumn<ContractModel, ?> column : contractsTable.getColumns()) {
             if ("Data Início".equals(column.getText())) {
@@ -89,7 +84,7 @@ public class HubViewController {
                     @Override
                     protected void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
-                        setText(empty || item == null ? null : dateFormatter.format(item));
+                        setText(empty || item == null ? null : DateFormatterUtils.dateFormatter.format(item));
                     }
                 });
             } else if ("Data Fim".equals(column.getText())) {
@@ -98,7 +93,7 @@ public class HubViewController {
                     @Override
                     protected void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
-                        setText(empty || item == null ? null : dateFormatter.format(item));
+                        setText(empty || item == null ? null : DateFormatterUtils.dateFormatter.format(item));
                     }
                 });
             }
@@ -112,7 +107,7 @@ public class HubViewController {
                     @Override
                     protected void updateItem(BigDecimal item, boolean empty) {
                         super.updateItem(item, empty);
-                        setText(empty || item == null ? null : "R$ " + decimalFormat.format(item));
+                        setText(empty || item == null ? null : "R$ " + DecimalFormatterUtils.decimalFormat.format(item));
                     }
                 });
             } else if ("IPTU".equals(column.getText())) {
@@ -121,7 +116,7 @@ public class HubViewController {
                     @Override
                     protected void updateItem(BigDecimal item, boolean empty) {
                         super.updateItem(item, empty);
-                        setText(empty || item == null ? null : "R$ " + decimalFormat.format(item));
+                        setText(empty || item == null ? null : "R$ " + DecimalFormatterUtils.decimalFormat.format(item));
                     }
                 });
             } else if ("Condomínio".equals(column.getText())) {
@@ -130,7 +125,7 @@ public class HubViewController {
                     @Override
                     protected void updateItem(BigDecimal item, boolean empty) {
                         super.updateItem(item, empty);
-                        setText(empty || item == null ? null : "R$ " + decimalFormat.format(item));
+                        setText(empty || item == null ? null : "R$ " + DecimalFormatterUtils.decimalFormat.format(item));
                     }
                 });
             }
@@ -144,7 +139,7 @@ public class HubViewController {
                     @Override
                     protected void updateItem(BigDecimal item, boolean empty) {
                         super.updateItem(item, empty);
-                        setText(empty || item == null ? null : "R$ " + decimalFormat.format(item));
+                        setText(empty || item == null ? null : "R$ " + DecimalFormatterUtils.decimalFormat.format(item));
                     }
                 });
             }
@@ -156,7 +151,7 @@ public class HubViewController {
                     @Override
                     protected void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
-                        setText(empty || item == null ? null : dateFormatter.format(item));
+                        setText(empty || item == null ? null : DateFormatterUtils.dateFormatter.format(item));
                     }
                 });
             }
@@ -330,7 +325,7 @@ public class HubViewController {
 
     @FXML
     private void exportReportContract() {
-        PdfReportService.exportContractsReport(contractsList, dateFormatter, decimalFormat);
+        PdfReportService.exportContractsReport(contractsList);
     }
 
     @FXML
@@ -364,7 +359,7 @@ public class HubViewController {
 
     @FXML
     private void exportReportPayment() {
-        PdfReportService.exportPaymentsReport(paymentsList, dateFormatter, decimalFormat);
+        PdfReportService.exportPaymentsReport(paymentsList);
     }
 
 
