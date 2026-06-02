@@ -137,7 +137,4 @@ public class ContractModel {
         this.contractType = contractType;
     }
 
-    public Enum getTypeContract() {
-        return contractType;
-    }
 }
