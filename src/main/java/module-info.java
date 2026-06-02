@@ -13,6 +13,7 @@ module org.desktop.system.sgli.sgli {
     exports org.desktop.system.sgli.sgli;
     exports org.desktop.system.sgli.sgli.Controller;
     exports org.desktop.system.sgli.sgli.Entity;
+    exports org.desktop.system.sgli.sgli.Entity.Enum;
 
 
 }
