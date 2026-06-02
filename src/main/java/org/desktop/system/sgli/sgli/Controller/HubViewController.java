@@ -256,7 +256,7 @@ public class HubViewController {
         if (semInformRadio.isSelected()) {
             return ContractTypeEnum.NO_INFORM;
         }
-        return ContractTypeEnum.CAUÇÃO;
+        return ContractTypeEnum.CAUCAO;
     }
 
     @FXML

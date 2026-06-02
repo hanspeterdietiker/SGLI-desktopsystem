@@ -146,7 +146,7 @@ public class ContractPutDialog extends Dialog<ContractModel> {
     private ContractTypeEnum resolveContractType() {
         if (fiadorRadio.isSelected()) return ContractTypeEnum.FIADOR;
         if (semInformRadio.isSelected()) return ContractTypeEnum.NO_INFORM;
-        return ContractTypeEnum.CAUÇÃO;
+        return ContractTypeEnum.CAUCAO;
     }
 }
 
