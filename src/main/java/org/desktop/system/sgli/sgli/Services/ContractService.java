@@ -112,7 +112,8 @@ public class ContractService {
             valorIptu = new BigDecimal(valorIptuStr.trim());
             valorCond = new BigDecimal(valorCondStr.trim());
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Valor numérico inválido! Digite apenas números válidos para aluguel, IPTU e condomínio.");
+            throw new IllegalArgumentException("Valor numérico inválido:\n " +
+                    "Digite apenas números válidos para aluguel, IPTU e condomínio.");
         }
 
         return new ContractModel(null, nameLocador.trim(), nameLocatario.trim(),
