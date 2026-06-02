@@ -41,3 +41,4 @@ build/
 ## CLAUDE ###
 CLAUDE.md
 .spec
+.claude
