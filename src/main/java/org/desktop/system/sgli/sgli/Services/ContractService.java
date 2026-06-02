@@ -1,6 +1,7 @@
 package org.desktop.system.sgli.sgli.Services;
 
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
+import org.desktop.system.sgli.sgli.Entity.Enum.ContractTypeEnum;
 import org.desktop.system.sgli.sgli.Repository.ContractRepository;
 import org.desktop.system.sgli.sgli.Utils.CpfUtils;
 
@@ -20,11 +21,11 @@ public class ContractService {
     public ContractModel save(
             String nameLocador, String nameLocatario, String cpfLocatario, String cpfLocador,
             String valorAlugStr, String valorIptuStr, String valorCondStr,
-            LocalDate dateInit, LocalDate dateEnd) {
+            LocalDate dateInit, LocalDate dateEnd, ContractTypeEnum contractType) {
 
         ContractModel contract = validateContractField(
                 nameLocador, nameLocatario, cpfLocatario, cpfLocador,
-                valorAlugStr, valorIptuStr, valorCondStr, dateInit, dateEnd);
+                valorAlugStr, valorIptuStr, valorCondStr, dateInit, dateEnd, contractType);
 
         if (contractRepository.existsByNameLocatario(nameLocatario)) {
             throw new IllegalArgumentException(
@@ -36,6 +37,7 @@ public class ContractService {
             throw new IllegalArgumentException(
                     "Ja existe um contrato com o numero de CPF:\"" + cpfLocatario.trim() + "\".\n" +
                             "Se necessário, edite ou exclua o contrato existente."
+                    
             );
         }
 
@@ -58,6 +60,9 @@ public class ContractService {
         if (contract.getValorAlug() == null || contract.getValorIptu() == null || contract.getValorCond() == null) {
             throw new IllegalArgumentException("Valor numérico inválido!");
         }
+        if (contract.getContractType() == null) {
+            throw new IllegalArgumentException("Selecione um tipo de contrato!");
+        }
         return contractRepository.update(contract);
     }
 
@@ -78,7 +83,7 @@ public class ContractService {
     private static ContractModel validateContractField(
             String nameLocador, String nameLocatario, String cpfLocatario, String cpfLocador,
             String valorAlugStr, String valorIptuStr, String valorCondStr,
-            LocalDate dateInit, LocalDate dateEnd) {
+            LocalDate dateInit, LocalDate dateEnd, ContractTypeEnum contractType) {
 
         if (dateInit == null || dateEnd == null) {
             throw new IllegalArgumentException("Selecione as datas de início e fim do contrato!");
@@ -94,6 +99,9 @@ public class ContractService {
             throw new IllegalArgumentException("CPF do Locador inválido! Use o formato 000.000.000-00.");
         }
 
+        if (contractType == null) {
+            throw new IllegalArgumentException("Selecione um tipo de contrato!");
+        }
 
         BigDecimal valorAlug;
         BigDecimal valorIptu;
@@ -108,7 +116,7 @@ public class ContractService {
         }
 
         return new ContractModel(null, nameLocador.trim(), nameLocatario.trim(),
-                cpfLocatario.trim(), cpfLocador.trim(), valorAlug, valorIptu, valorCond, dateInit, dateEnd);
+                cpfLocatario.trim(), cpfLocador.trim(), valorAlug, valorIptu, valorCond, dateInit, dateEnd, contractType );
     }
 
 

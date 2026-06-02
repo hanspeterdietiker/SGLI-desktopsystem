@@ -1,6 +1,7 @@
 package org.desktop.system.sgli.sgli.Entity;
 
 import jakarta.persistence.*;
+import org.desktop.system.sgli.sgli.Entity.Enum.ContractTypeEnum;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -25,10 +26,16 @@ public class ContractModel {
     private LocalDate dateInit;
     private LocalDate dateEnd;
 
+
+    @Enumerated(value = EnumType.STRING)
+    private ContractTypeEnum contractType;
+
     @OneToMany(mappedBy = "contract", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PaymentModel> payments;
 
-    public ContractModel(UUID id, String nameLocador, String nameLocatario, String cpfLocatario, String cpfLocador, BigDecimal valorAlug, BigDecimal valorIptu, BigDecimal valorCond, LocalDate dateInit, LocalDate dateEnd) {
+    public ContractModel(UUID id, String nameLocador, String nameLocatario, String cpfLocatario, String cpfLocador, BigDecimal valorAlug,
+                         BigDecimal valorIptu, BigDecimal valorCond,
+                         LocalDate dateInit, LocalDate dateEnd, ContractTypeEnum contractType) {
         this.id = id;
         this.nameLocador = nameLocador;
         this.nameLocatario = nameLocatario;
@@ -39,6 +46,7 @@ public class ContractModel {
         this.valorCond = valorCond;
         this.dateInit = dateInit;
         this.dateEnd = dateEnd;
+        this.contractType = contractType;
     }
     public ContractModel() {}
 
@@ -120,5 +128,12 @@ public class ContractModel {
 
     public void setDateEnd(LocalDate dateEnd) {
         this.dateEnd = dateEnd;
+    }
+    public ContractTypeEnum getContractType() {
+        return contractType;
+    }
+
+    public void setContractType(ContractTypeEnum contractType) {
+        this.contractType = contractType;
     }
 }

@@ -14,6 +14,7 @@ import org.desktop.system.sgli.sgli.Components.ActionTableCell;
 import org.desktop.system.sgli.sgli.Controller.Dialog.ContractPutDialog;
 import org.desktop.system.sgli.sgli.Controller.Dialog.PaymentPutDialog;
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
+import org.desktop.system.sgli.sgli.Entity.Enum.ContractTypeEnum;
 import org.desktop.system.sgli.sgli.Entity.PaymentModel;
 import org.desktop.system.sgli.sgli.Utils.AlertAction;
 import org.desktop.system.sgli.sgli.Utils.DateFormatterUtils;
@@ -47,6 +48,12 @@ public class HubViewController {
     private DatePicker dateInitPicker;
     @FXML
     private DatePicker dateEndPicker;
+    @FXML
+    private RadioButton caucaoRadio;
+    @FXML
+    private RadioButton fiadorRadio;
+    @FXML
+    private RadioButton semInformRadio;
 
     // Payment
     @FXML
@@ -220,11 +227,13 @@ public class HubViewController {
     private void saveContract() {
         try {
 
+            ContractTypeEnum contractType = resolveContractType();
+
             ContractModel savedContract = contractService.save(
                     nameLocadorField.getText(), nameLocatarioField.getText(),
                     cpfLocatarioField.getText(), cpfLocadorField.getText(),
                     valorAlugField.getText(), valorIptuField.getText(), valorCondField.getText(),
-                    dateInitPicker.getValue(), dateEndPicker.getValue());
+                    dateInitPicker.getValue(), dateEndPicker.getValue(), contractType);
             contractsList.add(savedContract);
             AlertAction.showAlert("Sucesso", "Contrato salvo com sucesso!");
 
@@ -238,6 +247,16 @@ public class HubViewController {
 
             AlertAction.showAlert("Erro Inesperado", "Erro ao salvar contrato: " + e.getMessage());
         }
+    }
+
+    private ContractTypeEnum resolveContractType() {
+        if (fiadorRadio.isSelected()) {
+            return ContractTypeEnum.FIADOR;
+        }
+        if (semInformRadio.isSelected()) {
+            return ContractTypeEnum.NO_INFORM;
+        }
+        return ContractTypeEnum.CAUÇÃO;
     }
 
     @FXML
@@ -342,6 +361,7 @@ public class HubViewController {
 
     private void clearFieldContract() {
         FormUtils.clearFields(nameLocadorField, nameLocatarioField, cpfLocatarioField, cpfLocadorField, valorAlugField, valorIptuField, valorCondField, dateInitPicker, dateEndPicker);
+        caucaoRadio.setSelected(true);
 
     }
 

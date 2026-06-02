@@ -3,7 +3,9 @@ package org.desktop.system.sgli.sgli.Controller.Dialog;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
+import org.desktop.system.sgli.sgli.Entity.Enum.ContractTypeEnum;
 import org.desktop.system.sgli.sgli.Utils.AlertAction;
 import org.desktop.system.sgli.sgli.Utils.FormUtils;
 
@@ -19,14 +21,21 @@ public class ContractPutDialog extends Dialog<ContractModel> {
     private final TextField valorCondField = new TextField();
     private final DatePicker dateInitPicker = new DatePicker();
     private final DatePicker dateEndPicker = new DatePicker();
+    private final RadioButton caucaoRadio = new RadioButton("Caução");
+    private final RadioButton fiadorRadio = new RadioButton("Fiador");
+    private final RadioButton semInformRadio = new RadioButton("Sem Informação");
+    private final ToggleGroup contractTypeGroup = new ToggleGroup();
     private final ContractModel contract;
 
     public ContractPutDialog(ContractModel contract) {
         this.contract = contract;
         setTitle("Editar Contrato");
         getDialogPane().setPrefWidth(600);
-        getDialogPane().setPrefHeight(560);
+        getDialogPane().setPrefHeight(600);
 
+        caucaoRadio.setToggleGroup(contractTypeGroup);
+        fiadorRadio.setToggleGroup(contractTypeGroup);
+        semInformRadio.setToggleGroup(contractTypeGroup);
 
         FormUtils.applyCpfMask(cpfLocatarioField, cpfLocadorField);
 
@@ -40,6 +49,14 @@ public class ContractPutDialog extends Dialog<ContractModel> {
         dateInitPicker.setValue(contract.getDateInit());
         dateEndPicker.setValue(contract.getDateEnd());
 
+        ContractTypeEnum currentType = contract.getContractType();
+        if (currentType == ContractTypeEnum.FIADOR) {
+            fiadorRadio.setSelected(true);
+        } else if (currentType == ContractTypeEnum.NO_INFORM) {
+            semInformRadio.setSelected(true);
+        } else {
+            caucaoRadio.setSelected(true);
+        }
 
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(20));
@@ -73,6 +90,9 @@ public class ContractPutDialog extends Dialog<ContractModel> {
         gridPane.add(new Label("Data Fim:"), 0, 8);
         gridPane.add(dateEndPicker, 1, 8);
 
+        HBox contractTypeBox = new HBox(15, caucaoRadio, fiadorRadio, semInformRadio);
+        gridPane.add(new Label("Tipo de Contrato:"), 0, 9);
+        gridPane.add(contractTypeBox, 1, 9);
 
         nameLocadorField.setPrefWidth(250);
         nameLocatarioField.setPrefWidth(250);
@@ -114,12 +134,19 @@ public class ContractPutDialog extends Dialog<ContractModel> {
             contract.setValorCond(valorCond);
             contract.setDateInit(dateInitPicker.getValue());
             contract.setDateEnd(dateEndPicker.getValue());
+            contract.setContractType(resolveContractType());
 
             return contract;
         } catch (NumberFormatException e) {
             AlertAction.showAlert("Erro", "Valor inválido! Digite números válidos para os valores monetários.");
             return null;
         }
+    }
+
+    private ContractTypeEnum resolveContractType() {
+        if (fiadorRadio.isSelected()) return ContractTypeEnum.FIADOR;
+        if (semInformRadio.isSelected()) return ContractTypeEnum.NO_INFORM;
+        return ContractTypeEnum.CAUÇÃO;
     }
 }
 
