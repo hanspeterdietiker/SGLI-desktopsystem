@@ -21,9 +21,9 @@ public class ContractPutDialog extends Dialog<ContractModel> {
     private final TextField valorCondField = new TextField();
     private final DatePicker dateInitPicker = new DatePicker();
     private final DatePicker dateEndPicker = new DatePicker();
-    private final RadioButton caucaoRadio = new RadioButton("Caução");
-    private final RadioButton fiadorRadio = new RadioButton("Fiador");
-    private final RadioButton semInformRadio = new RadioButton("Sem Informação");
+    private final RadioButton caucaoRadio = new RadioButton(ContractTypeEnum.CAUCAO.getLabel());
+    private final RadioButton fiadorRadio = new RadioButton(ContractTypeEnum.FIADOR.getLabel());
+    private final RadioButton semInformRadio = new RadioButton(ContractTypeEnum.NO_INFORM.getLabel());
     private final ToggleGroup contractTypeGroup = new ToggleGroup();
     private final ContractModel contract;
 

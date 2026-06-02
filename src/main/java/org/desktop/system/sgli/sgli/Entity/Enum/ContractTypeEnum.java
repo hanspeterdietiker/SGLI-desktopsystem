@@ -14,4 +14,8 @@ public enum ContractTypeEnum {
     public String getLabel() {
         return label;
     }
+
+    public String toString() {
+        return label;
+    }
 }
