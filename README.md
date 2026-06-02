@@ -1,68 +1,184 @@
-# Sistema de Gestão de Locação e Relatórios Fiscais - SGLI
+# SGLI System
 
-Uma aplicação desktop robusta e intuitiva desenvolvida para simplificar a gestão financeira de contratos de aluguel e a preparação de dados para a Declaração de Imposto de Renda.
+**Sistema de Gestão de Locação e Relatórios Fiscais**
 
-## 🚀 Sobre o Projeto
+Aplicação desktop feita em JavaFX para organizar contratos de aluguel, registrar pagamentos mensais e gerar relatórios em PDF para apoio à declaração de Imposto de Renda.
 
-Este sistema foi concebido para resolver a complexidade de organizar pagamentos mensais de aluguel, IPTU e condomínio, transformando dados brutos em relatórios organizados e prontos para fins fiscais. Com foco em privacidade e performance, a aplicação opera de forma totalmente local.
+---
 
-## ✨ Funcionalidades Principais
+## Visão Geral
 
-* **Gestão de Pagamentos:** Registro simplificado de valores de Aluguel, IPTU e Condomínio.
-* **Cálculos Automáticos:** Totalização imediata de Pagamentos mensais e Acumulados anuais.
-* **Monitoramento de Contratos:** Controle por Tabelas de vigencia de Contrato e Valores.
-* **Exportação para PDF:** Geração de documentos formatados especificamente para a Declaração de Imposto de Renda, separando valores dedutíveis.
-* **Privacidade Local:** Todos os dados são armazenados de forma segura no computador do usuário, sem necessidade de conexão externa.
+O SGLI foi criado para centralizar a gestão de locações em um sistema simples, local e direto ao ponto.
 
-## 🛠️ Tecnologias Utilizadas
+### O que o sistema faz
 
-* **Interface Gráfica:** JavaFX (com FXML e CSS para design responsivo).
-* **Persistência:** Banco de dados embarcado (SQLite) garantindo portabilidade.
-* **Relatórios:** Apache ItextPdf para a construção dinâmica de documentos.
-* **Distribuição:** Empacotamento nativo via `jpackage` para instalação direta.
+- Cadastra contratos de locação.
+- Registra pagamentos mensais.
+- Controla valores de aluguel, IPTU e condomínio.
+- Mantém os dados salvos localmente em SQLite.
+- Gera relatórios em PDF de contratos e pagamentos.
+- Funciona offline, sem depender de serviços externos.
 
-## 📂 Estrutura do Repositório
+### Público-alvo
 
-O projeto segue uma estrutura modular para facilitar a manutenção e escalabilidade:
+- Pessoas que administram imóveis alugados.
+- Locadores que precisam organizar dados para fins fiscais.
+- Usuários que desejam um sistema desktop local, simples e privado.
 
-* `src/main/java`: Contém a lógica de negócio, controladores de interface e serviços de persistência.
-* `src/main/resources`: Arquivos FXML, estilos CSS e recursos de imagem.
+---
 
+## Funcionalidades
 
+| Área | Recursos |
+| --- | --- |
+| Contratos | Cadastro, edição, remoção e listagem de contratos |
+| Pagamentos | Registro e manutenção de pagamentos por contrato |
+| Relatórios | Exportação de relatórios em PDF |
+| Persistência | Banco SQLite local criado automaticamente |
+| Interface | Telas JavaFX com FXML e CSS |
 
-## 🔧 Como Executar via Terminal
+---
 
-Para rodar o projeto localmente, certifique-se de ter o JDK 17+ instalado. Além disso, é necessário ter o **Git** e o **Maven** configurados no seu ambiente de desenvolvimento.
+## Tecnologias
 
-Siga o passo a passo abaixo para compilar e iniciar a aplicação:
+- **Java 21**
+- **JavaFX 17**
+- **Maven**
+- **SQLite**
+- **Hibernate / JPA**
+- **iText PDF**
+- **JUnit 5**
 
+---
 
-Abra o seu terminal e baixe o código-fonte para a sua máquina:
-```bash
-1. Clonando o repositório do projeto:
-git clone [https://github.com/hanspeter-dietiker/sgli-system.git](https://github.com/hanspeter-dietiker/sgli-system.git)
+## Estrutura do Projeto
 
-2. Acesse a pasta do projeto
-Navegue para o diretório raiz da aplicação que acabou de ser criada:
-
-Bash
-cd sgli-system
-
-3. Compile o projeto
-Execute o comando abaixo através do seu gerenciador de build para limpar builds antigos, baixar todas as dependências necessárias e compilar o código:
-
-Bash
-mvn clean install
-
-4. Inicie o sistema
-Como a aplicação utiliza a interface gráfica do JavaFX, rode o comando abaixo para iniciar o aplicativo com as permissões de módulos corretas:
-
-Bash
-mvn javafx:run
-
+```text
+SGLI/
++-- docs/
+|   +-- ARQUITETURA.md
+|   +-- EXECUCAO.md
+|   +-- VISAO-GERAL.md
++-- src/
+|   +-- main/
+|       +-- java/
+|       +-- resources/
++-- pom.xml
++-- mvnw
++-- mvnw.cmd
++-- README.md
 ```
-Desenvolvido
 
-Github: [Hanspeter Dietiker](https://github.com/hanspeterdietiker)
+### Principais diretórios
 
-Linkedin: [Hanspeter Dietiker](https://www.linkedin.com/in/hanspeterdietiker/)
+- `src/main/java`: código Java da aplicação.
+- `src/main/resources`: telas FXML, estilos CSS e imagens.
+- `docs`: documentação detalhada do projeto.
+- `pom.xml`: dependências e configuração Maven.
+
+---
+
+## Como Executar no Terminal
+
+### 1. Pré-requisitos
+
+Tenha instalado:
+
+- JDK 21 ou superior
+- Git
+- Maven
+
+> Observação: o projeto também possui Maven Wrapper (`mvnw` e `mvnw.cmd`), então é possível executar usando o wrapper sem instalar o Maven globalmente.
+
+### 2. Clonar o repositório
+
+```bash
+git clone https://github.com/hanspeter-dietiker/sgli-system.git
+```
+
+### 3. Entrar na pasta do projeto
+
+```bash
+cd sgli-system
+```
+
+### 4. Compilar o projeto
+
+Com Maven instalado:
+
+```bash
+mvn clean install
+```
+
+No Windows, usando Maven Wrapper:
+
+```bash
+.\mvnw.cmd clean install
+```
+
+No Linux/macOS, usando Maven Wrapper:
+
+```bash
+./mvnw clean install
+```
+
+### 5. Executar a aplicação
+
+Com Maven instalado:
+
+```bash
+mvn javafx:run
+```
+
+No Windows, usando Maven Wrapper:
+
+```bash
+.\mvnw.cmd javafx:run
+```
+
+No Linux/macOS, usando Maven Wrapper:
+
+```bash
+./mvnw javafx:run
+```
+
+---
+
+## Banco de Dados
+
+O banco é criado automaticamente na primeira execução.
+
+| Sistema | Local padrão |
+| --- | --- |
+| Windows | `%LOCALAPPDATA%\SGLI\sgli.db` |
+| Fallback | `~/.sgli/sgli.db` |
+
+O schema é atualizado pelo Hibernate com `hbm2ddl.auto=update`.
+
+---
+
+## Relatórios
+
+Os PDFs são gerados na pasta `Downloads` do usuário:
+
+- `Relatorio_Contratos.pdf`
+- `Relatorio_Pagamentos.pdf`
+
+---
+
+## Documentação
+
+Para mais detalhes:
+
+- [Visão geral](docs/VISAO-GERAL.md)
+- [Como executar](docs/EXECUCAO.md)
+- [Arquitetura](docs/ARQUITETURA.md)
+
+---
+
+## Desenvolvedor
+
+**Hanspeter Dietiker**
+
+- GitHub: [hanspeterdietiker](https://github.com/hanspeterdietiker)
+- LinkedIn: [Hanspeter Dietiker](https://www.linkedin.com/in/hanspeterdietiker/)
