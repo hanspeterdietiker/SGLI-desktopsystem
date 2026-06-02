@@ -37,6 +37,7 @@
 }
 
 .tab {
+
     -fx-background-color: #4A90E2;
     -fx-font-family: 'Dubai Light';
     -fx-font-size: 14px;
@@ -44,6 +45,11 @@
 
 }
 
+.form-radio {
+    -fx-font-family: "Dubai Light";
+    -fx-font-size: 14px;
+    -fx-padding: 10 10;
+}
 
 
 /* Form elements */
@@ -79,8 +85,8 @@
     -fx-font-family: 'Dubai Light';
     -fx-background-color: #4A90E2;
     -fx-text-fill: white;
-    -fx-padding: 10 20;
-    -fx-hgap: 12;
+    -fx-padding: 5 10;
+
 
 }
 
@@ -89,7 +95,7 @@
     -fx-font-family: 'Dubai Light';
     -fx-background-color: #e67e22;
     -fx-text-fill: white;
-    -fx-padding: 10 20;
+    -fx-padding: 5 10;
 }
 
 .edit-button {
@@ -97,7 +103,7 @@
     -fx-font-family: 'Dubai Light';
     -fx-background-color: #27ae60;
     -fx-text-fill: white;
-    -fx-padding: 5 10;
+    -fx-padding: 5 5;
     -fx-cursor: hand;
     -fx-min-width: 70;
 }
@@ -107,7 +113,7 @@
     -fx-font-family: 'Dubai Light';
     -fx-background-color: #e74c3c;
     -fx-text-fill: white;
-    -fx-padding: 5 10;
+    -fx-padding: 5 5;
     -fx-cursor: hand;
     -fx-min-width: 70;
 }
@@ -174,6 +180,7 @@
 .payments-vbox {
     -fx-spacing: 15;
     -fx-padding: 20;
+
 }
 
 .list-contracts-vbox {
@@ -206,5 +213,9 @@
     -fx-alignment: center;
     -fx-hgap: 15;
     -fx-vgap: 12;
-    -fx-padding: 20;
+    -fx-padding: 5;
+}
+
+.action-buttons-column{
+    -fx-pref-width: 200;
 }

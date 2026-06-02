@@ -17,7 +17,7 @@
     <Text text="Hub de Gerenciamento" styleClass="title-text"/>
     <Text text="Contratos e Pagamentos" styleClass="subtitle-text"/>
 
-    <TabPane styleClass="tab-pane" >
+    <TabPane styleClass="tab-pane">
         <!-- Aba Contratos -->
         <Tab styleClass="tab" text="Contratos" closable="false">
             <VBox styleClass="contracts-vbox">
@@ -49,7 +49,8 @@
                            GridPane.columnIndex="0" GridPane.rowIndex="4"/>
                     <TextField fx:id="valorAlugField" promptText="Valor do aluguel" GridPane.columnIndex="1"
                                GridPane.rowIndex="4" styleClass="form-textfield"/>
-
+                    <!-- Espaçador entre colunas -->
+                    <VBox GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.rowSpan="5" styleClass="spacer-30"/>
                     <!-- Segunda coluna -->
                     <Label text="Valor IPTU:" styleClass="form-label"
                            GridPane.columnIndex="3" GridPane.rowIndex="0"/>
@@ -71,8 +72,21 @@
                     <DatePicker fx:id="dateEndPicker" GridPane.columnIndex="4" GridPane.rowIndex="3"
                                 styleClass="form-date-picker"/>
 
-                    <!-- Espaçador entre colunas -->
-                    <VBox GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.rowSpan="5" styleClass="spacer-30"/>
+                    <fx:define>
+                        <ToggleGroup fx:id="contractTypeGroup"/>
+                    </fx:define>
+                    <Label text="Tipo de Contrato:" styleClass="form-label"
+                           GridPane.columnIndex="3" GridPane.rowIndex="4"/>
+                    <HBox
+                            GridPane.columnIndex="4" GridPane.rowIndex="4" GridPane.columnSpan="4">
+                        <RadioButton fx:id="caucaoRadio" text="Caução" selected="true"
+                                     toggleGroup="$contractTypeGroup" styleClass="form-radio"/>
+                        <RadioButton fx:id="fiadorRadio" text="Fiador"
+                                     toggleGroup="$contractTypeGroup" styleClass="form-radio"/>
+                        <RadioButton fx:id="semInformRadio" text="Sem Informação"
+                                     toggleGroup="$contractTypeGroup" styleClass="form-radio"/>
+                    </HBox>
+
                 </GridPane>
                 <HBox styleClass="center-alignment">
                     <Button text="Salvar Contrato" onAction="#saveContract" styleClass="primary-button"/>
@@ -82,7 +96,7 @@
         </Tab>
 
         <!-- Aba Pagamentos -->
-        <Tab styleClass="tab"  text="Pagamentos" closable="false">
+        <Tab styleClass="tab" text="Pagamentos" closable="false">
             <VBox styleClass="payments-vbox">
                 <Text text="Gerenciar Pagamentos" styleClass="section-title"/>
 
@@ -103,9 +117,10 @@
                                 styleClass="form-date-picker"/>
 
                 </GridPane>
-
                 <HBox styleClass="center-alignment">
-                    <Button text="Salvar Pagamento" onAction="#savePayment" styleClass="primary-button"/>
+                    <Button text="Salvar Pagamento" onAction="#savePayment" GridPane.columnIndex="1"
+                            GridPane.rowIndex="3"
+                            styleClass="primary-button"/>
                 </HBox>
             </VBox>
         </Tab>
@@ -156,14 +171,19 @@
                                 <PropertyValueFactory property="dateInit"/>
                             </cellValueFactory>
                         </TableColumn>
-                         <TableColumn text="Data Fim" prefWidth="100">
-                             <cellValueFactory>
-                                 <PropertyValueFactory property="dateEnd"/>
-                             </cellValueFactory>
-                         </TableColumn>
-                         <TableColumn text="Ações" prefWidth="200"/>
-                     </columns>
-                 </TableView>
+                        <TableColumn text="Data Fim" prefWidth="100">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="dateEnd"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Tipo" prefWidth="120">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="contractType"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Ações" styleClass="action-buttons-column"/>
+                    </columns>
+                </TableView>
 
                 <HBox styleClass="center-alignment,spacing-10">
                     <Button text="Atualizar Lista" onAction="#refreshListContract" styleClass="primary-button"/>
@@ -188,14 +208,14 @@
                                 <PropertyValueFactory property="monthRef"/>
                             </cellValueFactory>
                         </TableColumn>
-                         <TableColumn text="Valor Base" prefWidth="100">
-                             <cellValueFactory>
-                                 <PropertyValueFactory property="valorBase"/>
-                             </cellValueFactory>
-                         </TableColumn>
-                         <TableColumn text="Ações" prefWidth="200"/>
-                     </columns>
-                 </TableView>
+                        <TableColumn text="Valor Base" prefWidth="100">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="valorBase"/>
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn text="Ações" styleClass="action-buttons-column"/>
+                    </columns>
+                </TableView>
                 <HBox styleClass="center-alignment, spacing-10">
                     <Button text="Atualizar Lista" onAction="#refreshListPayment" styleClass="primary-button"/>
                     <Button text="Exportar Relatorio" onAction="#exportReportPayment" styleClass="export-button"/>
