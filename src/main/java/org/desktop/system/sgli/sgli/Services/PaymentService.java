@@ -13,8 +13,8 @@ public class PaymentService {
 
     private final PaymentRepository paymentRepository;
 
-    public PaymentService() {
-        this.paymentRepository = new PaymentRepository();
+    public PaymentService(PaymentRepository paymentRepository) {
+        this.paymentRepository = paymentRepository;
     }
 
     public PaymentModel save(ContractModel selectedContract, LocalDate monthRef, String valorBaseStr) {
