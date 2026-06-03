@@ -14,8 +14,9 @@ public class ContractService {
 
     private final ContractRepository contractRepository;
 
-    public ContractService() {
-        this.contractRepository = new ContractRepository();
+
+    public ContractService(ContractRepository contractRepository) {
+        this.contractRepository = contractRepository;
     }
 
     public ContractModel save(
@@ -37,7 +38,7 @@ public class ContractService {
             throw new IllegalArgumentException(
                     "Ja existe um contrato com o numero de CPF:\"" + cpfLocatario.trim() + "\".\n" +
                             "Se necessário, edite ou exclua o contrato existente."
-                    
+
             );
         }
 
@@ -79,6 +80,14 @@ public class ContractService {
         return contractRepository.findAll();
     }
 
+    public static ContractTypeEnum resolveContractType(String type) {
+        return switch (type) {
+            case "FIADOR" -> ContractTypeEnum.FIADOR;
+            case "NO_INFORM" -> ContractTypeEnum.NO_INFORM;
+            default -> ContractTypeEnum.CAUCAO;
+        };
+    }
+
 
     private static ContractModel validateContractField(
             String nameLocador, String nameLocatario, String cpfLocatario, String cpfLocador,
@@ -117,7 +126,7 @@ public class ContractService {
         }
 
         return new ContractModel(null, nameLocador.trim(), nameLocatario.trim(),
-                cpfLocatario.trim(), cpfLocador.trim(), valorAlug, valorIptu, valorCond, dateInit, dateEnd, contractType );
+                cpfLocatario.trim(), cpfLocador.trim(), valorAlug, valorIptu, valorCond, dateInit, dateEnd, contractType);
     }
 
 
