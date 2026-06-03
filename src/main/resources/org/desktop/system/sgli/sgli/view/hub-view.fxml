@@ -186,6 +186,11 @@
                 </TableView>
 
                 <HBox styleClass="center-alignment,spacing-10">
+                    <Button fx:id="prevPageButton" text="&lt;" onAction="#goToPrevPage" styleClass="pag-button"/>
+                    <Label fx:id="pageLabel" text="Página 1 de 1" styleClass="form-label"/>
+                    <Button fx:id="nextPageButton" text="&gt;" onAction="#goToNextPage" styleClass="pag-button"/>
+                </HBox>
+                <HBox styleClass="center-alignment,spacing-10">
                     <Button text="Atualizar Lista" onAction="#refreshListContract" styleClass="primary-button"/>
                     <Button text="Exportar Relatorio" onAction="#exportReportContract" styleClass="export-button"/>
                 </HBox>
