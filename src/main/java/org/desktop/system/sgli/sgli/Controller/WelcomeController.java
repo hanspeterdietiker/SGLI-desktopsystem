@@ -18,8 +18,8 @@ public class WelcomeController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/desktop/system/sgli/sgli/view/hub-view.fxml"));
         loader.setControllerFactory(c -> InjectionRoot.hubViewController());
         Parent root = loader.load();
-        
-        Scene hubScene = new Scene(root, 1280, 720);
+
+        Scene hubScene = new Scene(root, 1368, 720);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         stage.setScene(hubScene);
