@@ -70,8 +70,19 @@ public class HubViewController {
     private TableView<PaymentModel> paymentsTable;
 
 
+    // Pagination
+    @FXML
+    private Label pageLabel;
+    @FXML
+    private Button prevPageButton;
+    @FXML
+    private Button nextPageButton;
+
+    private int currentPage = 0;
+
     //  List Contract and Payment
     private final ObservableList<ContractModel> contractsList = FXCollections.observableArrayList();
+    private final ObservableList<ContractModel> pagedContractsList = FXCollections.observableArrayList();
     private final ObservableList<PaymentModel> paymentsList = FXCollections.observableArrayList();
 
     private final ContractService contractService;
@@ -182,7 +193,7 @@ public class HubViewController {
             }
         }
 
-        contractsTable.setItems(contractsList);
+        contractsTable.setItems(pagedContractsList);
         paymentsTable.setItems(paymentsList);
 
 
@@ -233,12 +244,12 @@ public class HubViewController {
             String selectedType = fiadorRadio.isSelected() ? "FIADOR" : semInformRadio.isSelected() ? "NO_INFORM" : "CAUCAO";
             ContractTypeEnum contractType = ContractService.resolveContractType(selectedType);
 
-            ContractModel savedContract = contractService.save(
+            contractService.save(
                     nameLocadorField.getText(), nameLocatarioField.getText(),
                     cpfLocatarioField.getText(), cpfLocadorField.getText(),
                     valorAlugField.getText(), valorIptuField.getText(), valorCondField.getText(),
                     dateInitPicker.getValue(), dateEndPicker.getValue(), contractType);
-            contractsList.add(savedContract);
+            loadDataFromDatabase();
             AlertAction.showAlert("Sucesso", "Contrato salvo com sucesso!");
 
             clearFieldContract();
@@ -260,6 +271,7 @@ public class HubViewController {
             PaymentModel savedPayment = paymentService.save(
                     contractComboBox.getValue(), monthRefPicker.getValue(), valorBaseField.getText());
             paymentsList.add(savedPayment);
+            loadDataFromDatabase();
             AlertAction.showAlert("Sucesso", "Pagamento salvo com sucesso!");
 
             clearFieldPayment();
@@ -297,10 +309,7 @@ public class HubViewController {
         if (confirmed) {
             paymentService.deleteByContractId(contract.getId());
             contractService.delete(contract.getId());
-            contractsList.remove(contract);
-            paymentsList.removeIf(payment -> payment.getContract() != null && contract.getId().equals(payment.getContract().getId()));
-            contractsTable.refresh();
-            paymentsTable.refresh();
+            loadDataFromDatabase();
             AlertAction.showAlert("Sucesso", "Contrato deletado com sucesso!");
         }
     }
@@ -344,7 +353,6 @@ public class HubViewController {
     @FXML
     private void refreshListContract() {
         try {
-            contractsTable.refresh();
             loadDataFromDatabase();
             AlertAction.showAlert("Info", "Lista de contratos atualizada!");
         } catch (Exception e) {
@@ -361,8 +369,6 @@ public class HubViewController {
     @FXML
     private void refreshListPayment() {
         try {
-
-            paymentsTable.refresh();
             loadDataFromDatabase();
             AlertAction.showAlert("Info", "Lista de pagamentos atualizada!");
         } catch (Exception e) {
@@ -380,11 +386,35 @@ public class HubViewController {
         FormUtils.clearFields(contractComboBox, monthRefPicker, valorBaseField);
     }
 
+    @FXML
+    private void goToPrevPage() {
+        if (currentPage > 0) {
+            currentPage--;
+            loadContractsPage();
+        }
+    }
+
+    @FXML
+    private void goToNextPage() {
+        currentPage++;
+        loadContractsPage();
+    }
+
+    private void loadContractsPage() {
+        var page = contractService.findPage(currentPage);
+        currentPage = page.currentPage();
+        pagedContractsList.setAll(page.contracts());
+        contractsTable.refresh();
+        pageLabel.setText("Página " + (currentPage + 1) + " de " + page.totalPages());
+        prevPageButton.setDisable(currentPage == 0);
+        nextPageButton.setDisable(currentPage + 1 >= page.totalPages());
+    }
+
     private void loadDataFromDatabase() {
         contractsList.setAll(contractService.findAll());
         paymentsList.setAll(paymentService.findAll());
-        contractsTable.refresh();
-        paymentsTable.refresh();
+        loadContractsPage();
+
     }
 
 }
