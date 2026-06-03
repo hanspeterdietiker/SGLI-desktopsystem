@@ -72,13 +72,16 @@ public class HubViewController {
 
     //  List Contract and Payment
     private final ObservableList<ContractModel> contractsList = FXCollections.observableArrayList();
-
     private final ObservableList<PaymentModel> paymentsList = FXCollections.observableArrayList();
 
-    private final ContractService contractService = new ContractService();
-    private final PaymentService paymentService = new PaymentService();
+    private final ContractService contractService;
+    private final PaymentService paymentService;
 
-    
+    public HubViewController(ContractService contractService, PaymentService paymentService) {
+        this.contractService = contractService;
+        this.paymentService = paymentService;
+    }
+
 
     @FXML
     public void initialize() {
@@ -227,7 +230,8 @@ public class HubViewController {
     private void saveContract() {
         try {
 
-            ContractTypeEnum contractType = resolveContractType();
+            String selectedType = fiadorRadio.isSelected() ? "FIADOR" : semInformRadio.isSelected() ? "NO_INFORM" : "CAUCAO";
+            ContractTypeEnum contractType = ContractService.resolveContractType(selectedType);
 
             ContractModel savedContract = contractService.save(
                     nameLocadorField.getText(), nameLocatarioField.getText(),
@@ -247,16 +251,6 @@ public class HubViewController {
 
             AlertAction.showAlert("Erro Inesperado", "Erro ao salvar contrato: " + e.getMessage());
         }
-    }
-
-    private ContractTypeEnum resolveContractType() {
-        if (fiadorRadio.isSelected()) {
-            return ContractTypeEnum.FIADOR;
-        }
-        if (semInformRadio.isSelected()) {
-            return ContractTypeEnum.NO_INFORM;
-        }
-        return ContractTypeEnum.CAUCAO;
     }
 
     @FXML
@@ -350,7 +344,6 @@ public class HubViewController {
     @FXML
     private void refreshListContract() {
         try {
-
             contractsTable.refresh();
             loadDataFromDatabase();
             AlertAction.showAlert("Info", "Lista de contratos atualizada!");
