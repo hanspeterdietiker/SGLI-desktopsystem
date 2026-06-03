@@ -12,8 +12,12 @@ import java.util.UUID;
 
 public class ContractService {
 
-    private final ContractRepository contractRepository;
+    public record ContractPage(List<ContractModel> contracts, int totalPages, int currentPage) {
+    }
 
+    private static final int PAGE_SIZE = 5;
+
+    private final ContractRepository contractRepository;
 
     public ContractService(ContractRepository contractRepository) {
         this.contractRepository = contractRepository;
@@ -24,7 +28,7 @@ public class ContractService {
             String valorAlugStr, String valorIptuStr, String valorCondStr,
             LocalDate dateInit, LocalDate dateEnd, ContractTypeEnum contractType) {
 
-        ContractModel contract = validateContractField(
+        ContractModel contract = buildContract(
                 nameLocador, nameLocatario, cpfLocatario, cpfLocador,
                 valorAlugStr, valorIptuStr, valorCondStr, dateInit, dateEnd, contractType);
 
@@ -36,21 +40,48 @@ public class ContractService {
 
         if (contractRepository.existsByCpfLocatario(cpfLocatario)) {
             throw new IllegalArgumentException(
-                    "Ja existe um contrato com o numero de CPF:\"" + cpfLocatario.trim() + "\".\n" +
-                            "Se necessário, edite ou exclua o contrato existente."
-
-            );
+                    "Já existe um contrato com o número de CPF: \"" + cpfLocatario.trim() + "\".\n" +
+                            "Se necessário, edite ou exclua o contrato existente.");
         }
 
         return contractRepository.save(contract);
     }
 
     public ContractModel update(ContractModel contract) {
+        validateForUpdate(contract);
+        return contractRepository.update(contract);
+    }
 
+    public void delete(UUID id) {
+        contractRepository.delete(id);
+    }
+
+    public List<ContractModel> findAll() {
+        return contractRepository.findAll();
+    }
+
+    public ContractPage findPage(int pageNumber) {
+        long total = contractRepository.countAll();
+        int totalPages = totalPages(total);
+        int safePage = Math.min(pageNumber, totalPages - 1);
+        List<ContractModel> contracts = contractRepository.findByPag(PAGE_SIZE, safePage * PAGE_SIZE);
+        return new ContractPage(contracts, totalPages, safePage);
+    }
+
+
+    public static ContractTypeEnum resolveContractType(String type) {
+        return switch (type) {
+            case "FIADOR" -> ContractTypeEnum.FIADOR;
+            case "CAUCAO" -> ContractTypeEnum.CAUCAO;
+            default -> ContractTypeEnum.NO_INFORM;
+        };
+    }
+
+    private static void validateForUpdate(ContractModel contract) {
         if (contract.getDateInit() == null || contract.getDateEnd() == null) {
             throw new IllegalArgumentException("Selecione as datas de início e fim do contrato!");
         }
-        if (isBlank(contract.getNameLocador()) || isBlank(contract.getNameLocatario())) {
+        if (contract.getNameLocador().isBlank() || contract.getNameLocatario().isBlank()) {
             throw new IllegalArgumentException("Preencha os campos de nome do locador e locatário!");
         }
         if (!CpfUtils.isFormatValid(contract.getCpfLocatario())) {
@@ -65,32 +96,13 @@ public class ContractService {
         if (contract.getContractType() == null) {
             throw new IllegalArgumentException("Selecione um tipo de contrato!");
         }
-        return contractRepository.update(contract);
     }
 
-
-    private static boolean isBlank(String s) {
-        return s == null || s.trim().isEmpty();
+    private static int totalPages(long total) {
+        return (int) Math.max(1, (total + PAGE_SIZE - 1) / PAGE_SIZE);
     }
 
-    public void delete(UUID id) {
-        contractRepository.delete(id);
-    }
-
-    public List<ContractModel> findAll() {
-        return contractRepository.findAll();
-    }
-
-    public static ContractTypeEnum resolveContractType(String type) {
-        return switch (type) {
-            case "FIADOR" -> ContractTypeEnum.FIADOR;
-            case "CAUCAO" -> ContractTypeEnum.CAUCAO;
-            default -> ContractTypeEnum.NO_INFORM;
-        };
-    }
-
-
-    private static ContractModel validateContractField(
+    private static ContractModel buildContract(
             String nameLocador, String nameLocatario, String cpfLocatario, String cpfLocador,
             String valorAlugStr, String valorIptuStr, String valorCondStr,
             LocalDate dateInit, LocalDate dateEnd, ContractTypeEnum contractType) {
@@ -98,8 +110,7 @@ public class ContractService {
         if (dateInit == null || dateEnd == null) {
             throw new IllegalArgumentException("Selecione as datas de início e fim do contrato!");
         }
-        if (nameLocador == null || nameLocador.trim().isEmpty() ||
-                nameLocatario == null || nameLocatario.trim().isEmpty()) {
+        if (nameLocador == null || nameLocador.isBlank() || nameLocatario == null || nameLocatario.isBlank()) {
             throw new IllegalArgumentException("Preencha os campos de nome do locador e locatário!");
         }
         if (!CpfUtils.isFormatValid(cpfLocatario)) {
@@ -108,7 +119,6 @@ public class ContractService {
         if (!CpfUtils.isFormatValid(cpfLocador)) {
             throw new IllegalArgumentException("CPF do Locador inválido! Use o formato 000.000.000-00.");
         }
-
         if (contractType == null) {
             throw new IllegalArgumentException("Selecione um tipo de contrato!");
         }
@@ -122,13 +132,12 @@ public class ContractService {
             valorIptu = new BigDecimal(valorIptuStr.trim());
             valorCond = new BigDecimal(valorCondStr.trim());
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Valor numérico inválido:\n " +
-                    "Digite apenas números válidos para aluguel, IPTU e condomínio.");
+            throw new IllegalArgumentException(
+                    "Valor numérico inválido:\n Digite apenas números válidos para aluguel, IPTU e condomínio.");
         }
 
         return new ContractModel(null, nameLocador.trim(), nameLocatario.trim(),
-                cpfLocatario.trim(), cpfLocador.trim(), valorAlug, valorIptu, valorCond, dateInit, dateEnd, contractType);
+                cpfLocatario.trim(), cpfLocador.trim(), valorAlug, valorIptu, valorCond,
+                dateInit, dateEnd, contractType);
     }
-
-
 }
