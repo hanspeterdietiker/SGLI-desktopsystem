@@ -216,6 +216,10 @@
     -fx-padding: 5;
 }
 
-.action-buttons-column{
-    -fx-pref-width: 200;
+.large-column{
+    -fx-pref-width: 160;
+}
+
+.small-column{
+    -fx-pref-width: 100;
 }

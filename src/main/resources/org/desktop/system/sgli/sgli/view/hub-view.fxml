@@ -131,57 +131,57 @@
                 <Text text="Lista de Contratos" styleClass="section-title"/>
                 <TableView fx:id="contractsTable" styleClass="contracts-table">
                     <columns>
-                        <TableColumn text="Nome Locador" prefWidth="150">
+                        <TableColumn text="Nome Locador" styleClass="large-column">
                             <cellValueFactory>
                                 <PropertyValueFactory property="nameLocador"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Nome Locatario" prefWidth="150">
+                        <TableColumn text="Nome Locatario" styleClass="large-column">
                             <cellValueFactory>
                                 <PropertyValueFactory property="nameLocatario"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="CPF Locatário" prefWidth="120">
+                        <TableColumn text="CPF Locatário" styleClass="small-column">
                             <cellValueFactory>
                                 <PropertyValueFactory property="cpfLocatario"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="CPF Locador" prefWidth="120">
+                        <TableColumn text="CPF Locador" styleClass="small-column">
                             <cellValueFactory>
                                 <PropertyValueFactory property="cpfLocador"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Aluguel" prefWidth="100">
+                        <TableColumn text="Aluguel" styleClass="small-column">
                             <cellValueFactory>
                                 <PropertyValueFactory property="valorAlug"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="IPTU" prefWidth="100">
+                        <TableColumn text="IPTU" styleClass="small-column">
                             <cellValueFactory>
                                 <PropertyValueFactory property="valorIptu"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Condomínio" prefWidth="100">
+                        <TableColumn text="Condomínio" styleClass="small-column">
                             <cellValueFactory>
                                 <PropertyValueFactory property="valorCond"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Data Início" prefWidth="100">
+                        <TableColumn text="Data Início" styleClass="small-column">
                             <cellValueFactory>
                                 <PropertyValueFactory property="dateInit"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Data Fim" prefWidth="100">
+                        <TableColumn text="Data Fim" styleClass="small-column">
                             <cellValueFactory>
                                 <PropertyValueFactory property="dateEnd"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Tipo" prefWidth="120">
+                        <TableColumn text="Tipo" styleClass="small-column">
                             <cellValueFactory>
                                 <PropertyValueFactory property="contractType"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Ações" styleClass="action-buttons-column"/>
+                        <TableColumn text="Ações" styleClass="large-column"/>
                     </columns>
                 </TableView>
 
@@ -198,22 +198,22 @@
                 <Text text="Lista de Pagamentos" styleClass="section-title"/>
                 <TableView fx:id="paymentsTable" styleClass="payments-table">
                     <columns>
-                        <TableColumn text="Contrato" prefWidth="180">
+                        <TableColumn text="Contrato" styleClass="large-column">
                             <cellValueFactory>
                                 <PropertyValueFactory property="contractName"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Mês Ref." prefWidth="100">
+                        <TableColumn text="Mês Ref." styleClass="small-column">
                             <cellValueFactory>
                                 <PropertyValueFactory property="monthRef"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Valor Base" prefWidth="100">
+                        <TableColumn text="Valor Base" styleClass="small-column">
                             <cellValueFactory>
                                 <PropertyValueFactory property="valorBase"/>
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn text="Ações" styleClass="action-buttons-column"/>
+                        <TableColumn text="Ações" styleClass="large-column"/>
                     </columns>
                 </TableView>
                 <HBox styleClass="center-alignment, spacing-10">
