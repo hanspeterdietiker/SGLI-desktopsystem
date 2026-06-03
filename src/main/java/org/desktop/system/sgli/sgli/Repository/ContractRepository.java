@@ -2,6 +2,7 @@ package org.desktop.system.sgli.sgli.Repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
 
 import java.util.List;
@@ -16,6 +17,25 @@ public class ContractRepository {
                     .getResultList();
         }
     }
+
+    public List<ContractModel> findByPag(int maxPag, int firstResult) {
+        try (EntityManager entityManager = JpaUtil.getEntityManager()) {
+            TypedQuery<ContractModel> query = entityManager
+                    .createQuery("SELECT contract FROM ContractModel contract ORDER BY contract.nameLocatario", ContractModel.class);
+            query.setMaxResults(maxPag);
+            query.setFirstResult(firstResult);
+            return query.getResultList();
+        }
+    }
+
+    public long countAll() {
+        try (EntityManager entityManager = JpaUtil.getEntityManager()) {
+            return entityManager
+                    .createQuery("SELECT COUNT(c) FROM ContractModel c", Long.class)
+                    .getSingleResult();
+        }
+    }
+
 
     public ContractModel save(ContractModel contract) {
         return executeInTransaction(entityManager -> {
