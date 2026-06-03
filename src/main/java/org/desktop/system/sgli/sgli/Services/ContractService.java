@@ -46,6 +46,7 @@ public class ContractService {
     }
 
     public ContractModel update(ContractModel contract) {
+
         if (contract.getDateInit() == null || contract.getDateEnd() == null) {
             throw new IllegalArgumentException("Selecione as datas de início e fim do contrato!");
         }
@@ -83,8 +84,8 @@ public class ContractService {
     public static ContractTypeEnum resolveContractType(String type) {
         return switch (type) {
             case "FIADOR" -> ContractTypeEnum.FIADOR;
-            case "NO_INFORM" -> ContractTypeEnum.NO_INFORM;
-            default -> ContractTypeEnum.CAUCAO;
+            case "CAUCAO" -> ContractTypeEnum.CAUCAO;
+            default -> ContractTypeEnum.NO_INFORM;
         };
     }
 
