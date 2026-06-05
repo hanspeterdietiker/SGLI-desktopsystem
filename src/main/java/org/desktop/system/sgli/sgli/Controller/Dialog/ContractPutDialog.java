@@ -38,12 +38,12 @@ public class ContractPutDialog extends Dialog<ContractModel> {
         fiadorRadio.setToggleGroup(contractTypeGroup);
         semInformRadio.setToggleGroup(contractTypeGroup);
 
-        FormUtils.applyCpfMask(cpfLocatarioField, cpfLocadorField);
-
         nameLocadorField.setText(contract.getNameLocador());
         nameLocatarioField.setText(contract.getNameLocatario());
-        cpfLocatarioField.setText(CpfUtils.mask(contract.getCpfLocatario()));
-        cpfLocadorField.setText(CpfUtils.mask(contract.getCpfLocador()));
+        cpfLocatarioField.setPromptText(CpfUtils.mask(contract.getCpfLocatario()));
+        cpfLocadorField.setPromptText(CpfUtils.mask(contract.getCpfLocador()));
+
+        FormUtils.applyCpfMask(cpfLocatarioField, cpfLocadorField);
         valorAlugField.setText(contract.getValorAlug().toString());
         valorIptuField.setText(contract.getValorIptu().toString());
         valorCondField.setText(contract.getValorCond().toString());
@@ -126,11 +126,11 @@ public class ContractPutDialog extends Dialog<ContractModel> {
             BigDecimal valorIptu = new BigDecimal(valorIptuField.getText().trim());
             BigDecimal valorCond = new BigDecimal(valorCondField.getText().trim());
 
-            
-            String cpfLocatario = cpfLocatarioField.getText().contains("*")
+
+            String cpfLocatario = cpfLocatarioField.getText().isBlank()
                     ? contract.getCpfLocatario()
                     : cpfLocatarioField.getText().trim();
-            String cpfLocador = cpfLocadorField.getText().contains("*")
+            String cpfLocador = cpfLocadorField.getText().isBlank()
                     ? contract.getCpfLocador()
                     : cpfLocadorField.getText().trim();
 
