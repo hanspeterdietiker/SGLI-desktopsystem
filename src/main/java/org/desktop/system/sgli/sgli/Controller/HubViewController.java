@@ -7,7 +7,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import org.desktop.system.sgli.sgli.Controller.Dialog.LgpdAuditDialog;
+import org.desktop.system.sgli.sgli.Repository.ContractRepository;
 import org.desktop.system.sgli.sgli.Services.ContractService;
+import org.desktop.system.sgli.sgli.Services.LgpdAuditService;
 import org.desktop.system.sgli.sgli.Services.PaymentService;
 import org.desktop.system.sgli.sgli.Services.PdfReportService;
 import org.desktop.system.sgli.sgli.Components.ActionTableCell;
@@ -87,6 +90,7 @@ public class HubViewController {
 
     private final ContractService contractService;
     private final PaymentService paymentService;
+    private LgpdAuditService lgpdAuditService;
 
     public HubViewController(ContractService contractService, PaymentService paymentService) {
         this.contractService = contractService;
@@ -217,6 +221,7 @@ public class HubViewController {
         });
 
         loadDataFromDatabase();
+        lgpdAuditService = new LgpdAuditService(new ContractRepository());
     }
 
 
@@ -381,6 +386,11 @@ public class HubViewController {
         PdfReportService.exportPaymentsReport(paymentsList);
     }
 
+    @FXML
+    private void openLgpdAudit() {
+        var report = lgpdAuditService.runAudit();
+        new LgpdAuditDialog(report).showAndWait();
+    }
 
     private void clearFieldPayment() {
         FormUtils.clearFields(contractComboBox, monthRefPicker, valorBaseField);

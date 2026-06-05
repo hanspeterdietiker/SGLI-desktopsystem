@@ -193,6 +193,7 @@
                 <HBox styleClass="center-alignment,spacing-10">
                     <Button text="Atualizar Lista" onAction="#refreshListContract" styleClass="primary-button"/>
                     <Button text="Exportar Relatorio" onAction="#exportReportContract" styleClass="export-button"/>
+                    <Button text="Auditoria LGPD" onAction="#openLgpdAudit" styleClass="pag-button"/>
                 </HBox>
             </VBox>
         </Tab>
