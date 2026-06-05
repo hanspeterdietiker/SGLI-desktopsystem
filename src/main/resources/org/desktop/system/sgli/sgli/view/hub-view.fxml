@@ -194,6 +194,7 @@
                     <Button text="Atualizar Lista" onAction="#refreshListContract" styleClass="primary-button"/>
                     <Button text="Exportar Relatorio" onAction="#exportReportContract" styleClass="export-button"/>
                     <Button text="Auditoria LGPD" onAction="#openLgpdAudit" styleClass="pag-button"/>
+                    <Button text="Exportar Dados (LGPD)" onAction="#exportPersonalData" styleClass="pag-button"/>
                 </HBox>
             </VBox>
         </Tab>

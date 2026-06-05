@@ -11,6 +11,7 @@ import org.desktop.system.sgli.sgli.Controller.Dialog.LgpdAuditDialog;
 import org.desktop.system.sgli.sgli.Repository.ContractRepository;
 import org.desktop.system.sgli.sgli.Services.ContractService;
 import org.desktop.system.sgli.sgli.Services.LgpdAuditService;
+import org.desktop.system.sgli.sgli.Services.LgpdExportService;
 import org.desktop.system.sgli.sgli.Services.PaymentService;
 import org.desktop.system.sgli.sgli.Services.PdfReportService;
 import org.desktop.system.sgli.sgli.Components.ActionTableCell;
@@ -92,6 +93,7 @@ public class HubViewController {
     private final ContractService contractService;
     private final PaymentService paymentService;
     private LgpdAuditService lgpdAuditService;
+    private LgpdExportService lgpdExportService;
 
     public HubViewController(ContractService contractService, PaymentService paymentService) {
         this.contractService = contractService;
@@ -237,6 +239,7 @@ public class HubViewController {
 
         loadDataFromDatabase();
         lgpdAuditService = new LgpdAuditService(new ContractRepository());
+        lgpdExportService = new LgpdExportService(new ContractRepository());
     }
 
 
@@ -399,6 +402,16 @@ public class HubViewController {
     @FXML
     private void exportReportPayment() {
         PdfReportService.exportPaymentsReport(paymentsList);
+    }
+
+    @FXML
+    private void exportPersonalData() {
+        try {
+            var path = lgpdExportService.exportPersonalDataJson();
+            AlertAction.showAlert("Exportação concluída", "Dados pessoais exportados para:\n" + path);
+        } catch (Exception e) {
+            AlertAction.showAlert("Erro na exportação", "Não foi possível exportar os dados.");
+        }
     }
 
     @FXML
