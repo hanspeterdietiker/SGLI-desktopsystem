@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.*;
 
-public class LgpdAuditLogger {
+public class LgpdAuditLoggerUtils {
 
     private static final DateTimeFormatter FMT =
         DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -23,12 +23,12 @@ public class LgpdAuditLogger {
             LOG.addHandler(fh);
             LOG.setUseParentHandlers(false);
         } catch (IOException e) {
-            Logger.getLogger(LgpdAuditLogger.class.getName())
+            Logger.getLogger(LgpdAuditLoggerUtils.class.getName())
                   .warning("LGPD audit log setup failed: " + e.getMessage());
         }
     }
 
-    private LgpdAuditLogger() {}
+    private LgpdAuditLoggerUtils() {}
 
     public static void logCreate(String entity, String maskedIdentifier) {
         log("CREATE", entity, maskedIdentifier);
