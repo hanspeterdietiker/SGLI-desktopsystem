@@ -2,7 +2,7 @@ package org.desktop.system.sgli.sgli.Services;
 
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Repository.ContractRepository;
-import org.desktop.system.sgli.sgli.Utils.LgpdAuditLogger;
+import org.desktop.system.sgli.sgli.Utils.LgpdAuditLoggerUtils;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -42,7 +42,7 @@ public class LgpdExportService {
         sb.append("]");
 
         Files.writeString(dest, sb.toString());
-        LgpdAuditLogger.logExport("DadosPessoais_JSON", contracts.size());
+        LgpdAuditLoggerUtils.logExport("DadosPessoais_JSON", contracts.size());
         return dest;
     }
 
