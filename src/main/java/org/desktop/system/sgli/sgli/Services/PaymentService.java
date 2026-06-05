@@ -4,7 +4,7 @@ import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Entity.PaymentModel;
 import org.desktop.system.sgli.sgli.Repository.PaymentRepository;
 import org.desktop.system.sgli.sgli.Utils.CpfUtils;
-import org.desktop.system.sgli.sgli.Utils.LgpdAuditLogger;
+import org.desktop.system.sgli.sgli.Utils.LgpdAuditLoggerUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -22,7 +22,7 @@ public class PaymentService {
     public PaymentModel save(ContractModel selectedContract, LocalDate monthRef, String valorBaseStr) {
         PaymentModel payment = validateAndCreate(selectedContract, monthRef, valorBaseStr);
         PaymentModel saved = paymentRepository.save(payment);
-        LgpdAuditLogger.logCreate("Payment", CpfUtils.mask(saved.getContract().getCpfLocatario()));
+        LgpdAuditLoggerUtils.logCreate("Payment", CpfUtils.mask(saved.getContract().getCpfLocatario()));
         return saved;
     }
 
@@ -41,12 +41,12 @@ public class PaymentService {
 
     public void delete(UUID id) {
         paymentRepository.delete(id);
-        LgpdAuditLogger.logDelete("Payment", id.toString());
+        LgpdAuditLoggerUtils.logDelete("Payment", id.toString());
     }
 
     public void deleteByContractId(UUID contractId) {
         paymentRepository.deleteByContractId(contractId);
-        LgpdAuditLogger.logDelete("Payment[byContract]", contractId.toString());
+        LgpdAuditLoggerUtils.logDelete("Payment[byContract]", contractId.toString());
     }
 
     public List<PaymentModel> findAll() {
