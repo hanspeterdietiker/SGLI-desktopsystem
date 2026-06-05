@@ -19,4 +19,32 @@ public class CpfUtils {
         if (len <= 9) return digits.substring(0, 3) + "." + digits.substring(3, 6) + "." + digits.substring(6);
         return digits.substring(0, 3) + "." + digits.substring(3, 6) + "." + digits.substring(6, 9) + "-" + digits.substring(9);
     }
+
+    /** Valida formato E dígito verificador do CPF. */
+    public static boolean isValid(String cpf) {
+        if (cpf == null) return false;
+        String trimmed = cpf.trim();
+        if (!trimmed.matches(CPF_PATTERN)) return false;
+        String d = trimmed.replaceAll("[^0-9]", "");
+        if (d.matches("(\\d)\\1{10}")) return false;
+        return checkDigit(d, 9) && checkDigit(d, 10);
+    }
+
+    /** Retorna XXX.***.***-YY mostrando os 3 primeiros e os 2 últimos dígitos. */
+    public static String mask(String cpf) {
+        if (cpf == null || cpf.isBlank()) return "";
+        String formatted = cpf.contains(".") ? cpf.trim() : format(cpf.trim());
+        if (formatted.length() < 14) return "***.***.***-**";
+        return formatted.substring(0, 3) + ".***.***-" + formatted.substring(12);
+    }
+
+    private static boolean checkDigit(String digits, int pos) {
+        int sum = 0;
+        for (int i = 0; i < pos; i++) {
+            sum += (digits.charAt(i) - '0') * (pos + 1 - i);
+        }
+        int r = 11 - (sum % 11);
+        int expected = (r >= 10) ? 0 : r;
+        return expected == (digits.charAt(pos) - '0');
+    }
 }
