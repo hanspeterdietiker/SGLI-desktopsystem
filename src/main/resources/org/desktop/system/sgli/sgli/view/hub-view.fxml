@@ -124,11 +124,14 @@
                 </HBox>
             </VBox>
         </Tab>
-
         <!-- Aba Listar Contratos -->
         <Tab styleClass="tab" text="Listar Contratos" closable="false">
             <VBox styleClass="list-contracts-vbox">
                 <Text text="Lista de Contratos" styleClass="section-title"/>
+                <HBox styleClass="lgpd-hbox">
+                    <Button text="Auditoria (LGPD)" onAction="#openLgpdAudit" styleClass="audit-lgpd-button"/>
+                    <Button text="Exportar Dados (LGPD)" onAction="#exportPersonalData" styleClass="audit-lgpd-button"/>
+                </HBox>
                 <TableView fx:id="contractsTable" styleClass="contracts-table">
                     <columns>
                         <TableColumn text="Nome Locador" styleClass="large-column">
@@ -193,10 +196,6 @@
                 <HBox styleClass="center-alignment,spacing-10">
                     <Button text="Atualizar Lista" onAction="#refreshListContract" styleClass="primary-button"/>
                     <Button text="Exportar Relatório" onAction="#exportReportContract" styleClass="export-button"/>
-                </HBox>
-                <HBox styleClass="center-alignment,spacing-10">
-                    <Button text="Auditoria LGPD" onAction="#openLgpdAudit" styleClass="audit-lgpd-button"/>
-                    <Button text="Exportar Dados (LGPD)" onAction="#exportPersonalData" styleClass="export-button"/>
                 </HBox>
 
 
