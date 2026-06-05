@@ -10,7 +10,7 @@ import org.desktop.system.sgli.sgli.Utils.AlertAction;
 import org.desktop.system.sgli.sgli.Utils.CpfUtils;
 import org.desktop.system.sgli.sgli.Utils.DateFormatterUtils;
 import org.desktop.system.sgli.sgli.Utils.DecimalFormatterUtils;
-import org.desktop.system.sgli.sgli.Utils.LgpdAuditLogger;
+import org.desktop.system.sgli.sgli.Utils.LgpdAuditLoggerUtils;
 
 import java.io.FileOutputStream;
 import java.time.LocalDate;
@@ -58,7 +58,7 @@ public class PdfReportService {
                 }
             }
 
-            LgpdAuditLogger.logExport("Relatorio_Contratos", contractsList.size());
+            LgpdAuditLoggerUtils.logExport("Relatorio_Contratos", contractsList.size());
             doc.close();
             AlertAction.showAlert("Sucesso", "PDF de Contratos salvo em: " + downloadsPath);
         } catch (Exception e) {
@@ -98,7 +98,7 @@ public class PdfReportService {
                 }
             }
 
-            LgpdAuditLogger.logExport("Relatorio_Pagamentos", paymentsList.size());
+            LgpdAuditLoggerUtils.logExport("Relatorio_Pagamentos", paymentsList.size());
             doc.close();
             AlertAction.showAlert("Sucesso", "PDF de Pagamentos salvo em: " + downloadsPath);
         } catch (Exception e) {
