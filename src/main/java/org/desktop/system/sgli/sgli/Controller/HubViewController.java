@@ -327,7 +327,14 @@ public class HubViewController {
     }
 
     private void deleteContract(ContractModel contract) {
-        boolean confirmed = AlertAction.showConfirmation("Confirmar Exclusão", "Tem certeza que deseja deletar o contrato de " + contract.getNameLocatario() + "?");
+        boolean confirmed = AlertAction.showConfirmation(
+            "Confirmar Eliminação (LGPD Art. 18-VI)",
+            "Esta ação eliminará permanentemente os seguintes dados pessoais:\n\n" +
+            "  • Nome: " + contract.getNameLocatario() + "\n" +
+            "  • CPF: " + CpfUtils.mask(contract.getCpfLocatario()) + "\n" +
+            "  • Todos os pagamentos vinculados\n\n" +
+            "Esta operação NÃO pode ser desfeita."
+        );
 
         if (confirmed) {
             paymentService.deleteByContractId(contract.getId());
