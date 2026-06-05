@@ -34,13 +34,13 @@ public class ContractService {
 
         if (contractRepository.existsByNameLocatario(nameLocatario)) {
             throw new IllegalArgumentException(
-                    "Já existe um contrato com o Locatario: \"" + nameLocatario.trim() + "\".\n" +
+                    "Já existe um contrato para este locatário.\n" +
                             "Se necessário, edite ou exclua o contrato existente.");
         }
 
         if (contractRepository.existsByCpfLocatario(cpfLocatario)) {
             throw new IllegalArgumentException(
-                    "Já existe um contrato com o número de CPF: \"" + cpfLocatario.trim() + "\".\n" +
+                    "Já existe um contrato com este CPF de locatário.\n" +
                             "Se necessário, edite ou exclua o contrato existente.");
         }
 
