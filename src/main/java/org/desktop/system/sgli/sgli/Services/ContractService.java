@@ -4,6 +4,7 @@ import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Entity.Enum.ContractTypeEnum;
 import org.desktop.system.sgli.sgli.Repository.ContractRepository;
 import org.desktop.system.sgli.sgli.Utils.CpfUtils;
+import org.desktop.system.sgli.sgli.Utils.LgpdAuditLogger;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -44,16 +45,21 @@ public class ContractService {
                             "Se necessário, edite ou exclua o contrato existente.");
         }
 
-        return contractRepository.save(contract);
+        ContractModel saved = contractRepository.save(contract);
+        LgpdAuditLogger.logCreate("Contract", CpfUtils.mask(saved.getCpfLocatario()));
+        return saved;
     }
 
     public ContractModel update(ContractModel contract) {
         validateForUpdate(contract);
-        return contractRepository.update(contract);
+        ContractModel updated = contractRepository.update(contract);
+        LgpdAuditLogger.logUpdate("Contract", CpfUtils.mask(updated.getCpfLocatario()));
+        return updated;
     }
 
     public void delete(UUID id) {
         contractRepository.delete(id);
+        LgpdAuditLogger.logDelete("Contract", id.toString());
     }
 
     public List<ContractModel> findAll() {
