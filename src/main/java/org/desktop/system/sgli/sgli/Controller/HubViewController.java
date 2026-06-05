@@ -22,6 +22,7 @@ import org.desktop.system.sgli.sgli.Entity.PaymentModel;
 import org.desktop.system.sgli.sgli.Utils.AlertAction;
 import org.desktop.system.sgli.sgli.Utils.DateFormatterUtils;
 import org.desktop.system.sgli.sgli.Utils.DecimalFormatterUtils;
+import org.desktop.system.sgli.sgli.Utils.CpfUtils;
 import org.desktop.system.sgli.sgli.Utils.FormUtils;
 
 
@@ -156,6 +157,20 @@ public class HubViewController {
             }
         }
 
+
+        for (TableColumn<ContractModel, ?> column : contractsTable.getColumns()) {
+            if ("CPF Locatário".equals(column.getText()) || "CPF Locador".equals(column.getText())) {
+                @SuppressWarnings("unchecked")
+                TableColumn<ContractModel, String> cpfColumn = (TableColumn<ContractModel, String>) column;
+                cpfColumn.setCellFactory(col -> new TableCell<>() {
+                    @Override
+                    protected void updateItem(String cpf, boolean empty) {
+                        super.updateItem(cpf, empty);
+                        setText(empty || cpf == null ? null : CpfUtils.mask(cpf));
+                    }
+                });
+            }
+        }
 
         for (TableColumn<PaymentModel, ?> column : paymentsTable.getColumns()) {
             if ("Valor Base".equals(column.getText())) {
