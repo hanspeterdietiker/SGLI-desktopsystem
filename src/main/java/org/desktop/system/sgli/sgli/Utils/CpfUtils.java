@@ -20,7 +20,7 @@ public class CpfUtils {
         return digits.substring(0, 3) + "." + digits.substring(3, 6) + "." + digits.substring(6, 9) + "-" + digits.substring(9);
     }
 
-    /** Valida formato E dígito verificador do CPF. */
+
     public static boolean isValid(String cpf) {
         if (cpf == null) return false;
         String trimmed = cpf.trim();
@@ -30,7 +30,7 @@ public class CpfUtils {
         return checkDigit(d, 9) && checkDigit(d, 10);
     }
 
-    /** Retorna XXX.***.***-YY mostrando os 3 primeiros e os 2 últimos dígitos. */
+
     public static String mask(String cpf) {
         if (cpf == null || cpf.isBlank()) return "";
         String formatted = cpf.contains(".") ? cpf.trim() : format(cpf.trim());
