@@ -4,7 +4,7 @@ import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Entity.Enum.ContractTypeEnum;
 import org.desktop.system.sgli.sgli.Repository.ContractRepository;
 import org.desktop.system.sgli.sgli.Utils.CpfUtils;
-import org.desktop.system.sgli.sgli.Utils.LgpdAuditLogger;
+import org.desktop.system.sgli.sgli.Utils.LgpdAuditLoggerUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,7 +16,7 @@ public class ContractService {
     public record ContractPage(List<ContractModel> contracts, int totalPages, int currentPage) {
     }
 
-    private static final int PAGE_SIZE = 5;
+    private static final int PAGE_SIZE = 4;
 
     private final ContractRepository contractRepository;
 
@@ -46,20 +46,20 @@ public class ContractService {
         }
 
         ContractModel saved = contractRepository.save(contract);
-        LgpdAuditLogger.logCreate("Contract", CpfUtils.mask(saved.getCpfLocatario()));
+        LgpdAuditLoggerUtils.logCreate("Contract", CpfUtils.mask(saved.getCpfLocatario()));
         return saved;
     }
 
     public ContractModel update(ContractModel contract) {
         validateForUpdate(contract);
         ContractModel updated = contractRepository.update(contract);
-        LgpdAuditLogger.logUpdate("Contract", CpfUtils.mask(updated.getCpfLocatario()));
+        LgpdAuditLoggerUtils.logUpdate("Contract", CpfUtils.mask(updated.getCpfLocatario()));
         return updated;
     }
 
     public void delete(UUID id) {
         contractRepository.delete(id);
-        LgpdAuditLogger.logDelete("Contract", id.toString());
+        LgpdAuditLoggerUtils.logDelete("Contract", id.toString());
     }
 
     public List<ContractModel> findAll() {
