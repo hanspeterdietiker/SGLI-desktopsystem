@@ -7,6 +7,7 @@ module org.desktop.system.sgli.sgli {
     requires org.hibernate.orm.community.dialects;
     requires org.xerial.sqlitejdbc;
     requires java.sql;
+    requires java.logging;
 
     opens org.desktop.system.sgli.sgli.Controller to javafx.fxml;
     opens org.desktop.system.sgli.sgli.Entity to org.hibernate.orm.core;
