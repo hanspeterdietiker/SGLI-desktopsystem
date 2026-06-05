@@ -7,6 +7,7 @@ import javafx.scene.layout.HBox;
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Entity.Enum.ContractTypeEnum;
 import org.desktop.system.sgli.sgli.Utils.AlertAction;
+import org.desktop.system.sgli.sgli.Utils.CpfUtils;
 import org.desktop.system.sgli.sgli.Utils.FormUtils;
 
 import java.math.BigDecimal;
@@ -41,8 +42,8 @@ public class ContractPutDialog extends Dialog<ContractModel> {
 
         nameLocadorField.setText(contract.getNameLocador());
         nameLocatarioField.setText(contract.getNameLocatario());
-        cpfLocatarioField.setText(contract.getCpfLocatario());
-        cpfLocadorField.setText(contract.getCpfLocador());
+        cpfLocatarioField.setText(CpfUtils.mask(contract.getCpfLocatario()));
+        cpfLocadorField.setText(CpfUtils.mask(contract.getCpfLocador()));
         valorAlugField.setText(contract.getValorAlug().toString());
         valorIptuField.setText(contract.getValorIptu().toString());
         valorCondField.setText(contract.getValorCond().toString());
@@ -125,10 +126,18 @@ public class ContractPutDialog extends Dialog<ContractModel> {
             BigDecimal valorIptu = new BigDecimal(valorIptuField.getText().trim());
             BigDecimal valorCond = new BigDecimal(valorCondField.getText().trim());
 
+            
+            String cpfLocatario = cpfLocatarioField.getText().contains("*")
+                    ? contract.getCpfLocatario()
+                    : cpfLocatarioField.getText().trim();
+            String cpfLocador = cpfLocadorField.getText().contains("*")
+                    ? contract.getCpfLocador()
+                    : cpfLocadorField.getText().trim();
+
             contract.setNameLocador(nameLocadorField.getText().trim());
             contract.setNameLocatario(nameLocatarioField.getText().trim());
-            contract.setCpfLocatario(cpfLocatarioField.getText().trim());
-            contract.setCpfLocador(cpfLocadorField.getText().trim());
+            contract.setCpfLocatario(cpfLocatario);
+            contract.setCpfLocador(cpfLocador);
             contract.setValorAlug(valorAlug);
             contract.setValorIptu(valorIptu);
             contract.setValorCond(valorCond);
