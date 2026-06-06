@@ -12,6 +12,10 @@ import java.util.List;
 import java.util.UUID;
 
 public class PaymentService {
+    public record PaymentPage(List<PaymentModel> payments, int totalPages, int currentPage) {
+    }
+
+    private static final int PAGE_SIZE = 6;
 
     private final PaymentRepository paymentRepository;
 
@@ -49,8 +53,20 @@ public class PaymentService {
         LgpdAuditLoggerUtils.logDelete("Payment[byContract]", contractId.toString());
     }
 
+    public PaymentPage findPage(int pageNumber) {
+        long total = paymentRepository.countAll();
+        int totalPages = totalPaymentPages(total);
+        int safePage = Math.min(pageNumber, totalPages - 1);
+        List<PaymentModel> payments = paymentRepository.findByPag(PAGE_SIZE, safePage * PAGE_SIZE);
+        return new PaymentPage(payments, totalPages, safePage);
+    }
+
     public List<PaymentModel> findAll() {
         return paymentRepository.findAll();
+    }
+
+    private static int totalPaymentPages(long total) {
+        return (int) Math.max(1, (total + PAGE_SIZE - 1) / PAGE_SIZE);
     }
 
     private static PaymentModel validateAndCreate(ContractModel selectedContract, LocalDate monthRef, String valorBaseStr) {
