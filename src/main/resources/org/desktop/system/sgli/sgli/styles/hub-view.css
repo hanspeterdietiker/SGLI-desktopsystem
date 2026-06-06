@@ -173,15 +173,18 @@
 
 /* VBox spacing */
 .contracts-vbox {
-    -fx-spacing: 15;
+    -fx-spacing: 20;
     -fx-padding: 20;
-
+    -fx-alignment: top-center;
 }
 
 .contracts-form-card {
-    -fx-padding: 20;
-    -fx-border-width: 2;
-    -fx-alignment: center;
+    -fx-padding: 15 20;
+    -fx-spacing: 12;
+    -fx-background-color: #4A90E2, white;
+    -fx-background-insets: 0, 3 0 0 0;
+    -fx-background-radius: 8, 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);
 }
 
 .payments-vbox {
@@ -264,7 +267,7 @@
 
 .form-section-title {
     -fx-font-family: 'Dubai Light';
-    -fx-font-size: 13;
+    -fx-font-size: 16;
     -fx-font-weight: bold;
     -fx-text-fill: #2c3e50;
 }
