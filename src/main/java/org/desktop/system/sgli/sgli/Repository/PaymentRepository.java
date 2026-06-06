@@ -2,6 +2,7 @@ package org.desktop.system.sgli.sgli.Repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
 import org.desktop.system.sgli.sgli.Entity.PaymentModel;
 
 import java.util.List;
@@ -19,6 +20,24 @@ public class PaymentRepository {
                             ORDER BY payment.monthRef DESC
                             """, PaymentModel.class)
                     .getResultList();
+        }
+    }
+
+    public List<PaymentModel> findByPag(int maxPag, int firstResult) {
+        try (EntityManager entityManager = JpaUtil.getEntityManager()) {
+            TypedQuery<PaymentModel> query = entityManager
+                    .createQuery("SELECT payment FROM PaymentModel payment ORDER BY payment.contract.id", PaymentModel.class);
+            query.setMaxResults(maxPag);
+            query.setFirstResult(firstResult);
+            return query.getResultList();
+        }
+    }
+
+    public long countAll() {
+        try (EntityManager entityManager = JpaUtil.getEntityManager()) {
+            return entityManager
+                    .createQuery("SELECT COUNT(p) FROM PaymentModel p", Long.class)
+                    .getSingleResult();
         }
     }
 
