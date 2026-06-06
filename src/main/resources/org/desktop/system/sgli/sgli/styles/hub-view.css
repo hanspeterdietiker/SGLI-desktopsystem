@@ -28,6 +28,7 @@
     -fx-font-family: 'Dubai Light';
     -fx-fill: #2c3e50;
 
+
 }
 
 /* TabPane styles */
@@ -35,6 +36,7 @@
     -fx-tab-min-height: 10px;
     -fx-font-family: 'Dubai Light';
     -fx-font-size: 14px;
+
 }
 
 .tab {
@@ -129,10 +131,14 @@
 /* Table styles */
 .contracts-table {
     -fx-font-family: 'Dubai Light';
+
+
 }
 
 .payments-table {
     -fx-font-family: 'Dubai Light';
+
+
 }
 
 /* Footer text */
@@ -169,12 +175,28 @@
 .contracts-vbox {
     -fx-spacing: 15;
     -fx-padding: 20;
+
+}
+
+.contracts-form-card {
+    -fx-padding: 20;
+    -fx-border-width: 2;
+    -fx-alignment: center;
 }
 
 .payments-vbox {
-    -fx-spacing: 15;
+    -fx-spacing: 20;
     -fx-padding: 20;
+    -fx-alignment: top-center;
+}
 
+.payments-form-card {
+    -fx-padding: 15 20;
+    -fx-spacing: 12;
+    -fx-background-color: #4A90E2, white;
+    -fx-background-insets: 0, 3 0 0 0;
+    -fx-background-radius: 8, 8;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 8, 0, 0, 2);
 }
 
 .list-contracts-vbox {
@@ -184,7 +206,7 @@
 
 .list-payments-vbox {
     -fx-spacing: 5;
-
+    -fx-alignment: center;
 }
 
 /* GridPane spacing */
@@ -210,15 +232,15 @@
     -fx-padding: 5;
 }
 
-.large-column{
+.large-column {
     -fx-pref-width: 160;
 }
 
-.small-column{
+.small-column {
     -fx-pref-width: 100;
 }
 
-.pag-button{
+.pag-button {
     -fx-padding: 5 5;
     -fx-text-fill: white;
     -fx-background-color: #4A90E2;
@@ -232,7 +254,31 @@
     -fx-padding: 2 4;
 
 }
-.lgpd-hbox{
+
+.lgpd-hbox {
     -fx-alignment: center-right;
     -fx-spacing: 10;
+}
+
+/* ── Payments Form Redesign ── */
+
+.form-section-title {
+    -fx-font-family: 'Dubai Light';
+    -fx-font-size: 13;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2c3e50;
+}
+
+.payments-form-hbox {
+    -fx-spacing: 15;
+    -fx-alignment: center-left;
+}
+
+.payments-form-field {
+    -fx-spacing: 4;
+}
+
+.payments-form-save {
+    -fx-spacing: 4;
+    -fx-alignment: bottom-left;
 }
