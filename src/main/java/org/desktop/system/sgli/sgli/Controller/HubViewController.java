@@ -75,29 +75,47 @@ public class HubViewController {
     private TableView<PaymentModel> paymentsTable;
 
 
-    // Pagination
+    // Pagination Contract
     @FXML
-    private Label pageLabel;
+    private Label pageContractLabel;
     @FXML
-    private Button prevPageButton;
+    private Button prevContractPageButton;
     @FXML
-    private Button nextPageButton;
+    private Button nextContractPageButton;
+    private int currentContractPage = 0;
 
-    private int currentPage = 0;
+    // Pagination Payment
+    @FXML
+    private Label pagePaymentLabel;
+    @FXML
+    private Button prevPaymentPageButton;
+    @FXML
+    private Button nextPaymentPageButton;
+    private int currentPaymentPage = 0;
+
+
 
     //  List Contract and Payment
     private final ObservableList<ContractModel> contractsList = FXCollections.observableArrayList();
     private final ObservableList<ContractModel> pagedContractsList = FXCollections.observableArrayList();
+
     private final ObservableList<PaymentModel> paymentsList = FXCollections.observableArrayList();
+    private final ObservableList<PaymentModel> pagedPaymentList = FXCollections.observableArrayList();
 
     private final ContractService contractService;
     private final PaymentService paymentService;
-    private LgpdAuditService lgpdAuditService;
-    private LgpdExportService lgpdExportService;
+    private final LgpdAuditService lgpdAuditService;
+    private final LgpdExportService lgpdExportService;
 
-    public HubViewController(ContractService contractService, PaymentService paymentService) {
+    public HubViewController(ContractService contractService,
+                             PaymentService paymentService,
+                             LgpdAuditService lgpdAuditService,
+                             LgpdExportService lgpdExportService) {
+
         this.contractService = contractService;
         this.paymentService = paymentService;
+        this.lgpdAuditService = lgpdAuditService;
+        this.lgpdExportService = lgpdExportService;
     }
 
 
@@ -215,7 +233,7 @@ public class HubViewController {
         }
 
         contractsTable.setItems(pagedContractsList);
-        paymentsTable.setItems(paymentsList);
+        paymentsTable.setItems(pagedPaymentList);
 
 
         configureContractActionsColumn();
@@ -238,8 +256,7 @@ public class HubViewController {
         });
 
         loadDataFromDatabase();
-        lgpdAuditService = new LgpdAuditService(new ContractRepository());
-        lgpdExportService = new LgpdExportService(new ContractRepository());
+
     }
 
 
@@ -287,6 +304,42 @@ public class HubViewController {
         }
     }
 
+
+
+    private void editContract(ContractModel contract) {
+        ContractPutDialog dialog = new ContractPutDialog(contract);
+        var result = dialog.showAndWait();
+
+        if (result.isPresent() && result.get() != null) {
+            try {
+                contractService.update(result.get());
+                loadDataFromDatabase();
+                AlertAction.showAlert("Sucesso", "Contrato atualizado com sucesso!");
+            } catch (IllegalArgumentException e) {
+                AlertAction.showAlert("Erro de Validação", e.getMessage());
+            } catch (Exception e) {
+                AlertAction.showAlert("Erro Inesperado", "Erro ao atualizar contrato: " + e.getMessage());
+            }
+        }
+    }
+
+    private void deleteContract(ContractModel contract) {
+        boolean confirmed = AlertAction.showConfirmation(
+                "Confirmar Eliminação (LGPD Art. 18-VI)",
+                "Esta ação eliminará permanentemente os seguintes dados pessoais:\n\n" +
+                        "  • Nome: " + contract.getNameLocatario() + "\n" +
+                        "  • CPF: " + CpfUtils.mask(contract.getCpfLocatario()) + "\n" +
+                        "  • Todos os pagamentos vinculados\n\n" +
+                        "Esta operação NÃO pode ser desfeita."
+        );
+
+        if (confirmed) {
+            paymentService.deleteByContractId(contract.getId());
+            contractService.delete(contract.getId());
+            loadDataFromDatabase();
+            AlertAction.showAlert("Sucesso", "Contrato deletado com sucesso!");
+        }
+    }
     @FXML
     private void savePayment() {
         try {
@@ -308,42 +361,6 @@ public class HubViewController {
             AlertAction.showAlert("Erro Inesperado", "Erro ao salvar pagamento: " + e.getMessage());
         }
     }
-
-    private void editContract(ContractModel contract) {
-        ContractPutDialog dialog = new ContractPutDialog(contract);
-        var result = dialog.showAndWait();
-
-        if (result.isPresent() && result.get() != null) {
-            try {
-                contractService.update(result.get());
-                loadDataFromDatabase();
-                AlertAction.showAlert("Sucesso", "Contrato atualizado com sucesso!");
-            } catch (IllegalArgumentException e) {
-                AlertAction.showAlert("Erro de Validação", e.getMessage());
-            } catch (Exception e) {
-                AlertAction.showAlert("Erro Inesperado", "Erro ao atualizar contrato: " + e.getMessage());
-            }
-        }
-    }
-
-    private void deleteContract(ContractModel contract) {
-        boolean confirmed = AlertAction.showConfirmation(
-            "Confirmar Eliminação (LGPD Art. 18-VI)",
-            "Esta ação eliminará permanentemente os seguintes dados pessoais:\n\n" +
-            "  • Nome: " + contract.getNameLocatario() + "\n" +
-            "  • CPF: " + CpfUtils.mask(contract.getCpfLocatario()) + "\n" +
-            "  • Todos os pagamentos vinculados\n\n" +
-            "Esta operação NÃO pode ser desfeita."
-        );
-
-        if (confirmed) {
-            paymentService.deleteByContractId(contract.getId());
-            contractService.delete(contract.getId());
-            loadDataFromDatabase();
-            AlertAction.showAlert("Sucesso", "Contrato deletado com sucesso!");
-        }
-    }
-
     private void editPayment(PaymentModel payment) {
         PaymentPutDialog dialog = new PaymentPutDialog(payment, contractsList);
         var result = dialog.showAndWait();
@@ -351,6 +368,7 @@ public class HubViewController {
         if (result.isPresent() && result.get() != null) {
             try {
                 PaymentModel updatedPayment = paymentService.update(result.get());
+                loadDataFromDatabase();
                 int paymentIndex = paymentsList.indexOf(payment);
                 if (paymentIndex >= 0) {
                     paymentsList.set(paymentIndex, updatedPayment);
@@ -371,6 +389,7 @@ public class HubViewController {
             paymentService.delete(payment.getId());
             paymentsList.remove(payment);
             paymentsTable.refresh();
+            loadDataFromDatabase();
             AlertAction.showAlert("Sucesso", "Pagamento deletado com sucesso!");
         }
     }
@@ -391,7 +410,8 @@ public class HubViewController {
     }
 
     private void clearFieldContract() {
-        FormUtils.clearFields(nameLocadorField, nameLocatarioField, cpfLocatarioField, cpfLocadorField, valorAlugField, valorIptuField, valorCondField, dateInitPicker, dateEndPicker);
+        FormUtils.clearFields(nameLocadorField, nameLocatarioField, cpfLocatarioField,
+                cpfLocadorField, valorAlugField, valorIptuField, valorCondField, dateInitPicker, dateEndPicker);
         caucaoRadio.setSelected(true);
 
     }
@@ -432,33 +452,60 @@ public class HubViewController {
     }
 
     @FXML
-    private void goToPrevPage() {
-        if (currentPage > 0) {
-            currentPage--;
+    private void goToPrevContractPage() {
+        if (currentContractPage > 0) {
+            currentContractPage--;
             loadContractsPage();
         }
     }
 
     @FXML
-    private void goToNextPage() {
-        currentPage++;
+    private void goToNextContractPage() {
+        currentContractPage++;
         loadContractsPage();
     }
 
+    @FXML
+    private void goToPrevPaymentPage() {
+        if (currentPaymentPage > 0) {
+            currentPaymentPage--;
+            loadPaymentsPage();
+        }
+
+    }
+
+    @FXML
+    private void goToNextPaymentPage() {
+        currentPaymentPage++;
+        loadPaymentsPage();
+    }
+
     private void loadContractsPage() {
-        var page = contractService.findPage(currentPage);
-        currentPage = page.currentPage();
+        var page = contractService.findPage(currentContractPage);
+        currentContractPage = page.currentPage();
         pagedContractsList.setAll(page.contracts());
         contractsTable.refresh();
-        pageLabel.setText("Página " + (currentPage + 1) + " de " + page.totalPages());
-        prevPageButton.setDisable(currentPage == 0);
-        nextPageButton.setDisable(currentPage + 1 >= page.totalPages());
+        pageContractLabel.setText("Página " + (currentContractPage + 1) + " de " + page.totalPages());
+        prevContractPageButton.setDisable(currentContractPage == 0);
+        nextContractPageButton.setDisable(currentContractPage + 1 >= page.totalPages());
+    }
+
+    private void loadPaymentsPage() {
+        var page = paymentService.findPage(currentPaymentPage);
+        currentPaymentPage = page.currentPage();
+        pagedPaymentList.setAll(page.payments());
+        paymentsTable.refresh();
+        pagePaymentLabel.setText("Página " + (currentPaymentPage + 1) + " de " + page.totalPages());
+        prevPaymentPageButton.setDisable(currentPaymentPage == 0);
+        nextPaymentPageButton.setDisable(currentPaymentPage + 1 >= page.totalPages());
+
     }
 
     private void loadDataFromDatabase() {
         contractsList.setAll(contractService.findAll());
         paymentsList.setAll(paymentService.findAll());
         loadContractsPage();
+        loadPaymentsPage();
 
     }
 
