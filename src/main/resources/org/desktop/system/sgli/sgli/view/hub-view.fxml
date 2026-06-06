@@ -23,75 +23,77 @@
             <VBox styleClass="contracts-vbox">
                 <Text text="Gerenciar Contratos" styleClass="section-title"/>
 
-                <GridPane styleClass="grid-pane">
-                    <!-- Primeira coluna -->
-                    <Label text="Nome Locatario:" styleClass="form-label"
-                           GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                    <TextField fx:id="nameLocatarioField" promptText="Digite o nome"
-                               GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="form-textfield"/>
+                <VBox styleClass="contracts-form-card">
+                    <GridPane styleClass="grid-pane">
+                        <!-- Primeira coluna -->
+                        <Label text="Nome Locatario:" styleClass="form-label"
+                               GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <TextField fx:id="nameLocatarioField" promptText="Digite o nome"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="0" styleClass="form-textfield"/>
 
-                    <Label text="Nome Locador:" styleClass="form-label"
-                           GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                    <TextField fx:id="nameLocadorField" promptText="Digite o nome" GridPane.columnIndex="1"
-                               GridPane.rowIndex="1" styleClass="form-textfield"/>
+                        <Label text="Nome Locador:" styleClass="form-label"
+                               GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <TextField fx:id="nameLocadorField" promptText="Digite o nome" GridPane.columnIndex="1"
+                                   GridPane.rowIndex="1" styleClass="form-textfield"/>
 
-                    <Label text="CPF Locatário:" styleClass="form-label"
-                           GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                    <TextField fx:id="cpfLocatarioField" promptText="CPF do Locatário" GridPane.columnIndex="1"
-                               GridPane.rowIndex="2" styleClass="form-textfield"/>
+                        <Label text="CPF Locatário:" styleClass="form-label"
+                               GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                        <TextField fx:id="cpfLocatarioField" promptText="CPF do Locatário" GridPane.columnIndex="1"
+                                   GridPane.rowIndex="2" styleClass="form-textfield"/>
 
-                    <Label text="CPF Locador:" styleClass="form-label"
-                           GridPane.columnIndex="0" GridPane.rowIndex="3"/>
-                    <TextField fx:id="cpfLocadorField" promptText="CPF do Locador" GridPane.columnIndex="1"
-                               GridPane.rowIndex="3" styleClass="form-textfield"/>
+                        <Label text="CPF Locador:" styleClass="form-label"
+                               GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                        <TextField fx:id="cpfLocadorField" promptText="CPF do Locador" GridPane.columnIndex="1"
+                                   GridPane.rowIndex="3" styleClass="form-textfield"/>
 
-                    <Label text="Valor Aluguel:" styleClass="form-label"
-                           GridPane.columnIndex="0" GridPane.rowIndex="4"/>
-                    <TextField fx:id="valorAlugField" promptText="Valor do aluguel" GridPane.columnIndex="1"
-                               GridPane.rowIndex="4" styleClass="form-textfield"/>
-                    <!-- Espaçador entre colunas -->
-                    <VBox GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.rowSpan="5" styleClass="spacer-30"/>
-                    <!-- Segunda coluna -->
-                    <Label text="Valor IPTU:" styleClass="form-label"
-                           GridPane.columnIndex="3" GridPane.rowIndex="0"/>
-                    <TextField fx:id="valorIptuField" promptText="Valor do IPTU" GridPane.columnIndex="4"
-                               GridPane.rowIndex="0" styleClass="form-textfield"/>
+                        <Label text="Valor Aluguel:" styleClass="form-label"
+                               GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                        <TextField fx:id="valorAlugField" promptText="Valor do aluguel" GridPane.columnIndex="1"
+                                   GridPane.rowIndex="4" styleClass="form-textfield"/>
+                        <!-- Espaçador entre colunas -->
+                        <VBox GridPane.columnIndex="2" GridPane.rowIndex="0" GridPane.rowSpan="5"
+                              styleClass="spacer-30"/>
+                        <!-- Segunda coluna -->
+                        <Label text="Valor IPTU:" styleClass="form-label"
+                               GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+                        <TextField fx:id="valorIptuField" promptText="Valor do IPTU" GridPane.columnIndex="4"
+                                   GridPane.rowIndex="0" styleClass="form-textfield"/>
 
-                    <Label text="Valor Condomínio:" styleClass="form-label"
-                           GridPane.columnIndex="3" GridPane.rowIndex="1"/>
-                    <TextField fx:id="valorCondField" promptText="Valor do condomínio" GridPane.columnIndex="4"
-                               GridPane.rowIndex="1" styleClass="form-textfield"/>
+                        <Label text="Valor Condomínio:" styleClass="form-label"
+                               GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                        <TextField fx:id="valorCondField" promptText="Valor do condomínio" GridPane.columnIndex="4"
+                                   GridPane.rowIndex="1" styleClass="form-textfield"/>
 
-                    <Label text="Data Início:" styleClass="form-label"
-                           GridPane.columnIndex="3" GridPane.rowIndex="2"/>
-                    <DatePicker fx:id="dateInitPicker" GridPane.columnIndex="4" GridPane.rowIndex="2"
-                                styleClass="form-date-picker"/>
+                        <Label text="Data Início:" styleClass="form-label"
+                               GridPane.columnIndex="3" GridPane.rowIndex="2"/>
+                        <DatePicker fx:id="dateInitPicker" GridPane.columnIndex="4" GridPane.rowIndex="2"
+                                    styleClass="form-date-picker"/>
 
-                    <Label text="Data Fim:" styleClass="form-label"
-                           GridPane.columnIndex="3" GridPane.rowIndex="3"/>
-                    <DatePicker fx:id="dateEndPicker" GridPane.columnIndex="4" GridPane.rowIndex="3"
-                                styleClass="form-date-picker"/>
+                        <Label text="Data Fim:" styleClass="form-label"
+                               GridPane.columnIndex="3" GridPane.rowIndex="3"/>
+                        <DatePicker fx:id="dateEndPicker" GridPane.columnIndex="4" GridPane.rowIndex="3"
+                                    styleClass="form-date-picker"/>
 
-                    <fx:define>
-                        <ToggleGroup fx:id="contractTypeGroup"/>
-                    </fx:define>
-                    <Label text="Tipo de Contrato:" styleClass="form-label"
-                           GridPane.columnIndex="3" GridPane.rowIndex="4"/>
-                    <HBox
-                            GridPane.columnIndex="4" GridPane.rowIndex="4" GridPane.columnSpan="4">
-                        <RadioButton fx:id="caucaoRadio" text="Caução" selected="true"
-                                     toggleGroup="$contractTypeGroup" styleClass="form-radio"/>
-                        <RadioButton fx:id="fiadorRadio" text="Fiador"
-                                     toggleGroup="$contractTypeGroup" styleClass="form-radio"/>
-                        <RadioButton fx:id="semInformRadio" text="Sem Informação"
-                                     toggleGroup="$contractTypeGroup" styleClass="form-radio"/>
+                        <fx:define>
+                            <ToggleGroup fx:id="contractTypeGroup"/>
+                        </fx:define>
+                        <Label text="Tipo de Contrato:" styleClass="form-label"
+                               GridPane.columnIndex="3" GridPane.rowIndex="4"/>
+                        <HBox
+                                GridPane.columnIndex="4" GridPane.rowIndex="4" GridPane.columnSpan="4">
+                            <RadioButton fx:id="caucaoRadio" text="Caução" selected="true"
+                                         toggleGroup="$contractTypeGroup" styleClass="form-radio"/>
+                            <RadioButton fx:id="fiadorRadio" text="Fiador"
+                                         toggleGroup="$contractTypeGroup" styleClass="form-radio"/>
+                            <RadioButton fx:id="semInformRadio" text="Sem Informação"
+                                         toggleGroup="$contractTypeGroup" styleClass="form-radio"/>
+                        </HBox>
+
+                    </GridPane>
+                    <HBox styleClass="center-alignment">
+                        <Button text="Salvar Contrato" onAction="#saveContract" styleClass="primary-button"/>
                     </HBox>
-
-                </GridPane>
-                <HBox styleClass="center-alignment">
-                    <Button text="Salvar Contrato" onAction="#saveContract" styleClass="primary-button"/>
-                </HBox>
-
+                </VBox>
             </VBox>
         </Tab>
 
@@ -100,28 +102,30 @@
             <VBox styleClass="payments-vbox">
                 <Text text="Gerenciar Pagamentos" styleClass="section-title"/>
 
-                <GridPane styleClass="grid-pane">
-                    <Label text="Contrato:" styleClass="form-label"
-                           GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                    <ComboBox fx:id="contractComboBox" promptText="Selecione o contrato" GridPane.columnIndex="1"
-                              GridPane.rowIndex="0" styleClass="form-combo-box"/>
+                <VBox styleClass="payments-form-card">
+                    <Label text="Novo Pagamento" styleClass="form-section-title"/>
+                    <HBox styleClass="payments-form-hbox">
+                        <VBox styleClass="payments-form-field">
+                            <Label text="Contrato:" styleClass="form-label"/>
+                            <ComboBox fx:id="contractComboBox" promptText="Selecione o contrato"
+                                      styleClass="form-combo-box"/>
+                        </VBox>
+                        <VBox styleClass="payments-form-field">
+                            <Label text="Valor Base:" styleClass="form-label"/>
+                            <TextField fx:id="valorBaseField" promptText="R$ 0,00"
+                                       styleClass="form-textfield"/>
+                        </VBox>
+                        <VBox styleClass="payments-form-field">
+                            <Label text="Mês Referência:" styleClass="form-label"/>
+                            <DatePicker fx:id="monthRefPicker" styleClass="form-date-picker"/>
+                        </VBox>
+                        <VBox styleClass="payments-form-save">
+                            <Label text=" " styleClass="form-label"/>
+                            <Button text="Salvar Pagamento" onAction="#savePayment" styleClass="primary-button"/>
+                        </VBox>
+                    </HBox>
+                </VBox>
 
-                    <Label text="Valor Base:" styleClass="form-label"
-                           GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                    <TextField fx:id="valorBaseField" promptText="Valor base do contrato" GridPane.columnIndex="1"
-                               GridPane.rowIndex="1" styleClass="form-textfield"/>
-
-                    <Label text="Mês Referência:" styleClass="form-label"
-                           GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                    <DatePicker fx:id="monthRefPicker" GridPane.columnIndex="1" GridPane.rowIndex="2"
-                                styleClass="form-date-picker"/>
-
-                </GridPane>
-                <HBox styleClass="center-alignment">
-                    <Button text="Salvar Pagamento" onAction="#savePayment" GridPane.columnIndex="1"
-                            GridPane.rowIndex="3"
-                            styleClass="primary-button"/>
-                </HBox>
             </VBox>
         </Tab>
         <!-- Aba Listar Contratos -->
@@ -189,9 +193,11 @@
                 </TableView>
 
                 <HBox styleClass="center-alignment,spacing-10">
-                    <Button fx:id="prevPageButton" text="&lt;" onAction="#goToPrevPage" styleClass="pag-button"/>
-                    <Label fx:id="pageLabel" text="Página 1 de 1" styleClass="form-label"/>
-                    <Button fx:id="nextPageButton" text="&gt;" onAction="#goToNextPage" styleClass="pag-button"/>
+                    <Button fx:id="prevContractPageButton" text="&lt;" onAction="#goToPrevContractPage"
+                            styleClass="pag-button"/>
+                    <Label fx:id="pageContractLabel" text="Página 1 de 1" styleClass="form-label"/>
+                    <Button fx:id="nextContractPageButton" text="&gt;" onAction="#goToNextContractPage"
+                            styleClass="pag-button"/>
                 </HBox>
                 <HBox styleClass="center-alignment,spacing-10">
                     <Button text="Atualizar Lista" onAction="#refreshListContract" styleClass="primary-button"/>
@@ -206,7 +212,7 @@
         <Tab styleClass="tab" text="Listar Pagamentos" closable="false">
             <VBox styleClass="list-payments-vbox">
                 <Text text="Lista de Pagamentos" styleClass="section-title"/>
-                <TableView fx:id="paymentsTable" styleClass="payments-table">
+                <TableView fx:id="paymentsTable" maxWidth="520" styleClass="payments-table">
                     <columns>
                         <TableColumn text="Contrato" styleClass="large-column">
                             <cellValueFactory>
@@ -226,6 +232,14 @@
                         <TableColumn text="Ações" styleClass="large-column"/>
                     </columns>
                 </TableView>
+
+                <HBox styleClass="center-alignment,spacing-10">
+                    <Button fx:id="prevPaymentPageButton" text="&lt;" onAction="#goToPrevPaymentPage"
+                            styleClass="pag-button"/>
+                    <Label fx:id="pagePaymentLabel" text="Página 1 de 1" styleClass="form-label"/>
+                    <Button fx:id="nextPaymentPageButton" text="&gt;" onAction="#goToNextPaymentPage"
+                            styleClass="pag-button"/>
+                </HBox>
                 <HBox styleClass="center-alignment, spacing-10">
                     <Button text="Atualizar Lista" onAction="#refreshListPayment" styleClass="primary-button"/>
                     <Button text="Exportar Relatorio" onAction="#exportReportPayment" styleClass="export-button"/>
