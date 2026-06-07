@@ -1,16 +1,15 @@
-# SGLI System
-
+# <img  src="src/main/resources/org/desktop/system/sgli/sgli/assets/icon.png" height="25" width="25"/>  SGLI - Sistema 
 **Sistema de Gestão de Locação e Relatórios Fiscais**
 
 Aplicação desktop feita em JavaFX para organizar contratos de aluguel, registrar pagamentos mensais e gerar relatórios em PDF para apoio à declaração de Imposto de Renda.
 
 ---
 
-## Visão Geral
+### Visão Geral
 
 O SGLI foi criado para centralizar a gestão de locações em um sistema simples, local e direto ao ponto.
 
-### O que o sistema faz
+#### O que o sistema faz
 
 - Cadastra contratos de locação.
 - Registra pagamentos mensais.
@@ -19,15 +18,14 @@ O SGLI foi criado para centralizar a gestão de locações em um sistema simples
 - Gera relatórios em PDF de contratos e pagamentos.
 - Funciona offline, sem depender de serviços externos.
 
-### Público-alvo
+#### Público-alvo
 
 - Pessoas que administram imóveis alugados.
 - Locadores que precisam organizar dados para fins fiscais.
 - Usuários que desejam um sistema desktop local, simples e privado.
 
----
 
-## Funcionalidades
+### Funcionalidades
 
 | Área | Recursos |
 | --- | --- |
@@ -39,7 +37,7 @@ O SGLI foi criado para centralizar a gestão de locações em um sistema simples
 
 ---
 
-## Tecnologias
+### Tecnologias
 
 - **Java 21**
 - **JavaFX 17**
@@ -51,7 +49,7 @@ O SGLI foi criado para centralizar a gestão de locações em um sistema simples
 
 ---
 
-## Estrutura do Projeto
+### Estrutura do Projeto
 
 ```text
 SGLI/
@@ -144,7 +142,7 @@ No Linux/macOS, usando Maven Wrapper:
 
 ---
 
-## Banco de Dados
+### Banco de Dados
 
 O banco é criado automaticamente na primeira execução.
 
@@ -157,7 +155,7 @@ O schema é atualizado pelo Hibernate com `hbm2ddl.auto=update`.
 
 ---
 
-## Relatórios
+### Relatórios
 
 Os PDFs são gerados na pasta `Downloads` do usuário:
 
@@ -166,7 +164,7 @@ Os PDFs são gerados na pasta `Downloads` do usuário:
 
 ---
 
-## Documentação
+### Documentação
 
 Para mais detalhes:
 
@@ -176,9 +174,9 @@ Para mais detalhes:
 
 ---
 
-## Desenvolvedor
+### Desenvolvedor
 
 **Hanspeter Dietiker**
 
-- GitHub: [hanspeterdietiker](https://github.com/hanspeterdietiker)
+- GitHub: [Hanspeter Dietiker](https://github.com/hanspeterdietiker)
 - LinkedIn: [Hanspeter Dietiker](https://www.linkedin.com/in/hanspeterdietiker/)
