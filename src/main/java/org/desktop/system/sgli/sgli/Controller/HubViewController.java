@@ -94,7 +94,6 @@ public class HubViewController {
     private int currentPaymentPage = 0;
 
 
-
     //  List Contract and Payment
     private final ObservableList<ContractModel> contractsList = FXCollections.observableArrayList();
     private final ObservableList<ContractModel> pagedContractsList = FXCollections.observableArrayList();
@@ -159,67 +158,78 @@ public class HubViewController {
         }
 
         for (TableColumn<PaymentModel, ?> column : paymentsTable.getColumns()) {
-            if ("Valor Base".equals(column.getText())) {
-                @SuppressWarnings("unchecked") TableColumn<PaymentModel, BigDecimal> valorBaseColumn = (TableColumn<PaymentModel, BigDecimal>) column;
-                valorBaseColumn.setCellFactory(col -> new TableCell<>() {
-                    @Override
-                    protected void updateItem(BigDecimal item, boolean empty) {
-                        super.updateItem(item, empty);
-                        setText(empty || item == null ? null : "R$ " + DecimalFormatterUtils.decimalFormat.format(item));
-                    }
-                });
-            }
-        }
-        for (TableColumn<PaymentModel, ?> column : paymentsTable.getColumns()) {
-            if ("Mês Ref.".equals(column.getText())) {
-                @SuppressWarnings("unchecked") TableColumn<PaymentModel, LocalDate> monthRefColumn = (TableColumn<PaymentModel, LocalDate>) column;
-                monthRefColumn.setCellFactory(col -> new TableCell<>() {
-                    @Override
-                    protected void updateItem(LocalDate item, boolean empty) {
-                        super.updateItem(item, empty);
-                        setText(empty || item == null ? null : DateFormatterUtils.dateFormatter.format(item));
-                    }
-                });
-            }
-        }
-        for (TableColumn<PaymentModel, ?> column : paymentsTable.getColumns()) {
-            if ("Contrato".equals(column.getText())) {
-                @SuppressWarnings("unchecked") TableColumn<PaymentModel, String> contractNameColumn = (TableColumn<PaymentModel, String>) column;
-                contractNameColumn.setCellValueFactory(cellData -> {
-                    PaymentModel pagamento = cellData.getValue();
-                    if (pagamento != null && pagamento.getContract() != null) {
-                        String nomeDoLocatario = pagamento.getContract().getNameLocatario();
-                        return new SimpleStringProperty(nomeDoLocatario);
-                    } else {
-                        return new SimpleStringProperty("Sem contrato");
-                    }
-                });
+            switch (column.getText()) {
+                case "Valor Base" -> {
+                    @SuppressWarnings("unchecked") TableColumn<PaymentModel, BigDecimal> valorBaseColumn = (TableColumn<PaymentModel, BigDecimal>) column;
+                    valorBaseColumn.setCellFactory(col -> new TableCell<>() {
+                        @Override
+                        protected void updateItem(BigDecimal item, boolean empty) {
+                            super.updateItem(item, empty);
+                            setText(empty || item == null ? null : "R$ " + DecimalFormatterUtils.decimalFormat.format(item));
+                        }
+                    });
+                }
+
+                case "Mês Ref." -> {
+                    @SuppressWarnings("unchecked") TableColumn<PaymentModel, LocalDate> monthRefColumn = (TableColumn<PaymentModel, LocalDate>) column;
+                    monthRefColumn.setCellFactory(col -> new TableCell<>() {
+                        @Override
+                        protected void updateItem(LocalDate item, boolean empty) {
+                            super.updateItem(item, empty);
+                            setText(empty || item == null ? null : DateFormatterUtils.dateFormatter.format(item));
+
+                        }
+                    });
+                }
+
+
+                case "Contrato" -> {
+                    @SuppressWarnings("unchecked") TableColumn<PaymentModel, String> contractNameColumn = (TableColumn<PaymentModel, String>) column;
+                    contractNameColumn.setCellValueFactory(cellData -> {
+                        PaymentModel pagamento = cellData.getValue();
+                        if (pagamento != null && pagamento.getContract() != null) {
+                            String nomeDoLocatario = pagamento.getContract().getNameLocatario();
+                            return new SimpleStringProperty(nomeDoLocatario);
+                        } else {
+                            return new SimpleStringProperty("Sem contrato");
+                        }
+                    });
+                }
 
             }
         }
 
-        contractsTable.setItems(pagedContractsList);
-        paymentsTable.setItems(pagedPaymentList);
+
+        contractsTable.
+
+                setItems(pagedContractsList);
+        paymentsTable.
+
+                setItems(pagedPaymentList);
 
 
         configureContractActionsColumn();
 
         configurePaymentActionsColumn();
 
-        contractComboBox.setItems(contractsList);
-        contractComboBox.setConverter(new javafx.util.StringConverter<>() {
-            @Override
-            public String toString(ContractModel contract) {
-                return contract != null ? contract.getNameLocatario() : "";
+        contractComboBox.
+
+                setItems(contractsList);
+        contractComboBox.
+
+                setConverter(new javafx.util.StringConverter<>() {
+                    @Override
+                    public String toString(ContractModel contract) {
+                        return contract != null ? contract.getNameLocatario() : "";
 
 
-            }
+                    }
 
-            @Override
-            public ContractModel fromString(String string) {
-                return null;
-            }
-        });
+                    @Override
+                    public ContractModel fromString(String string) {
+                        return null;
+                    }
+                });
 
         loadDataFromDatabase();
 
@@ -271,7 +281,6 @@ public class HubViewController {
     }
 
 
-
     private void editContract(ContractModel contract) {
         ContractPutDialog dialog = new ContractPutDialog(contract);
         var result = dialog.showAndWait();
@@ -306,6 +315,7 @@ public class HubViewController {
             AlertAction.showAlert("Sucesso", "Contrato deletado com sucesso!");
         }
     }
+
     @FXML
     private void savePayment() {
         try {
@@ -326,6 +336,7 @@ public class HubViewController {
             AlertAction.showAlert("Erro Inesperado", "Erro ao salvar pagamento: " + e.getMessage());
         }
     }
+
     private void editPayment(PaymentModel payment) {
         PaymentPutDialog dialog = new PaymentPutDialog(payment, contractsList);
         var result = dialog.showAndWait();
