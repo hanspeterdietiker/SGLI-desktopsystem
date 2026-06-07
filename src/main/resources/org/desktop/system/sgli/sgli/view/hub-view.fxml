@@ -56,12 +56,12 @@
                         </VBox>
                         <VBox styleClass="form-field">
                             <Label text="Valor Aluguel:" styleClass="form-label"/>
-                            <TextField fx:id="valorAlugField" promptText="Valor do aluguel"
+                            <TextField fx:id="valorAlugField" promptText="R$ 0,00"
                                        styleClass="form-textfield"/>
                         </VBox>
                         <VBox styleClass="form-field">
                             <Label text="Valor IPTU:" styleClass="form-label"/>
-                            <TextField fx:id="valorIptuField" promptText="Valor do IPTU"
+                            <TextField fx:id="valorIptuField" promptText="R$ 0,00"
                                        styleClass="form-textfield"/>
                         </VBox>
                     </HBox>
@@ -69,16 +69,16 @@
                     <HBox styleClass="form-hbox">
                         <VBox styleClass="form-field">
                             <Label text="Valor Condomínio:" styleClass="form-label"/>
-                            <TextField fx:id="valorCondField" promptText="Valor do condomínio"
+                            <TextField fx:id="valorCondField" promptText="R$ 0,00"
                                        styleClass="form-textfield"/>
                         </VBox>
                         <VBox styleClass="form-field">
                             <Label text="Data Início:" styleClass="form-label"/>
-                            <DatePicker fx:id="dateInitPicker" styleClass="form-date-picker"/>
+                            <DatePicker fx:id="dateInitPicker" promptText="01/01/2026" styleClass="form-date-picker"/>
                         </VBox>
                         <VBox styleClass="form-field">
                             <Label text="Data Fim:" styleClass="form-label"/>
-                            <DatePicker fx:id="dateEndPicker" styleClass="form-date-picker"/>
+                            <DatePicker fx:id="dateEndPicker" promptText="01/01/2027" styleClass="form-date-picker"/>
                         </VBox>
                     </HBox>
 
@@ -126,7 +126,7 @@
                         </VBox>
                         <VBox styleClass="form-field">
                             <Label text="Mês Referência:" styleClass="form-label"/>
-                            <DatePicker fx:id="monthRefPicker" styleClass="form-date-picker"/>
+                            <DatePicker fx:id="monthRefPicker" promptText="05/01/2026" styleClass="form-date-picker"/>
                         </VBox>
                     </HBox>
                     <HBox styleClass="center-alignment">
