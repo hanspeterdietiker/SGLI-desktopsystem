@@ -124,71 +124,37 @@ public class HubViewController {
         FormUtils.applyCpfMask(cpfLocatarioField, cpfLocadorField);
 
         for (TableColumn<ContractModel, ?> column : contractsTable.getColumns()) {
-            if ("Data Início".equals(column.getText())) {
-                @SuppressWarnings("unchecked") TableColumn<ContractModel, LocalDate> dateInitColumn = (TableColumn<ContractModel, LocalDate>) column;
-                dateInitColumn.setCellFactory(col -> new TableCell<>() {
-                    @Override
-                    protected void updateItem(LocalDate item, boolean empty) {
-                        super.updateItem(item, empty);
-                        setText(empty || item == null ? null : DateFormatterUtils.dateFormatter.format(item));
-                    }
-                });
-            } else if ("Data Fim".equals(column.getText())) {
-                @SuppressWarnings("unchecked") TableColumn<ContractModel, LocalDate> dateEndColumn = (TableColumn<ContractModel, LocalDate>) column;
-                dateEndColumn.setCellFactory(col -> new TableCell<>() {
-                    @Override
-                    protected void updateItem(LocalDate item, boolean empty) {
-                        super.updateItem(item, empty);
-                        setText(empty || item == null ? null : DateFormatterUtils.dateFormatter.format(item));
-                    }
-                });
-            }
-        }
-
-
-        for (TableColumn<ContractModel, ?> column : contractsTable.getColumns()) {
-            if ("Aluguel".equals(column.getText())) {
-                @SuppressWarnings("unchecked") TableColumn<ContractModel, BigDecimal> valorAlugColumn = (TableColumn<ContractModel, BigDecimal>) column;
-                valorAlugColumn.setCellFactory(col -> new TableCell<>() {
-                    @Override
-                    protected void updateItem(BigDecimal item, boolean empty) {
-                        super.updateItem(item, empty);
-                        setText(empty || item == null ? null : "R$ " + DecimalFormatterUtils.decimalFormat.format(item));
-                    }
-                });
-            } else if ("IPTU".equals(column.getText())) {
-                @SuppressWarnings("unchecked") TableColumn<ContractModel, BigDecimal> valorIptuColumn = (TableColumn<ContractModel, BigDecimal>) column;
-                valorIptuColumn.setCellFactory(col -> new TableCell<>() {
-                    @Override
-                    protected void updateItem(BigDecimal item, boolean empty) {
-                        super.updateItem(item, empty);
-                        setText(empty || item == null ? null : "R$ " + DecimalFormatterUtils.decimalFormat.format(item));
-                    }
-                });
-            } else if ("Condomínio".equals(column.getText())) {
-                @SuppressWarnings("unchecked") TableColumn<ContractModel, BigDecimal> valorCondColumn = (TableColumn<ContractModel, BigDecimal>) column;
-                valorCondColumn.setCellFactory(col -> new TableCell<>() {
-                    @Override
-                    protected void updateItem(BigDecimal item, boolean empty) {
-                        super.updateItem(item, empty);
-                        setText(empty || item == null ? null : "R$ " + DecimalFormatterUtils.decimalFormat.format(item));
-                    }
-                });
-            }
-        }
-
-
-        for (TableColumn<ContractModel, ?> column : contractsTable.getColumns()) {
-            if ("CPF Locatário".equals(column.getText()) || "CPF Locador".equals(column.getText())) {
-                @SuppressWarnings("unchecked")
-                TableColumn<ContractModel, String> cpfColumn = (TableColumn<ContractModel, String>) column;
-                cpfColumn.setCellFactory(col -> new TableCell<>() {
-                    @Override
-                    protected void updateItem(String cpf, boolean empty) {
-                        super.updateItem(cpf, empty);
-                        setText(empty || cpf == null ? null : CpfUtils.mask(cpf));
-                    }
-                });
+            switch (column.getText()) {
+                case "Data Início", "Data Fim" -> {
+                    @SuppressWarnings("unchecked") TableColumn<ContractModel, LocalDate> dateCol = (TableColumn<ContractModel, LocalDate>) column;
+                    dateCol.setCellFactory(col -> new TableCell<>() {
+                        @Override
+                        protected void updateItem(LocalDate item, boolean empty) {
+                            super.updateItem(item, empty);
+                            setText(empty || item == null ? null : DateFormatterUtils.dateFormatter.format(item));
+                        }
+                    });
+                }
+                case "Aluguel", "IPTU", "Condomínio" -> {
+                    @SuppressWarnings("unchecked") TableColumn<ContractModel, BigDecimal> moneyCol = (TableColumn<ContractModel, BigDecimal>) column;
+                    moneyCol.setCellFactory(col -> new TableCell<>() {
+                        @Override
+                        protected void updateItem(BigDecimal item, boolean empty) {
+                            super.updateItem(item, empty);
+                            setText(empty || item == null ? null : "R$ " + DecimalFormatterUtils.decimalFormat.format(item));
+                        }
+                    });
+                }
+                case "CPF Locatário", "CPF Locador" -> {
+                    @SuppressWarnings("unchecked") TableColumn<ContractModel, String> cpfCol = (TableColumn<ContractModel, String>) column;
+                    cpfCol.setCellFactory(col -> new TableCell<>() {
+                        @Override
+                        protected void updateItem(String cpf, boolean empty) {
+                            super.updateItem(cpf, empty);
+                            setText(empty || cpf == null ? null : CpfUtils.mask(cpf));
+                        }
+                    });
+                }
             }
         }
 
@@ -344,9 +310,8 @@ public class HubViewController {
     private void savePayment() {
         try {
 
-            PaymentModel savedPayment = paymentService.save(
+            paymentService.save(
                     contractComboBox.getValue(), monthRefPicker.getValue(), valorBaseField.getText());
-            paymentsList.add(savedPayment);
             loadDataFromDatabase();
             AlertAction.showAlert("Sucesso", "Pagamento salvo com sucesso!");
 
@@ -387,8 +352,6 @@ public class HubViewController {
 
         if (confirmed) {
             paymentService.delete(payment.getId());
-            paymentsList.remove(payment);
-            paymentsTable.refresh();
             loadDataFromDatabase();
             AlertAction.showAlert("Sucesso", "Pagamento deletado com sucesso!");
         }
