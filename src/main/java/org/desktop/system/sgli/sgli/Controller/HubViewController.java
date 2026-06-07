@@ -8,7 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 import org.desktop.system.sgli.sgli.Controller.Dialog.LgpdAuditDialog;
-import org.desktop.system.sgli.sgli.Repository.ContractRepository;
+import org.desktop.system.sgli.sgli.Dto.ContractDto;
 import org.desktop.system.sgli.sgli.Services.ContractService;
 import org.desktop.system.sgli.sgli.Services.LgpdAuditService;
 import org.desktop.system.sgli.sgli.Services.LgpdExportService;
@@ -250,11 +250,11 @@ public class HubViewController {
             String selectedType = fiadorRadio.isSelected() ? "FIADOR" : semInformRadio.isSelected() ? "NO_INFORM" : "CAUCAO";
             ContractTypeEnum contractType = ContractService.resolveContractType(selectedType);
 
-            contractService.save(
+            contractService.save(new ContractDto(
                     nameLocadorField.getText(), nameLocatarioField.getText(),
                     cpfLocatarioField.getText(), cpfLocadorField.getText(),
                     valorAlugField.getText(), valorIptuField.getText(), valorCondField.getText(),
-                    dateInitPicker.getValue(), dateEndPicker.getValue(), contractType);
+                    dateInitPicker.getValue(), dateEndPicker.getValue(), contractType));
             loadDataFromDatabase();
             AlertAction.showAlert("Sucesso", "Contrato salvo com sucesso!");
 
