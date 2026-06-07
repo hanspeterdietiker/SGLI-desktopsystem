@@ -51,6 +51,21 @@ public class ContractService {
     }
 
     public ContractModel update(ContractModel contract) {
+        var contractCpfLocatario = contract.getCpfLocatario();
+        var contractNameLocatario = contract.getNameLocatario();
+
+        if (contractRepository.existsByNameLocatario(contractNameLocatario)) {
+            throw new IllegalArgumentException(
+                    "Já existe um contrato para este locatário.\n" +
+                            "Se necessário, edite ou exclua o contrato existente.");
+        }
+
+        if (contractRepository.existsByCpfLocatario(contractCpfLocatario)) {
+            throw new IllegalArgumentException(
+                    "Já existe um contrato com este CPF de locatário.\n" +
+                            "Se necessário, edite ou exclua o contrato existente.");
+        }
+
         validateForUpdate(contract);
         ContractModel updated = contractRepository.update(contract);
         LgpdAuditLoggerUtils.logUpdate("Contract", CpfUtils.mask(updated.getCpfLocatario()));
@@ -102,6 +117,7 @@ public class ContractService {
         if (contract.getContractType() == null) {
             throw new IllegalArgumentException("Selecione um tipo de contrato!");
         }
+
     }
 
     private static int totalPages(long total) {
