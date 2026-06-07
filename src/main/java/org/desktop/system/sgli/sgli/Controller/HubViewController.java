@@ -200,36 +200,28 @@ public class HubViewController {
         }
 
 
-        contractsTable.
-
-                setItems(pagedContractsList);
-        paymentsTable.
-
-                setItems(pagedPaymentList);
+        contractsTable.setItems(pagedContractsList);
+        paymentsTable.setItems(pagedPaymentList);
 
 
         configureContractActionsColumn();
 
         configurePaymentActionsColumn();
 
-        contractComboBox.
-
-                setItems(contractsList);
-        contractComboBox.
-
-                setConverter(new javafx.util.StringConverter<>() {
-                    @Override
-                    public String toString(ContractModel contract) {
-                        return contract != null ? contract.getNameLocatario() : "";
+        contractComboBox.setItems(contractsList);
+        contractComboBox.setConverter(new javafx.util.StringConverter<>() {
+            @Override
+            public String toString(ContractModel contract) {
+                return contract != null ? contract.getNameLocatario() : "";
 
 
-                    }
+            }
 
-                    @Override
-                    public ContractModel fromString(String string) {
-                        return null;
-                    }
-                });
+            @Override
+            public ContractModel fromString(String string) {
+                return null;
+            }
+        });
 
         loadDataFromDatabase();
 
