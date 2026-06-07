@@ -29,66 +29,64 @@
                     </fx:define>
                     <Label text="Novo Contrato" styleClass="form-section-title"/>
 
-                    <!-- Linha 1: Nomes -->
-                    <HBox styleClass="payments-form-hbox">
-                        <VBox styleClass="payments-form-field">
+
+                    <HBox styleClass="form-hbox">
+                        <VBox styleClass="form-field">
                             <Label text="Nome Locatário:" styleClass="form-label"/>
                             <TextField fx:id="nameLocatarioField" promptText="Digite o nome"
                                        styleClass="form-textfield"/>
                         </VBox>
-                        <VBox styleClass="payments-form-field">
+                        <VBox styleClass="form-field">
                             <Label text="Nome Locador:" styleClass="form-label"/>
                             <TextField fx:id="nameLocadorField" promptText="Digite o nome"
                                        styleClass="form-textfield"/>
                         </VBox>
-                    </HBox>
-
-                    <!-- Linha 2: CPFs -->
-                    <HBox styleClass="payments-form-hbox">
-                        <VBox styleClass="payments-form-field">
+                        <VBox styleClass="form-field">
                             <Label text="CPF Locatário:" styleClass="form-label"/>
                             <TextField fx:id="cpfLocatarioField" promptText="CPF do Locatário"
                                        styleClass="form-textfield"/>
                         </VBox>
-                        <VBox styleClass="payments-form-field">
+                    </HBox>
+
+                    <HBox styleClass="form-hbox">
+                        <VBox styleClass="form-field">
                             <Label text="CPF Locador:" styleClass="form-label"/>
                             <TextField fx:id="cpfLocadorField" promptText="CPF do Locador"
                                        styleClass="form-textfield"/>
                         </VBox>
-                    </HBox>
-
-                    <!-- Linha 3: Valores -->
-                    <HBox styleClass="payments-form-hbox">
-                        <VBox styleClass="payments-form-field">
+                        <VBox styleClass="form-field">
                             <Label text="Valor Aluguel:" styleClass="form-label"/>
                             <TextField fx:id="valorAlugField" promptText="Valor do aluguel"
                                        styleClass="form-textfield"/>
                         </VBox>
-                        <VBox styleClass="payments-form-field">
+                        <VBox styleClass="form-field">
                             <Label text="Valor IPTU:" styleClass="form-label"/>
                             <TextField fx:id="valorIptuField" promptText="Valor do IPTU"
                                        styleClass="form-textfield"/>
                         </VBox>
-                        <VBox styleClass="payments-form-field">
+                    </HBox>
+
+                    <HBox styleClass="form-hbox">
+                        <VBox styleClass="form-field">
                             <Label text="Valor Condomínio:" styleClass="form-label"/>
                             <TextField fx:id="valorCondField" promptText="Valor do condomínio"
                                        styleClass="form-textfield"/>
                         </VBox>
-                    </HBox>
-
-                    <!-- Linha 4: Datas e Tipo -->
-                    <HBox styleClass="payments-form-hbox">
-                        <VBox styleClass="payments-form-field">
+                        <VBox styleClass="form-field">
                             <Label text="Data Início:" styleClass="form-label"/>
                             <DatePicker fx:id="dateInitPicker" styleClass="form-date-picker"/>
                         </VBox>
-                        <VBox styleClass="payments-form-field">
+                        <VBox styleClass="form-field">
                             <Label text="Data Fim:" styleClass="form-label"/>
                             <DatePicker fx:id="dateEndPicker" styleClass="form-date-picker"/>
                         </VBox>
-                        <VBox styleClass="payments-form-field">
-                            <Label text="Tipo de Contrato:" styleClass="form-label"/>
-                            <HBox>
+                    </HBox>
+
+
+                    <HBox styleClass="contracts-type-row">
+                        <VBox styleClass="form-field">
+                            <HBox styleClass="form-hbox">
+                                <Label text="Tipo de Garantia:" styleClass="form-label"/>
                                 <RadioButton fx:id="caucaoRadio" text="Caução" selected="true"
                                              toggleGroup="$contractTypeGroup" styleClass="form-radio"/>
                                 <RadioButton fx:id="fiadorRadio" text="Fiador"
@@ -102,6 +100,8 @@
                     <HBox styleClass="center-alignment">
                         <Button text="Salvar Contrato" onAction="#saveContract" styleClass="primary-button"/>
                     </HBox>
+
+
                 </VBox>
             </VBox>
         </Tab>
@@ -113,25 +113,24 @@
 
                 <VBox styleClass="payments-form-card">
                     <Label text="Novo Pagamento" styleClass="form-section-title"/>
-                    <HBox styleClass="payments-form-hbox">
-                        <VBox styleClass="payments-form-field">
+                    <HBox styleClass="form-hbox">
+                        <VBox styleClass="form-field">
                             <Label text="Contrato:" styleClass="form-label"/>
                             <ComboBox fx:id="contractComboBox" promptText="Selecione o contrato"
                                       styleClass="form-combo-box"/>
                         </VBox>
-                        <VBox styleClass="payments-form-field">
+                        <VBox styleClass="form-field">
                             <Label text="Valor Base:" styleClass="form-label"/>
                             <TextField fx:id="valorBaseField" promptText="R$ 0,00"
                                        styleClass="form-textfield"/>
                         </VBox>
-                        <VBox styleClass="payments-form-field">
+                        <VBox styleClass="form-field">
                             <Label text="Mês Referência:" styleClass="form-label"/>
                             <DatePicker fx:id="monthRefPicker" styleClass="form-date-picker"/>
                         </VBox>
-                        <VBox styleClass="payments-form-save">
-                            <Label text=" " styleClass="form-label"/>
-                            <Button text="Salvar Pagamento" onAction="#savePayment" styleClass="primary-button"/>
-                        </VBox>
+                    </HBox>
+                    <HBox styleClass="center-alignment">
+                        <Button text="Salvar Pagamento" onAction="#savePayment" styleClass="primary-button"/>
                     </HBox>
                 </VBox>
 
