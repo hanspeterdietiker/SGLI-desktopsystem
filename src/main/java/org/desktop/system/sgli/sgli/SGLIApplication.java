@@ -17,8 +17,9 @@ public class SGLIApplication extends Application {
         JpaUtil.initialize();
 
         FXMLLoader fxmlLoader = new FXMLLoader(SGLIApplication.class.getResource("view/welcome-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1368, 720);
+        Scene scene = new Scene(fxmlLoader.load(), 1368, 768);
         stage.setTitle("SGLI System - Application");
+        stage.setResizable(false);
         stage.getIcons().add(icone);
         stage.setScene(scene);
         stage.show();
