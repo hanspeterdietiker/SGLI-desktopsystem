@@ -29,7 +29,7 @@ public class ContractService {
             String valorAlugStr, String valorIptuStr, String valorCondStr,
             LocalDate dateInit, LocalDate dateEnd, ContractTypeEnum contractType) {
 
-        ContractModel contract = buildContract(
+        ContractModel contract = validateForCreate(
                 nameLocador, nameLocatario, cpfLocatario, cpfLocador,
                 valorAlugStr, valorIptuStr, valorCondStr, dateInit, dateEnd, contractType);
 
@@ -51,22 +51,21 @@ public class ContractService {
     }
 
     public ContractModel update(ContractModel contract) {
-        var contractCpfLocatario = contract.getCpfLocatario();
-        var contractNameLocatario = contract.getNameLocatario();
 
-        if (contractRepository.existsByNameLocatario(contractNameLocatario)) {
+        validateForUpdate(contract);
+        if (contractRepository.existsByNameLocatarioAndId(contract.getNameLocatario(), contract.getId())) {
             throw new IllegalArgumentException(
                     "Já existe um contrato para este locatário.\n" +
                             "Se necessário, edite ou exclua o contrato existente.");
         }
 
-        if (contractRepository.existsByCpfLocatario(contractCpfLocatario)) {
+        if (contractRepository.existsByCpfLocatarioAndId(contract.getCpfLocatario(), contract.getId())) {
             throw new IllegalArgumentException(
                     "Já existe um contrato com este CPF de locatário.\n" +
                             "Se necessário, edite ou exclua o contrato existente.");
         }
 
-        validateForUpdate(contract);
+
         ContractModel updated = contractRepository.update(contract);
         LgpdAuditLoggerUtils.logUpdate("Contract", CpfUtils.mask(updated.getCpfLocatario()));
         return updated;
@@ -124,10 +123,11 @@ public class ContractService {
         return (int) Math.max(1, (total + PAGE_SIZE - 1) / PAGE_SIZE);
     }
 
-    private static ContractModel buildContract(
+    private static ContractModel validateForCreate(
             String nameLocador, String nameLocatario, String cpfLocatario, String cpfLocador,
             String valorAlugStr, String valorIptuStr, String valorCondStr,
-            LocalDate dateInit, LocalDate dateEnd, ContractTypeEnum contractType) {
+            LocalDate dateInit, LocalDate dateEnd, ContractTypeEnum contractType
+    ) {
 
         if (dateInit == null || dateEnd == null) {
             throw new IllegalArgumentException("Selecione as datas de início e fim do contrato!");
