@@ -30,8 +30,8 @@ public class SGLIApplication extends Application {
 
     private Scene createPreloaderScene() {
         ImageView iconView = new ImageView(icone);
-        iconView.setFitWidth(600);
-        iconView.setFitHeight(600);
+        iconView.setFitWidth(300);
+        iconView.setFitHeight(300);
         iconView.setPreserveRatio(true);
 
         rotateTransition = new RotateTransition(Duration.seconds(30), iconView);
