@@ -16,7 +16,7 @@ public class ContractService {
     public record ContractPage(List<ContractModel> contracts, int totalPages, int currentPage) {
     }
 
-    private static final int PAGE_SIZE = 4;
+    private static final int PAGE_SIZE = 6;
 
     private final ContractRepository contractRepository;
 
