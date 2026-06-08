@@ -13,7 +13,7 @@ public class ContractRepository {
     public List<ContractModel> findAll() {
         try (EntityManager entityManager = JpaUtil.getEntityManager()) {
             return entityManager
-                    .createQuery("SELECT contract FROM ContractModel contract ORDER BY contract.nameLocatario", ContractModel.class)
+                    .createQuery("SELECT contract FROM ContractModel contract", ContractModel.class)
                     .getResultList();
         }
     }
@@ -21,7 +21,7 @@ public class ContractRepository {
     public List<ContractModel> findByPag(int maxPag, int firstResult) {
         try (EntityManager entityManager = JpaUtil.getEntityManager()) {
             TypedQuery<ContractModel> query = entityManager
-                    .createQuery("SELECT contract FROM ContractModel contract ORDER BY contract.nameLocatario", ContractModel.class);
+                    .createQuery("SELECT contract FROM ContractModel contract ORDER BY contract.nameLocador ", ContractModel.class);
             query.setMaxResults(maxPag);
             query.setFirstResult(firstResult);
             return query.getResultList();
