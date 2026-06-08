@@ -13,12 +13,7 @@ public class PaymentRepository {
     public List<PaymentModel> findAll() {
         try (EntityManager entityManager = JpaUtil.getEntityManager()) {
             return entityManager
-                    .createQuery("""
-                            SELECT payment
-                            FROM PaymentModel payment
-                            JOIN FETCH payment.contract
-                            ORDER BY payment.monthRef DESC
-                            """, PaymentModel.class)
+                    .createQuery("SELECT payment FROM PaymentModel payment", PaymentModel.class)
                     .getResultList();
         }
     }
@@ -26,7 +21,7 @@ public class PaymentRepository {
     public List<PaymentModel> findByPag(int maxPag, int firstResult) {
         try (EntityManager entityManager = JpaUtil.getEntityManager()) {
             TypedQuery<PaymentModel> query = entityManager
-                    .createQuery("SELECT payment FROM PaymentModel payment ORDER BY payment.monthRef DESC", PaymentModel.class);
+                    .createQuery("SELECT payment FROM PaymentModel payment ORDER BY payment.contract.nameLocatario, payment.monthRef ", PaymentModel.class);
             query.setMaxResults(maxPag);
             query.setFirstResult(firstResult);
             return query.getResultList();
