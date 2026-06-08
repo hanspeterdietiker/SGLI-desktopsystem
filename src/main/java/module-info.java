@@ -16,6 +16,7 @@ module org.desktop.system.sgli.sgli {
     exports org.desktop.system.sgli.sgli.Entity;
     exports org.desktop.system.sgli.sgli.Entity.Enum;
     exports org.desktop.system.sgli.sgli.Config;
+    exports org.desktop.system.sgli.sgli.Dto;
 
 
 }
