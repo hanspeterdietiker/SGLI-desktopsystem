@@ -31,7 +31,7 @@ public class ContractRepository {
     public long countAll() {
         try (EntityManager entityManager = JpaUtil.getEntityManager()) {
             return entityManager
-                    .createQuery("SELECT COUNT(c) FROM ContractModel c", Long.class)
+                    .createQuery("SELECT COUNT(contract) FROM ContractModel contract", Long.class)
                     .getSingleResult();
         }
     }
@@ -47,7 +47,7 @@ public class ContractRepository {
     public boolean existsByNameLocatario(String nameLocatario) {
         try (EntityManager entityManager = JpaUtil.getEntityManager()) {
             Long count = entityManager
-                    .createQuery("SELECT COUNT(c) FROM ContractModel c WHERE LOWER(c.nameLocatario) = LOWER(:nameLocatario)", Long.class)
+                    .createQuery("SELECT COUNT(contract) FROM ContractModel contract WHERE LOWER(contract.nameLocatario) = LOWER(:nameLocatario)", Long.class)
                     .setParameter("nameLocatario", nameLocatario.trim())
                     .getSingleResult();
             return count > 0;
@@ -57,7 +57,7 @@ public class ContractRepository {
     public boolean existsByNameLocatarioAndId(String nameLocatario, UUID excludeId) {
         try (EntityManager entityManager = JpaUtil.getEntityManager()) {
             Long count = entityManager
-                    .createQuery("SELECT COUNT(c) FROM ContractModel c WHERE LOWER(c.nameLocatario) = LOWER(:nameLocatario) and c.id  <> :excludeId", Long.class)
+                    .createQuery("SELECT COUNT(contract) FROM ContractModel contract WHERE LOWER(contract.nameLocatario) = LOWER(:nameLocatario) and contract.id  <> :excludeId", Long.class)
                     .setParameter("nameLocatario", nameLocatario.trim())
                     .setParameter("excludeId", excludeId)
                     .getSingleResult();
@@ -68,7 +68,7 @@ public class ContractRepository {
     public boolean existsByCpfLocatario(String cpfLocatario) {
         try (EntityManager entityManager = JpaUtil.getEntityManager()) {
             Long count = entityManager
-                    .createQuery("SELECT COUNT(c) FROM ContractModel c WHERE c.cpfLocatario = :cpfLocatario", Long.class)
+                    .createQuery("SELECT COUNT(contract) FROM ContractModel contract WHERE contract.cpfLocatario = :cpfLocatario", Long.class)
                     .setParameter("cpfLocatario", cpfLocatario.trim())
                     .getSingleResult();
             return count > 0;
@@ -78,7 +78,7 @@ public class ContractRepository {
     public boolean existsByCpfLocatarioAndId(String cpfLocatario, UUID excludeId) {
         try (EntityManager entityManager = JpaUtil.getEntityManager()) {
             Long count = entityManager
-                    .createQuery("SELECT COUNT(c) FROM ContractModel c WHERE c.cpfLocatario = :cpfLocatario AND c.id <> :excludeId", Long.class)
+                    .createQuery("SELECT COUNT(contract) FROM ContractModel contract WHERE contract.cpfLocatario = :cpfLocatario AND contract.id <> :excludeId", Long.class)
                     .setParameter("cpfLocatario", cpfLocatario.trim())
                     .setParameter("excludeId", excludeId)
                     .getSingleResult();

@@ -31,7 +31,7 @@ public class PaymentRepository {
     public long countAll() {
         try (EntityManager entityManager = JpaUtil.getEntityManager()) {
             return entityManager
-                    .createQuery("SELECT COUNT(p) FROM PaymentModel p", Long.class)
+                    .createQuery("SELECT COUNT(payment) FROM PaymentModel payment", Long.class)
                     .getSingleResult();
         }
     }
