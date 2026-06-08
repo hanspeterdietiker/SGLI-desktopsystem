@@ -1,4 +1,4 @@
-# <img  src="src/main/resources/org/desktop/system/sgli/sgli/assets/icon.png" height="25" width="25"/>  SGLI - Sistema 
+# <img  src="src/main/resources/org/desktop/system/sgli/sgli/assets/icon.png" height="40" width="40"/>  SGLI - Sistema 
 **Sistema de Gestão de Locação e Relatórios Fiscais**
 
 Aplicação desktop feita em JavaFX para organizar contratos de aluguel, registrar pagamentos mensais e gerar relatórios em PDF para apoio à declaração de Imposto de Renda.
