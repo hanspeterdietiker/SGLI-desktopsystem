@@ -62,7 +62,7 @@ public class SGLIApplication extends Application {
                     FXMLLoader fxmlLoader = new FXMLLoader(SGLIApplication.class.getResource("view/welcome-view.fxml"));
                     Scene welcomeScene = new Scene(fxmlLoader.load(), 1368, 768);
 
-                    FadeTransition fadeOut = new FadeTransition(Duration.millis(3000), preloaderScene.getRoot());
+                    FadeTransition fadeOut = new FadeTransition(Duration.seconds(3), preloaderScene.getRoot());
                     fadeOut.setFromValue(1.0);
                     fadeOut.setToValue(0.0);
                     fadeOut.setOnFinished(e -> {
