@@ -11,6 +11,7 @@ import org.desktop.system.sgli.sgli.Utils.CpfUtils;
 import org.desktop.system.sgli.sgli.Utils.FormUtils;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 public class ContractPutDialog extends Dialog<ContractModel> {
     private final TextField nameLocadorField = new TextField();
@@ -121,11 +122,17 @@ public class ContractPutDialog extends Dialog<ContractModel> {
     }
 
     private ContractModel validateAndSave() {
+        LocalDate dateInit = dateInitPicker.getValue();
+        LocalDate dateEnd = dateEndPicker.getValue();
+        if (dateInit == null || dateEnd == null) {
+            AlertAction.showAlert("Erro de Validação", "Selecione as datas de início e fim do contrato!");
+            return null;
+        }
+
         try {
             BigDecimal valorAlug = new BigDecimal(valorAlugField.getText().trim());
             BigDecimal valorIptu = new BigDecimal(valorIptuField.getText().trim());
             BigDecimal valorCond = new BigDecimal(valorCondField.getText().trim());
-
 
             String cpfLocatario = cpfLocatarioField.getText().isBlank()
                     ? contract.getCpfLocatario()
@@ -141,8 +148,8 @@ public class ContractPutDialog extends Dialog<ContractModel> {
             contract.setValorAlug(valorAlug);
             contract.setValorIptu(valorIptu);
             contract.setValorCond(valorCond);
-            contract.setDateInit(dateInitPicker.getValue());
-            contract.setDateEnd(dateEndPicker.getValue());
+            contract.setDateInit(dateInit);
+            contract.setDateEnd(dateEnd);
             contract.setContractType(resolveContractType());
 
             return contract;
