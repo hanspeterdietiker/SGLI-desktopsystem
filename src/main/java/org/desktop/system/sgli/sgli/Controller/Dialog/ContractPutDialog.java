@@ -1,5 +1,6 @@
 package org.desktop.system.sgli.sgli.Controller.Dialog;
 
+import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -10,9 +11,10 @@ import org.desktop.system.sgli.sgli.Utils.AlertAction;
 import org.desktop.system.sgli.sgli.Utils.CpfUtils;
 import org.desktop.system.sgli.sgli.Utils.FormUtils;
 
-import java.math.BigDecimal;
+import java.time.LocalDate;
+import org.desktop.system.sgli.sgli.Dto.ContractDto;
 
-public class ContractPutDialog extends Dialog<ContractModel> {
+public class ContractPutDialog extends Dialog<ContractDto> {
     private final TextField nameLocadorField = new TextField();
     private final TextField nameLocatarioField = new TextField();
     private final TextField cpfLocatarioField = new TextField();
@@ -112,44 +114,49 @@ public class ContractPutDialog extends Dialog<ContractModel> {
         ButtonType cancelButton = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
         getDialogPane().getButtonTypes().addAll(saveButton, cancelButton);
 
+        Button saveButtonNode = (Button) getDialogPane().lookupButton(saveButton);
+        saveButtonNode.addEventFilter(ActionEvent.ACTION, event -> {
+            if (dateInitPicker.getValue() == null || dateEndPicker.getValue() == null) {
+                AlertAction.showAlert("Erro de Validação", "Selecione as datas de início e fim do contrato!");
+                event.consume();
+            }
+        });
+
         setResultConverter(dialogButton -> {
             if (dialogButton == saveButton) {
-                return validateAndSave();
+                return validateAndUpdate();
             }
             return null;
         });
     }
 
-    private ContractModel validateAndSave() {
-        try {
-            BigDecimal valorAlug = new BigDecimal(valorAlugField.getText().trim());
-            BigDecimal valorIptu = new BigDecimal(valorIptuField.getText().trim());
-            BigDecimal valorCond = new BigDecimal(valorCondField.getText().trim());
-
-
-            String cpfLocatario = cpfLocatarioField.getText().isBlank()
-                    ? contract.getCpfLocatario()
-                    : cpfLocatarioField.getText().trim();
-            String cpfLocador = cpfLocadorField.getText().isBlank()
-                    ? contract.getCpfLocador()
-                    : cpfLocadorField.getText().trim();
-
-            contract.setNameLocador(nameLocadorField.getText().trim());
-            contract.setNameLocatario(nameLocatarioField.getText().trim());
-            contract.setCpfLocatario(cpfLocatario);
-            contract.setCpfLocador(cpfLocador);
-            contract.setValorAlug(valorAlug);
-            contract.setValorIptu(valorIptu);
-            contract.setValorCond(valorCond);
-            contract.setDateInit(dateInitPicker.getValue());
-            contract.setDateEnd(dateEndPicker.getValue());
-            contract.setContractType(resolveContractType());
-
-            return contract;
-        } catch (NumberFormatException e) {
-            AlertAction.showAlert("Erro", "Valor inválido! Digite números válidos para os valores monetários.");
+    private ContractDto validateAndUpdate() {
+        LocalDate dateInit = dateInitPicker.getValue();
+        LocalDate dateEnd = dateEndPicker.getValue();
+        if (dateInit == null || dateEnd == null) {
+            AlertAction.showAlert("Erro de Validação", "Selecione as datas de início e fim do contrato!");
             return null;
         }
+
+        String cpfLocatario = cpfLocatarioField.getText().isBlank()
+                ? contract.getCpfLocatario()
+                : cpfLocatarioField.getText().trim();
+        String cpfLocador = cpfLocadorField.getText().isBlank()
+                ? contract.getCpfLocador()
+                : cpfLocadorField.getText().trim();
+
+        return new ContractDto(
+                nameLocadorField.getText().trim(),
+                nameLocatarioField.getText().trim(),
+                cpfLocatario,
+                cpfLocador,
+                valorAlugField.getText().trim(),
+                valorIptuField.getText().trim(),
+                valorCondField.getText().trim(),
+                dateInit,
+                dateEnd,
+                resolveContractType()
+        );
     }
 
     private ContractTypeEnum resolveContractType() {

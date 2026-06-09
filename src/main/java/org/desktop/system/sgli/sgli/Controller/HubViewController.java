@@ -266,9 +266,6 @@ public class HubViewController {
 
             AlertAction.showAlert("Erro de Validação", e.getMessage());
 
-        } catch (Exception e) {
-
-            AlertAction.showAlert("Erro Inesperado", "Erro ao salvar contrato: " + e.getMessage());
         }
     }
 
@@ -279,13 +276,11 @@ public class HubViewController {
 
         if (result.isPresent() && result.get() != null) {
             try {
-                contractService.update(result.get());
+                contractService.update(contract.getId(), result.get());
                 loadDataFromDatabase();
                 AlertAction.showAlert("Sucesso", "Contrato atualizado com sucesso!");
             } catch (IllegalArgumentException e) {
                 AlertAction.showAlert("Erro de Validação", e.getMessage());
-            } catch (Exception e) {
-                AlertAction.showAlert("Erro Inesperado", "Erro ao atualizar contrato: " + e.getMessage());
             }
         }
     }
@@ -323,9 +318,6 @@ public class HubViewController {
 
             AlertAction.showAlert("Erro de Validação", e.getMessage());
 
-        } catch (Exception e) {
-
-            AlertAction.showAlert("Erro Inesperado", "Erro ao salvar pagamento: " + e.getMessage());
         }
     }
 
@@ -344,8 +336,6 @@ public class HubViewController {
                 AlertAction.showAlert("Sucesso", "Pagamento atualizado com sucesso!");
             } catch (IllegalArgumentException e) {
                 AlertAction.showAlert("Erro de Validação", e.getMessage());
-            } catch (Exception e) {
-                AlertAction.showAlert("Erro Inesperado", "Erro ao atualizar pagamento: " + e.getMessage());
             }
         }
     }
