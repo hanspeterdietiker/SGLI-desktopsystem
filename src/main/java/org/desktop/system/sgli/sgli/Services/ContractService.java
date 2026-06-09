@@ -54,9 +54,19 @@ public class ContractService {
         return saved;
     }
 
-    public ContractModel update(ContractModel contract) {
+    public ContractModel update(UUID id, ContractDto contractDto) {
+        ContractModel contract = new ContractModel();
+        contract.setId(id);
+        contract.setNameLocador(contractDto.nameLocador());
+        contract.setNameLocatario(contractDto.nameLocatario());
+        contract.setCpfLocatario(contractDto.cpfLocatario());
+        contract.setCpfLocador(contractDto.cpfLocador());
+        contract.setDateInit(contractDto.dateInit());
+        contract.setDateEnd(contractDto.dateEnd());
+        contract.setContractType(contractDto.contractType());
 
-        validateForUpdate(contract);
+        validateForCreate(contract, contractDto.valorAlugStr(), contractDto.valorIptuStr(), contractDto.valorCondStr());
+
         if (contractRepository.existsByNameLocatarioAndId(contract.getNameLocatario(), contract.getId())) {
             throw new IllegalArgumentException(
                     "Já existe um contrato para este locatário.\n" +
@@ -69,10 +79,9 @@ public class ContractService {
                             "Se necessário, edite ou exclua o contrato existente.");
         }
 
-
         ContractModel updated = contractRepository.update(contract);
         LgpdAuditLoggerUtils.logUpdate("Contract", CpfUtils.mask(updated.getCpfLocatario()));
-        return updated;
+        return  updated;
     }
 
     public void delete(UUID id) {
@@ -101,35 +110,14 @@ public class ContractService {
         };
     }
 
-    private static void validateForUpdate(ContractModel contract) {
-        if (contract.getDateInit() == null || contract.getDateEnd() == null) {
-            throw new IllegalArgumentException("Selecione as datas de início e fim do contrato!");
-        }
-        if (contract.getNameLocador() == null || contract.getNameLocador().isBlank()
-                || contract.getNameLocatario() == null || contract.getNameLocatario().isBlank()) {
-            throw new IllegalArgumentException("Preencha os campos de nome do locador e locatário!");
-        }
-        if (!CpfUtils.isFormatValid(contract.getCpfLocatario())) {
-            throw new IllegalArgumentException("CPF do Locatário inválido! Use o formato 000.000.000-00.");
-        }
-        if (!CpfUtils.isFormatValid(contract.getCpfLocador())) {
-            throw new IllegalArgumentException("CPF do Locador inválido! Use o formato 000.000.000-00.");
-        }
-        if (contract.getValorAlug() == null || contract.getValorIptu() == null || contract.getValorCond() == null) {
-            throw new IllegalArgumentException("Valor numérico inválido!");
-        }
-        if (contract.getContractType() == null) {
-            throw new IllegalArgumentException("Selecione um tipo de contrato!");
-        }
 
-    }
 
     private static int totalPages(long total) {
         return (int) Math.max(1, (total + PAGE_SIZE - 1) / PAGE_SIZE);
     }
 
     private static void validateForCreate(ContractModel contract,
-                                           String valorAlugStr, String valorIptuStr, String valorCondStr) {
+                                          String valorAlugStr, String valorIptuStr, String valorCondStr) {
 
         if (contract.getDateInit() == null || contract.getDateEnd() == null) {
             throw new IllegalArgumentException("Selecione as datas de início e fim do contrato!");
