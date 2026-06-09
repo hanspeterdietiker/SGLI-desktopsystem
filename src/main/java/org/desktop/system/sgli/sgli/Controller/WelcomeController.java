@@ -19,7 +19,7 @@ public class WelcomeController {
         loader.setControllerFactory(c -> InjectionRoot.hubViewController());
         Parent root = loader.load();
 
-        Scene hubScene = new Scene(root, 1368, 720);
+        Scene hubScene = new Scene(root, 1368, 768);
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         stage.setScene(hubScene);

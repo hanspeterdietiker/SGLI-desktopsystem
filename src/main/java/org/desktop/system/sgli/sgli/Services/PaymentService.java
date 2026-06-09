@@ -3,6 +3,8 @@ package org.desktop.system.sgli.sgli.Services;
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Entity.PaymentModel;
 import org.desktop.system.sgli.sgli.Repository.PaymentRepository;
+import org.desktop.system.sgli.sgli.Utils.CpfUtils;
+import org.desktop.system.sgli.sgli.Utils.LgpdAuditLoggerUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,6 +12,10 @@ import java.util.List;
 import java.util.UUID;
 
 public class PaymentService {
+    public record PaymentPage(List<PaymentModel> payments, int totalPages, int currentPage) {
+    }
+
+    private static final int PAGE_SIZE = 6;
 
     private final PaymentRepository paymentRepository;
 
@@ -19,7 +25,9 @@ public class PaymentService {
 
     public PaymentModel save(ContractModel selectedContract, LocalDate monthRef, String valorBaseStr) {
         PaymentModel payment = validateAndCreate(selectedContract, monthRef, valorBaseStr);
-        return paymentRepository.save(payment);
+        PaymentModel saved = paymentRepository.save(payment);
+        LgpdAuditLoggerUtils.logCreate("Payment", CpfUtils.mask(saved.getContract().getCpfLocatario()));
+        return saved;
     }
 
     public PaymentModel update(PaymentModel payment) {
@@ -37,14 +45,28 @@ public class PaymentService {
 
     public void delete(UUID id) {
         paymentRepository.delete(id);
+        LgpdAuditLoggerUtils.logDelete("Payment", id.toString());
     }
 
     public void deleteByContractId(UUID contractId) {
         paymentRepository.deleteByContractId(contractId);
+        LgpdAuditLoggerUtils.logDelete("Payment[byContract]", contractId.toString());
+    }
+
+    public PaymentPage findPage(int pageNumber) {
+        long total = paymentRepository.countAll();
+        int totalPages = totalPaymentPages(total);
+        int safePage = Math.min(pageNumber, totalPages - 1);
+        List<PaymentModel> payments = paymentRepository.findByPag(PAGE_SIZE, safePage * PAGE_SIZE);
+        return new PaymentPage(payments, totalPages, safePage);
     }
 
     public List<PaymentModel> findAll() {
         return paymentRepository.findAll();
+    }
+
+    private static int totalPaymentPages(long total) {
+        return (int) Math.max(1, (total + PAGE_SIZE - 1) / PAGE_SIZE);
     }
 
     private static PaymentModel validateAndCreate(ContractModel selectedContract, LocalDate monthRef, String valorBaseStr) {

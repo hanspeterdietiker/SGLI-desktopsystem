@@ -7,8 +7,10 @@ import com.itextpdf.text.pdf.PdfWriter;
 import org.desktop.system.sgli.sgli.Entity.ContractModel;
 import org.desktop.system.sgli.sgli.Entity.PaymentModel;
 import org.desktop.system.sgli.sgli.Utils.AlertAction;
+import org.desktop.system.sgli.sgli.Utils.CpfUtils;
 import org.desktop.system.sgli.sgli.Utils.DateFormatterUtils;
 import org.desktop.system.sgli.sgli.Utils.DecimalFormatterUtils;
+import org.desktop.system.sgli.sgli.Utils.LgpdAuditLoggerUtils;
 
 import java.io.FileOutputStream;
 import java.time.LocalDate;
@@ -43,9 +45,9 @@ public class PdfReportService {
             } else {
                 for (ContractModel contract : contractsList) {
                     doc.add(new Paragraph("Nome Locador: " + contract.getNameLocador()));
-                    doc.add(new Paragraph("CPF Locador: " + contract.getCpfLocador()));
+                    doc.add(new Paragraph("CPF Locador: " + CpfUtils.mask(contract.getCpfLocador())));
                     doc.add(new Paragraph("Nome Locatario: " + contract.getNameLocatario()));
-                    doc.add(new Paragraph("CPF Locatário: " + contract.getCpfLocatario()));
+                    doc.add(new Paragraph("CPF Locatário: " + CpfUtils.mask(contract.getCpfLocatario())));
                     doc.add(new Paragraph("Tipo do Contrato: " + contract.getContractType().getLabel()));
                     doc.add(new Paragraph("Valor Condominio R$ " + DecimalFormatterUtils.decimalFormat.format(contract.getValorCond())));
                     doc.add(new Paragraph("Valor Aluguel R$ " + DecimalFormatterUtils.decimalFormat.format(contract.getValorAlug())));
@@ -56,6 +58,7 @@ public class PdfReportService {
                 }
             }
 
+            LgpdAuditLoggerUtils.logExport("Relatorio_Contratos", contractsList.size());
             doc.close();
             AlertAction.showAlert("Sucesso", "PDF de Contratos salvo em: " + downloadsPath);
         } catch (Exception e) {
@@ -88,13 +91,14 @@ public class PdfReportService {
             } else {
                 for (PaymentModel payment : paymentsList) {
                     doc.add(new Paragraph("Locatario: " + payment.getContract().getNameLocatario()));
-                    doc.add(new Paragraph("CPF Locatario: " + payment.getContract().getCpfLocatario()));
+                    doc.add(new Paragraph("CPF Locatario: " + CpfUtils.mask(payment.getContract().getCpfLocatario())));
                     doc.add(new Paragraph("Mes de Referencia: " + payment.getMonthRef().format(DateFormatterUtils.dateFormatter)));
                     doc.add(new Paragraph("Valor Base R$ " + DecimalFormatterUtils.decimalFormat.format(payment.getValorBase())));
                     doc.add(new Paragraph("\n"));
                 }
             }
 
+            LgpdAuditLoggerUtils.logExport("Relatorio_Pagamentos", paymentsList.size());
             doc.close();
             AlertAction.showAlert("Sucesso", "PDF de Pagamentos salvo em: " + downloadsPath);
         } catch (Exception e) {
